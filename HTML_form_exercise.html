@@ -1,25 +1,25 @@
 <!DOCTYPE html> 
 <html>
-<head>
+  <head>
   
-  <body>
-  <style>
-    .center_align {text-align:center;}
-    .red {color:red;}
-    .background { background-color:#FFFFCC; }
-    .constantlength { 
-      width: 150px;
-      float: left;
+    <body>
+    <style>
+      .center_align {text-align:center;}
+      .red {color:red;}
+      .background { background-color:#FFFFCC; }
+      .constantlength { 
+        width: 150px;
+        float: left;
         }
-      .asterisk 
-        { color: red;
+       .asterisk {
+        color: red;
          }
-      .input
-        { background-color: yellow; }
-      .large
-        { width: 300px; }
+      .input {
+         background-color: yellow; }
+      .large {
+         width: 300px; }
       .zero_margin { margin-bottom:0px; }
-  </style>
+    </style>
 
     <div class="background">
     <h1 class="center_align"> HTML form exercise </h1>
@@ -27,57 +27,57 @@
     <p> <span class="red">Please note:</span> This Example demonstrate how HTML forms can be used. Submit button should submit the button and reset button should reset the form(revert the changes in form fields). The form layout should be the same as below.       </p>
 
     <form>
-    <h3> Contact form </h3>    
-<span class="asterisk"></span>
-    <span class="constantlength">Your name:<span class="asterisk">&nbsp *</span></span> <input type="text" name="yourname"><br>
-    <span class="constantlength">E-mail: <span class="asterisk">&nbsp *</span></span>      <input class="input" type="text" name="email"><br>
-    <span class="constantlength">Phone number: </span> <input class="input" type="text" name="phonenumber"><br>
-    <span class="constantlength">Website:<span class="asterisk">&nbsp *</span></span>     <input class="large" type="text" name="website" placeholder="http://"><br>
-    Comments:<span class="asterisk">&nbsp *</span><br>
-      <textarea rows="10" cols="30" name="comments"> </textarea>
+      <h3> Contact form </h3>    
+        <span class="asterisk"></span>
+        <span class="constantlength">Your name:<span class="asterisk">&nbsp *</span></span> <input type="text" name="yourname"><br>
+        <span class="constantlength">E-mail: <span class="asterisk">&nbsp *</span></span>      <input class="input" type="text" name="email"><br>
+        <span class="constantlength">Phone number: </span> <input class="input" type="text" name="phonenumber"><br>
+        <span class="constantlength">Website:<span class="asterisk">&nbsp *</span></span>     <input class="large" type="text" name="website" placeholder="http://"><br>
+        Comments:<span class="asterisk">&nbsp *</span><br>
+        <textarea rows="10" cols="30" name="comments"> </textarea>
 
-    <h3 class="zero_margin"> Text field </h3>
-    Your name: <input class="input" type="text" name="name">
-    <h3 class="zero_margin"> Password field </h3>
-    Password: <input type="password" name="pwd">
+      <h3 class="zero_margin"> Text field </h3>
+        Your name: <input class="input" type="text" name="name">
+      <h3 class="zero_margin"> Password field </h3>
+        Password: <input type="password" name="pwd">
 
-    <h3 class="zero_margin"> Radio buttons</h3>
-    <p class="zero_margin" style="margin-top:0px;"> Do you like pizza?</p>
-    <input type="radio" name="pizza" value="yes">Yes<br>
-    <input type="radio" name="pizza" value="no">No<br>
-    <input type="radio" name="pizza" value="maybe">Maybe<br>
-    <input type="radio" name="pizza" value="nevertried">Never tried<br>
+      <h3 class="zero_margin"> Radio buttons</h3>
+        <p class="zero_margin" style="margin-top:0px;"> Do you like pizza?</p>
+        <input type="radio" name="pizza" value="yes">Yes<br>
+        <input type="radio" name="pizza" value="no">No<br>
+        <input type="radio" name="pizza" value="maybe">Maybe<br>
+        <input type="radio" name="pizza" value="nevertried">Never tried<br>
      
-    <h3 class="zero_margin"> Check Box </h3>
-    <input type="checkbox" name="checkbox" value="yes">Check this box if you like our service
+      <h3 class="zero_margin"> Check Box </h3>
+        <input type="checkbox" name="checkbox" value="yes">Check this box if you like our service
 
-    <h3 class="zero_margin"> Text area</h3>
-    <p style="margin:0px;">Anything you would like to say?</p>
-    <textarea rows="10" cols="30"></textarea>
+      <h3 class="zero_margin"> Text area</h3>
+        <p style="margin:0px;">Anything you would like to say?</p>
+        <textarea rows="10" cols="30"></textarea>
 
-    <h3 class="zero_margin"> I Like </h3>
-    <select  name="like" size="5">
-    <option> one </option>
-    <option> two </option>
-    <option> tomatoes </option>
-    <option> green peppers </option>
-    <option> five </option>
-    </select>
+      <h3 class="zero_margin"> I Like </h3>
+        <select  name="like" size="5">
+          <option> one </option>
+          <option> two </option>
+          <option> tomatoes </option>
+          <option> green peppers </option>
+          <option> five </option>
+        </select>
 
 
-    <h3 class="zero_margin"> Menu </h3>
-    <p style="margin:0px;"> Your favourite color </p>
-    <select  name="like">
-    <option> Red </option>
-    <option> Blue </option>
-    <option> Green </option>
-    </select>
+      <h3 class="zero_margin"> Menu </h3>
+        <p style="margin:0px;"> Your favourite color </p>
+        <select  name="like">
+          <option> Red </option>
+          <option> Blue </option>
+          <option> Green </option>
+       </select>
 
-    <h3 class="zero_margin">Attach file</h3>
-    <input type="file" name="upload">
+      <h3 class="zero_margin">Attach file</h3>
+        <input type="file" name="upload">
 
-    <h3 class="zero_margin"> Buttons</h3>    
-    <input type="submit" value="Submit"> <input type="reset" value="Reset">
+      <h3 class="zero_margin"> Buttons</h3>    
+        <input type="submit" value="Submit"> <input type="reset" value="Reset">
     </form>
     </div>
     </div>
