@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			/* For the top instruction, above main menu */
+			.instruction {
+			color:red;
+			font-size:18px;
+			}
+			
+			.italic {
+			font-style:italic;
+			}			
+			
+			/* CSS for container which is used as reference for any absolute positioned element */
+			.container {			
+			position:relative;
+			top:0px;	
+			left:0px;						
+			}
+			
+			/* CSS for main menu */
+			.menu {			
+			float:left;
+			font-family:Georgia,sans-serif;
+			font-size:18px;
+			background-color:#CFCFCF;			
+			padding-left:20px;
+			padding-right:20px;
+			padding-top:9px;
+			padding-bottom:10px;
+			margin-left:2px;			
+			}
+			
+			#home { 
+			margin-left:0px;			
+			}			
+			
+			/* CSS for drop-down box which contains the link */
+			.ddbox { 
+			position:relative;
+			left:2px;
+			clear:left;		
+			width:178px;
+			border: 1px solid #6d6d6d;			
+			border-top-width:0px;
+			background-color:white;	
+			padding:10px;												
+			}
+			
+			#dd1 { 
+			left:0px;
+			}			
+			
+			/* CSS for drop-down links */
+			.ddlink {			
+			font-family:Georgia,sans-serif;
+			margin:0px;			
+			font-size:14px;
+			padding-top:5px;
+			padding-bottom:5px;
+			border-bottom: 1px solid #cfcfcf;						
+			}
+			
+			a {	text-decoration:none;}
+			
+			.hidden { display:none;}			
+			
+			/* Provide position for div containing main menu and its drop-down */
+			#div1 { 			
+			position:absolute;
+			top:40px;
+			left:0px;	
+			z-index:5;				
+			}
+			
+			#div2 { 
+			position:absolute;
+			top:40px;
+			left:89px;
+			z-index:6;			
+			}
+			
+			#div3 { 
+			position:absolute;
+			top:40px;
+			left:205px;
+			z-index:7;
+			}
+			
+			#div4 { 
+			position:absolute;
+			top:40px;
+			left:347px;
+			z-index:8;
+			}
+			
+			#div5 { 				
+			position:absolute;
+			top:40px;
+			left:495px;	
+			z-index:9;			
+			}
+			
+			/* Hover action on main menu OR drop-down to change CSS of main menu */
+			.ddiv:hover .menu { 						
+			position:relative;
+			z-index:89;
+			font-family:Georgia,sans-serif;						
+			font-color:#8c8c8c;
+			background-color:white;
+			font-size:18px;			
+			padding:8px 19px 9px;			
+			margin-left:2px;												
+			border:1px solid #6d6d6d;
+			border-bottom:2px solid white;			
+			}
+			
+			/* Last link in the drop-down should not have bottom border */
+			#lastp {
+			border-width:0px;
+			}	
+			
+			/* To make the last drop-down opens left side instead of right */
+			#dd5 { 				
+			left:-69px;
+			}
+			
+			/* This CSS will only read by Firefox. Its a hack. */
+			@-moz-document url-prefix() { 
+			#div4 { left:349px; }
+			#div5 { left:498px; }
+			#line { top:168px; padding-top:1px !important;width:629px !important;}				
+			}
+			
+			a { color:black; }
+			a:hover { color:#bd0707; }
+			
+			
+			/* Hover action on menu OR drop-down */
+			#div1:hover #dd1{ display:block;}
+			#div2:hover #dd2{ display:block;}
+			#div3:hover #dd3{ display:block;}
+			#div4:hover #dd4{ display:block;}
+			#div5:hover #dd5{ display:block;}
+			 
+			 
+			/* Bottom border for menu section */
+			#line {
+			margin:0px;
+			padding:0px;
+			font-size:0px;
+			position:fixed;
+			width:626px;
+			border-bottom:1px solid #6d6d6d;				
+			top:160px;
+			top:159px\9;			/* This CSS is only read by IE8 */
+			z-index:-1;
+			}	
+				
+			
+		</style>	
+	<body>
+		
+	<div>
+		 
+		<h1> Example of CSS based drop downs<span class="instruction">&nbsp(Every menu should show its drop-down on hover effect)</span></h1>
+		<div id="line"></div>
+		<div id="nav" class="container">
+			
+			<div id="div1" class="ddiv">
+				<div id="home" class="menu italic"> Home </div>
+				<div id="dd1" class="ddbox hidden">				
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 11</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 12</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 13</a>
+					</p>
+					<p id="lastp" class="ddlink italic" href="#">
+						<a href="#">Example Link 14</a>
+					</p>
+				</div>
+			</div>
+			<div id="div2" class="ddiv">
+				<div id="aboutus" class="menu italic"> About Us </div>
+				<div id="dd2" class="ddbox hidden">
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 21</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 22</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 23</a>
+					</p>
+					<p id="lastp" class="ddlink italic" href="#">
+						<a href="#">Example Link 24</a>
+					</p>
+				</div>	
+			</div>
+			<div id="div3" class="ddiv">
+				<div id="ourservices" class="menu italic"> Our Services </div>
+				<div id="dd3" class="ddbox hidden">
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 31</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 32</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 33</a>
+					</p>
+					<p id="lastp" class="ddlink italic" href="#">
+						<a href="#">Example Link 34</a>
+					</p>
+				</div>
+			</div>
+			<div id="div4" class="ddiv">			
+				<div id="ourportfolio" class="menu italic"> Our Portfolio </div>
+				<div id="dd4" class="ddbox hidden">
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 41</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 42</a>
+					</p>
+					<p class="ddlink italic" href="#">
+						<a href="#">Example Link 43</a>
+					</p>
+					<p id="lastp" class="ddlink italic" href="#">
+						<a href="#">Example Link 44</a>
+					</p>
+				</div>
+			</div>
+			<div id="div5" class="ddiv">
+				<div id="contactus" class="menu italic"> Contact Us </div>
+				<div id="dd5" class="ddbox hidden">		
+				
+					<p class="right ddlink italic" href="#">
+						<a href="#">Example Link 51</a>
+					</p>
+					<p class="right ddlink italic" href="#">
+						<a href="#">Example Link 52</a>
+					</p>
+					<p class="right ddlink italic" href="#">
+						<a href="#">Example Link 53</a>
+					</p>
+					<p id="lastp" class="right ddlink italic" href="#">
+						<a href="#">Example Link 54</a>
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+	</body>
+	</head>
+	</html>
