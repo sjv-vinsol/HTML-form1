@@ -11,16 +11,23 @@
 
 .top-text span { color:#045198; }
 
+
+
+#inner-container {
+  width: 100%;
+  text-align: center;
+}
+
 #heading {
-  position: relative;
-  left: -11.5%;  
   font: 18px tahoma, sans-serif;
   color:#2c286d;
+  text-align: left;
 }
 
 #form-area {     
-  width: 100%;
-  text-align: center;
+  width: auto;
+  overflow: hidden;
+  display: inline-block;
 }
 
 .form {
