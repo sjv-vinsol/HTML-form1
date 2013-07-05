@@ -2,26 +2,29 @@
   border-bottom: 2px solid #db2927;
 }
 
-.TopText { 
+.top-text { 
   position:absolute;
   top:60px;
   right:20px;
   font: 13px tahoma, sans-serif;
 }
 
-.TopText span { color:#045198; }
+.top-text span { color:#045198; }
 
 #heading {
-  position:relative;
-  left:300px;
+  position: relative;
+  left: -11.5%;  
   font: 18px tahoma, sans-serif;
   color:#2c286d;
 }
 
+#form-area {     
+  width: 100%;
+  text-align: center;
+}
 
-.FormBox {
-  position:relative;
-  left:300px;
+.form {
+  display: inline-block;
   width:450px;
   margin:0px;
   background-color:#ececec;
@@ -73,7 +76,7 @@ textarea {
   vertical-align:top;
 }
 
-.FormBox p {
+.form p {
   height:auto;
   width: 100%;
   padding:0px;
