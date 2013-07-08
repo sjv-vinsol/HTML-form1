@@ -1,0 +1,42 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  <script type="text/javascript">
+  window.onload = function() {
+  
+    
+    function User(name, age) {
+      this.name = name;
+      this.age = age;
+   }
+    var age1 = parseInt(window.prompt("Provide age of Test1 :" ));
+    var age2 = parseInt(window.prompt("Provide age of Test2 :"));
+
+    user1 = new User("Test1", age1);
+    user2 = new User("Test2", age2);
+    
+    user1.compare = function(user) {         
+      text = ( user1.age > user.age) ? "User1 is older than user2" : "user2 is older than user1";
+      if (user1.age == user2.age) {
+        text = "Both user have equal age";
+      }
+    }       
+  user1.compare(user2);
+  window.alert(text);
+
+};
+  </script>
+
+
+<style>
+
+
+</style>
+
+</head>
+<body>
+    
+</body>
+
+</html>
+

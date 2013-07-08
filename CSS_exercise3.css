@@ -30,8 +30,7 @@
   display: inline-block;
 }
 
-.form {
-  display: inline-block;
+.form {  
   width:450px;
   margin:0px;
   background-color:#ececec;
