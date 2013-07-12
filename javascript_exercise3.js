@@ -19,11 +19,11 @@ var main =  {
     var tdElemArr = newElemTr.append("sibling td td td"), name = tdElemArr[0].append("input");
     var attr = ["type", "text", "placeholder", "Type Name Here", "class", "name"];
     main.setAttribute(name,attr);
-
+    //appending input tag email to td
     var email = tdElemArr[1].append("input");
     attr = ["type", "email", "placeholder", "Email Address", "class", "email"];
     main.setAttribute(email, attr);
-
+    //appending input tag to td
     var save = tdElemArr[2].append("input");
     attr = ["type", "button", "value", "save", "id", "save", "onclick", "main.save(this)"];
     main.setAttribute(save, attr);
@@ -52,7 +52,6 @@ var main =  {
     main.setAttribute(del, attr);
     return newElemTr;
   },
-
 
   getNameAndEmail: function (currentElemTr) {
     var name_value = currentElemTr.getElementsByClassName("name")[0].value;
@@ -97,18 +96,18 @@ var main =  {
 }
 
 Object.prototype.append = function (elem) {
-    var elem = elem.split(" ");
-    var length = 1, appendedElements = [], that = this;
-    if (elem.length == 1) {
-      return that.appendChild(document.createElement(elem[0]));
-    } else {
-      while (elem[0] == "nested" && length < elem.length) {
-        that = that.appendChild(document.createElement(elem[length++]));
-        appendedElements.push(that);
-      }
-      while (elem[0] == "sibling" && length < elem.length) {
-        appendedElements.push(that.appendChild(document.createElement(elem[length++])));
-      }
-      return appendedElements;
+  var elem = elem.split(" ");
+  var length = 1, appendedElements = [], that = this;
+  if (elem.length == 1) {
+    return that.appendChild(document.createElement(elem[0]));
+  } else {
+    while (elem[0] == "nested" && length < elem.length) {
+      that = that.appendChild(document.createElement(elem[length++]));
+      appendedElements.push(that);
     }
-  };
+    while (elem[0] == "sibling" && length < elem.length) {
+      appendedElements.push(that.appendChild(document.createElement(elem[length++])));
+    }
+    return appendedElements;
+  }
+};
