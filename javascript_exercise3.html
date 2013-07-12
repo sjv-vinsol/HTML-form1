@@ -1,28 +1,100 @@
 <!DOCTYPE html> 
 <html>
   <head>
-    <script type="text/javascript" src="javascript_exercise2.js"></script>
-
+    
     <style>
-      
+      table {        
+        width: 700px;
+        border-spacing: 0px;                 
+        text-align: center;            
+      }
 
+      #inner-container {
+        overflow: hidden;
+        display: inline-block;
+        text-align: left;        
+        padding: 10px 15px 20px;
+        border: 2px solid grey;
+      }
+
+      th {
+        width: 300px;
+      }
+
+      #action {
+        width: 100px;
+      }
+
+      input {
+        padding:0px;
+        margin: 0px;
+        height:25px;
+      }
+
+
+      #save {
+        background-color: orange;        
+      }
+
+      td, th {
+        padding: 10px;
+      }
+
+
+      #main {        
+        margin: 0 auto;
+        text-align: center;
+      }
+
+       {
+        padding:10px;
+      }
+
+      #save {
+        padding:3px 10px;        
+      }
+
+      p { 
+        padding: 10px;
+        margin: 0px;
+        border: 2px solid grey;
+        border-top: 1px;
+        color: red;
+      }
+
+      #container {
+        float: left;           
+      }
+
+      a {
+        text-decoration: none;
+      }
     </style>
   </head>
+
   <body>
-    <div>
-      <div>
-        <p> Select days(maximum 3 can be selected at a time):- </p>
-        <input type="checkbox" class="checkbox" value= "mon" onclick="check(this)"> Monday <br>
-        <input type="checkbox" class="checkbox" value= "tue" onclick="check(this)"> Tuesday <br>
-        <input type="checkbox" class="checkbox" value= "wed" onclick="check(this)"> Wednesday <br>
-        <input type="checkbox" class="checkbox" value= "thu" onclick="check(this)"> Thursday <br>
-        <input type="checkbox" class="checkbox" value= "fri" onclick="check(this)"> Friday <br>
-        <input type="checkbox" class="checkbox" value= "sat" onclick="check(this)"> Saturday <br>
-        <input type="checkbox" class="checkbox" value= "sun" onclick="check(this)"> Sunday <br>
-        <input id="none" type="checkbox" value= "" onclick="uncheckAll();"> None <br>
-      </div>
-      
+    <div id="main">
+      <div id="inner-container">
+        <div id="container">        
+          <table id="table" border="1">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th id="action">Actions</th>
+            </tr>
+
+          </table>   
+          <p id="noData"> There are no records in this table. Please click on below button to add new records.</p> 
+          
+        </div>
+        <div id="button-container">     
+          <input type="button" value="add new row" onclick="main.addNewRow()">                        
+        </div>
+      </div>      
     </div>
   </body>
+
+  <script type="text/javascript" src="javascript_exercise3.js"></script>
+
   
 </html>
