@@ -1,18 +1,20 @@
+var main = {
+  checkAll: function () {
+    "use strict";
+    main.checkOrUncheck(true);
+  },
 
-function checkAll(x) {
-  "use strict";
-  var x = document.getElementsByClassName("checkbox"), i = x.length;
-  while (i) {
-    x[i-1].checked = true;
-    i -= 1;
-  }
-}
+  checkOrUncheck: function (value) {
+    "use strict";
+    var x = document.getElementsByClassName("checkbox"), i = x.length;
+    while (i) {
+      x[i-1].checked = value;
+      i -= 1;
+    }
+  },
 
-function uncheckAll() {
-  "use strict";
-  var x = document.getElementsByClassName("checkbox"), i = x.length;
-  while (i) {
-    x[i-1].checked = false;
-    i -= 1;
-  }
-}
+  uncheckAll: function () {
+    "use strict";
+    main.checkOrUncheck(false);
+  },
+};
