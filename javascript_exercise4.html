@@ -1,0 +1,48 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    
+    <script type="text/javascript" src="javascript_exercise4.js"></script>
+
+    <style>
+      .innerCheckbox {
+        margin-left: 30px;
+      }
+
+      #main {
+        height: 100px;        
+        width: 200px;
+        overflow: auto;
+        border: 1px solid grey;        
+      }
+
+      .checkbox {
+        padding-top: 10px;
+      }
+      
+    </style>
+    
+  </head>
+
+  <body>
+    <div id="main">
+      <div class="checkbox" id="1">
+        <input type="checkbox" id="color" value="color" onclick="showOrRemoveList(this)"> Color        
+      </div>
+
+      <div class="checkbox" id="2">
+        <input type="checkbox" id="movies" value="movies" onclick="showOrRemoveList(this)"> Movies
+      </div>
+
+      <div class="checkbox" id="3">
+        <input type="checkbox" id="drinks" value="drinks" onclick="showOrRemoveList(this)"> Drinks
+      </div>
+
+      <div class="checkbox" id="4">
+        <input type="checkbox" id="bikes" value="bikes" onclick="showOrRemoveList(this)"> Bikes
+      </div>
+    </div>
+
+  </body> 
+  
+</html>
