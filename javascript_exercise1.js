@@ -1,10 +1,9 @@
 var main = {
-  checkOrUncheck: function (value) {
+  checkAll: function (value) {
     "use strict";
     var x = document.getElementsByClassName("checkbox"), i = x.length;
-    while (i) {
-      x[i-1].checked = value;
-      i -= 1;
+    while (i--) {
+      x[i].checked = value;
     }
-  }, 
+  },
 };
