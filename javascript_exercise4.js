@@ -27,7 +27,7 @@ var main = {
     var fragment = document.createDocumentFragment();
     var elemDiv = fragment.appendChild(document.createElement("div"));
     main.setAttributes(elemDiv, ["class", "innerCheckbox"]);
-    var valueArr = main.getValueOfInnerContainers(that);
+    var valueArr = main.getValueOfInnerCheckbox(that);
     while (len < valueArr.length) {
       var input = elemDiv.appendChild(document.createElement("input"));
       var attr = ["type", "checkbox", "onclick", "main.confirmAllCheckbox(this)","value", valueArr[len]];
@@ -66,7 +66,7 @@ var main = {
     }
   },
 
-  getValueOfInnerContainers: function (that) {
+  getValueOfInnerCheckbox: function (that) {
     "use strict";
     switch(parseInt(that.id, 10)) {
       case 1: {
