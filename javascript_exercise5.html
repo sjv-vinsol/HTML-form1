@@ -44,6 +44,7 @@
 
     p {
       background-color: #567080;
+      text-align: center;
     }
 
     #instruction {
@@ -75,10 +76,12 @@
         <label for="name">Name</label> <input type="text" id="name"/><br>
         <label for="timezone">Timezone</label> 
         <select id="timezone" size="1">
-          <option value=""> -Select- </option>
-          <option value="gmt"> GMT2 </option>
-          <option value="gmt"> GMT3 </option>
-          <option value="gmt"> GMT4 </option>
+          <option value="" >--Select--</option>
+          <option value="-12" >(GMT -12:00 hours) Eniwetok, Kwajalein</option>
+          <option value="-11" >(GMT -11:00 hours) Midway Island, Samoa</option>
+          <option value="-10" >(GMT -10:00 hours) Hawaii</option>
+          <option value="-9" >(GMT -9:00 hours) Alaska</option>
+          <option value="-8" >(GMT -8:00 hours) Pacific Time (US & Canada)</option>
         </select><br>
         <label for="homepage">Homepage </label><input type="text" id="homepage"/><br>
         <label for="about">About me </label><br><textarea rows="10" id="about"></textarea><br>
