@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="javascript_exercise8.js"></script>
+    <style>
+      select {
+        width: 200px;
+      }
+
+      #container1 {
+        position: absolute;
+      }
+      
+      #container2 {
+        position: absolute;
+        left: 300px;
+      }
+
+      input {
+        width: 70px;
+        background-color: #ffbd55;
+        display: inline-block;
+      }
+
+      div#button {
+        height: 86px;
+        width:100px;
+        text-align: center;
+        position: absolute;
+        left: 200px;
+      }
+      #container {
+        height: 86px;
+        position: relative;
+      }
+      #button1 {
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+  <div id="container">
+    <select id="container1" size=5 multiple>
+      <option value="delhi">Delhi</option>
+      <option value="mumbai">Mumbai</option>
+      <option value="chennai">Chennai</option>
+      <option value="kolkata">Kolkata</option>
+      <option value="ahmedabad">Ahmedabad</option>
+      <option value="nagpur">Nagpur</option>
+      <option value="pune">Pune</option>
+      <option value="hydrabad">Hydrabad</option>
+      <option value="banglore">Bangalore</option>
+      <option value="jaipur">Jaipur</option>
+      <option value="shrinagar">Shrinagar</option>
+    </select>
+    <div id="button">
+      <input id="button1" type="button" value="Add >" />
+      <input id="button2" type="button" value="< Remove" />
+    </div>
+    <select id="container2" size=5 multiple>
+    </select>
+  </div>
+  </body>
+</html>
