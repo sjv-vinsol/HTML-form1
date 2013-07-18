@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="text/javascript" src="javascript_exercise5.js"></script>
+    <style>
+      label {
+        width: 130px;
+        display: inline-block;
+      }
+      select {
+        width: 140px;
+      }
+      label, input {
+        margin: 6px;
+      }
+      #container {
+        width: 400px;
+        background-color: #dee4fa; 
+        margin:0 auto;   
+      }
+      #register {
+        display: block;
+        margin: 0 auto;
+        margin-top: 5px;
+        margin-bottom: 10px;
+      }
+      #timezone {
+        margin-left: 5px;
+      }
+      #about {
+        width: 380px;
+        margin-left: 5px
+      }
+      label, .label {
+        font: bold 13px arial;
+      }
+      p {
+        background-color: #567080;
+        text-align: center;
+      }
+      #instruction {
+        font-size: 12px;
+      }
+      span {
+        padding: 0px;
+      }
+      #passInstruction {
+        display: inline-block;
+        text-align: center;
+        width:100%;
+      }
+      #email, #name {
+        background-color: #fee176;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="container">
+      <p id="registration"> Registration Form </p>
+      <div>
+        <form name="form1" id="form1" > 
+          <label for="loginId">Login id</label> <input type="text" id="loginId" /><br>
+          <label for="email">Email</label> <input type="email" id="email"/><br>
+          <label for="name">Name</label> <input type="text" id="name"/><br>
+          <label for="timezone">Timezone</label> 
+          <select id="timezone" size="1">
+            <option value="" >--Select--</option>
+            <option value="-12" >(GMT -12:00 hours) Eniwetok, Kwajalein</option>
+            <option value="-11" >(GMT -11:00 hours) Midway Island, Samoa</option>
+            <option value="-10" >(GMT -10:00 hours) Hawaii</option>
+            <option value="-9" >(GMT -9:00 hours) Alaska</option>
+            <option value="-8" >(GMT -8:00 hours) Pacific Time (US & Canada)</option>
+          </select><br>
+          <label for="homepage">Homepage </label><input type="text" id="homepage"/><br>
+          <label for="about">About me </label><br><textarea rows="10" id="about"></textarea><br>
+          <input type="checkbox" id="notification"/> <span class="label">Receive notification about comments</span> <br>
+          <span id="instruction"> You will be send an email when someone post comments on your blog or Album.</span><br>
+          <span id="passInstruction"> Your password will be mailed to you </span><br>
+          <input type="submit" value="Go" id="register"/>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
