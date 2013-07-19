@@ -6,13 +6,13 @@ window.addEventListener("load", function() {
     } while (!(name[len] = extractNameMatchingRegex(name[len])));
   }
   alert("Hello "+name[0]+" "+name[1]+".");
-  document.write("Hello "+name[0]+" "+name[1]+".");
-
-  function extractNameMatchingRegex(name) {
-    "use strict";
-    if (name==null) {
-      document.write("Please reload the page to start again");
-    }
-    if (name.match(/[a-z]+/ig)) return name.match(/[a-z]+/ig).join(" ");
-  }
+  document.write("Hello "+name[0]+" "+name[1]+".");  
 });
+
+function extractNameMatchingRegex(name) {
+  "use strict";
+  if (name==null) {
+    document.write("Please reload the page to start again");
+  }
+  if (name.match(/[a-z]+/ig)) return name.match(/[a-z]+/ig).join(" ");
+}
