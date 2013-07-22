@@ -1,30 +1,44 @@
 window.addEventListener("load", function() {
   var main = {
-    form: {
-      email: document.getElementById("email"),
-      homepage: document.getElementById("homepage"),
-      register: document.getElementById("register")
-    },
-
-    validateForm: function (e) {
-      "use strict";      
-      var elem = form1.elements;
-      var isValidEmail = main.isInvalid("email", main.form.email.value);
-      var isValidUrl = main.isInvalid("url", main.form.homepage.value);
-      if ( isValidEmail || isValidUrl) {
-        e.preventDefault();
-      }
-    },
-
-    isInvalid: function(str, value) {
+    submitForm: function (e , formName, validateFieldArr) {
       "use strict";
-      var regex = (str == "email") ? /^\w([.$&_]*\w+)*@([a-zA-Z]+\.)+[a-zA-Z]+$/ : /^((https?|ftp):\/\/)([a-zA-Z]+\.)+[a-zA-Z]+\/[^\s]*$/
-      if (!regex.test(value)) {
-        alert("Invalid "+str);
-        return true;
+      var form = new main.formObj(formName, validateFieldArr);
+      if (form.valid) {
+        form.submit();
+      } else e.preventDefault();
+    },
+
+    formObj: function (formName, validateFieldArr) {
+      "use strict";
+      var validFieldCount = 0;
+      var email = document.forms[formName].email;
+      var homepage = document.forms[formName].url;
+
+      var validateUsingRegex = function (currfieldObj, regex) {
+        if (regex.test(currfieldObj.value)) {
+          validFieldCount++;
+          currfieldObj.className = "normal";
+        } else {
+          alert(currfieldObj.name + " is invalid");
+          main.paintRed(currfieldObj);
+        }
       }
+
+      validateUsingRegex(email, /^\w([\.\$\?\&\_]?\w+)*@([a-zA-Z]+\.)+[a-zA-Z]+$/);
+      validateUsingRegex(homepage, /^((https?|ftp):\/\/)([a-zA-Z]+\.)+[a-zA-Z]+\/[^\s]*$/);
+
+      if (validFieldCount == validateFieldArr.length) {
+        this.valid = true;
+      } else this.valid = false;
+    },
+
+    paintRed: function (currfieldObj) {
+      "use strict";
+      currfieldObj.className = "error";
     }
   }
-  // bind click event to submit button
-  main.form.register.addEventListener("click", main.validateForm);
-})
+  document.getElementById("register").addEventListener("click", function(e) {
+    var fieldArr = ["email", "url"];
+    main.submitForm(e, "form1", fieldArr);
+  });
+});

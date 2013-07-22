@@ -7,11 +7,21 @@
         width: 130px;
         display: inline-block;
       }
+
+      .error {
+        border-color: red;
+      }
+
+      .normal {
+        border-color: white;
+      }
+
       select {
         width: 140px;
       }
       label, input {
         margin: 6px;
+        border-color: white;
       }
       #container {
         width: 400px;
@@ -61,7 +71,7 @@
       <div>
         <form name="form1" id="form1" > 
           <label for="loginId">Login id</label> <input type="text" id="loginId" /><br>
-          <label for="email">Email</label> <input type="email" id="email"/><br>
+          <label for="email">Email</label> <input type="email" id="email" name="email"/><br>
           <label for="name">Name</label> <input type="text" id="name"/><br>
           <label for="timezone">Timezone</label> 
           <select id="timezone" size="1">
@@ -72,7 +82,7 @@
             <option value="-9" >(GMT -9:00 hours) Alaska</option>
             <option value="-8" >(GMT -8:00 hours) Pacific Time (US & Canada)</option>
           </select><br>
-          <label for="homepage">Homepage </label><input type="text" id="homepage"/><br>
+          <label for="homepage">Homepage </label><input type="text" id="homepage" name="url"/><br>
           <label for="about">About me </label><br><textarea rows="10" id="about"></textarea><br>
           <input type="checkbox" id="notification"/> <span class="label">Receive notification about comments</span> <br>
           <span id="instruction"> You will be send an email when someone post comments on your blog or Album.</span><br>
