@@ -12,7 +12,11 @@ window.addEventListener("load", function() {
   }
   document.form1.addEventListener("submit", function(e) {
     var form = new main.formObj("form1");
-    (form.isNumeric()) ? (form.resultObj.value = "true") : (form.resultObj.value = "false");
-    if (!form.isNumeric()) e.preventDefault();
+    if (form.isNumeric()) {
+      form.resultObj.value = "true";
+    } else {
+      form.resultObj.value = "false";
+      e.preventDefault();
+    }    
   })
 })
