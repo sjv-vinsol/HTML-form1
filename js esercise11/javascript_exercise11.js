@@ -1,16 +1,15 @@
 window.addEventListener("load", function() {
   var main = {
-    regex: /^((https?|ftp):\/\/)?(([\w]+\.)*)([\w]+\.[\w]+)([\/][^\s]*)*$/,
+    regex: /^[\s]*(?:(?:https?|ftp):\/\/)?(?:((?:[a-z]+\.??)*)[^\.]?\.)?([\w]+\.[\w]+)[\/]?[\s]*$/,
     formObj: function(formName) {
       "use stict";
       this.url = document.forms[formName].url;
       this.hasValidUrl = function () {
-        if (this.url.value.match(main.regex)) return true
-          else return false;
+        return (main.regex.test(this.url.value));
       }
       this.extractDomainAndSubdomain = function () {
         var str = this.url.value.match(main.regex);
-        return ([str[5],str[3].slice(0,-1)]);
+        return ([str[1],str[2]]);
       }
     }
   }
@@ -22,7 +21,7 @@ window.addEventListener("load", function() {
       e.preventDefault();
     } else {
       domainSubdomainArr = form.extractDomainAndSubdomain();
-      (domainSubdomainArr[1]) ? alert("Domain: " + domainSubdomainArr[0] + "\nSub Domain: " + domainSubdomainArr[1]) : alert("Domain: " + domainSubdomainArr[0]);
+      (domainSubdomainArr[0]) ? alert("Domain: " + domainSubdomainArr[1] + "\nSub Domain: " + domainSubdomainArr[0]) : alert("Domain: " + domainSubdomainArr[1]);
     }
   });
 })
