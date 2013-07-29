@@ -1,6 +1,6 @@
 window.addEventListener("load", function() {
   var main = {
-    regex: /^[\s]*(?:(?:https?|ftp):\/\/)?(?:((?:[a-z]+\.??)*)[^\.]?\.)?([\w]+\.[\w]+)[\/]?[\s]*$/,
+    regex: /^[\s]*(?:(?:https?|ftp):\/\/)?(?:([a-z]+(?:\.[a-z]+)*?)\.)?([\w]+\.[\w]+)([\/]+[^\s]*)*[\s]*$/,
     formObj: function(formName) {
       "use stict";
       this.url = document.forms[formName].url;
