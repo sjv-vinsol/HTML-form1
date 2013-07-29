@@ -12,55 +12,35 @@ var main =  {
 
   createInputFragment: function (currentElemId) {
     "use strict";
-    // Create Fragment for input field
     var newFrgment = document.createDocumentFragment(), newElemTr = newFrgment.append(["tr"]);
-    //Maintaining the existing Id of the tr tag
     var newId = (currentElemId) ? currentElemId : main.id++;
     newElemTr.setAttribute("id", ""+newId+"");
-    // Creting td thg that is sibling of tr tag.
-    var tdElemArr = newElemTr.append(["sibling", "td", "td", "td"]), name = tdElemArr[0].append(["input"]);
-    var attr = ["type", "text", "placeholder", "Type Name Here", "class", "name"];
-    main.setAttribute(name,attr);
-    //appending input tag email to td
-    var email = tdElemArr[1].append(["input"]);
-    attr = ["type", "email", "placeholder", "Email Address", "class", "email"];
-    main.setAttribute(email, attr);
-    //appending input tag to td
-    var save = tdElemArr[2].append(["input"]);
-    attr = ["type", "button", "value", "save", "id", "save", "onclick", "main.save(this)"];
-    main.setAttribute(save, attr);
+    var tdElemArr = newElemTr.append(["sibling", "td", "td", "td"]);
+    var name = tdElemArr[0].append(["input"]), email = tdElemArr[1].append(["input"]),  save = tdElemArr[2].append(["input"]);
+    name.classList.add("name"); email.classList.add("email");
+    main.setAttribute(name,["type", "text"]);
+    main.setAttribute(email, ["type", "email"]);
+    main.setAttribute(save, ["type", "button", "value", "save", "id", "save", "onclick", "main.save(this.parentNode.parentNode)"]);
     return newElemTr;
   },
 
-  createDisplayFragment: function (save, currentElemTr) {
+  createDisplayFragment: function (currentElemTr) {
     "use strict";
-    var value = main.getNameAndEmail(currentElemTr);
-    // Create fragment to display data of text field on clicking save button.
     var newFrgment = document.createDocumentFragment(), newElemTr = newFrgment.append(["tr"]);
     newElemTr.setAttribute("id", currentElemTr.id);
-    // Creting td thg that is sibling of tr tag.
     var tdElemArr = newElemTr.append(["sibling", "td", "td", "td"]);
-    tdElemArr[0].innerHTML = value[0];
-    tdElemArr[0].setAttribute("class", "name");
-    tdElemArr[1].innerHTML = value[1];
-    tdElemArr[1].setAttribute("class", "email");
+    tdElemArr[0].innerHTML = currentElemTr.getElementsByClassName("name")[0].value;
+    tdElemArr[0].classList.add("name");
+    tdElemArr[1].innerHTML = currentElemTr.getElementsByClassName("email")[0].value;
+    tdElemArr[1].classList.add("email");
     var edit = tdElemArr[2].append(["a"]);
     edit.innerHTML = "edit";
-    var attr = ["href", "#", "onclick", "main.edit(this)"];
-    main.setAttribute(edit, attr);
+    main.setAttribute(edit, ["href", "#", "onclick", "main.edit(this.parentNode.parentNode)"]);
     tdElemArr[2].appendChild(document.createTextNode(" / "));
     var del = tdElemArr[2].append(["a"]);
     del.innerHTML = "delete";
-    attr = ["href", "#", "onclick", "main.del(this)"];
-    main.setAttribute(del, attr);
+    main.setAttribute(del, ["href", "#", "onclick", "main.del(this.parentNode.parentNode)"]);
     return newElemTr;
-  },
-
-  getNameAndEmail: function (currentElemTr) {
-    "use strict";
-    var name_value = currentElemTr.getElementsByClassName("name")[0].value;
-    var email_value = currentElemTr.getElementsByClassName("email")[0].value;
-    return [name_value, email_value];
   },
 
   setAttribute: function (obj,attr) {
@@ -71,29 +51,21 @@ var main =  {
     }
   },
 
-  save: function (save) {
+  save: function (currentElemTr) {
     "use strict";
-    var currentElemTr = save.parentNode.parentNode;
-    var newElemTr = main.createDisplayFragment(save, currentElemTr);
-    //Replace element 
-    table.replaceChild(newElemTr, currentElemTr);
+    table.replaceChild(main.createDisplayFragment(currentElemTr), currentElemTr);
   },
 
-  edit: function (edit) {
+  edit: function (currentElemTr) {
     "use strict";
-    var currentElemTr = edit.parentNode.parentNode;
     var newElemTr = main.createInputFragment(currentElemTr.id);
-    var name = currentElemTr.getElementsByClassName("name")[0].innerHTML;
-    var email = currentElemTr.getElementsByClassName("email")[0].innerHTML;
-    newElemTr.getElementsByClassName("name")[0].value = name;
-    newElemTr.getElementsByClassName("email")[0].value = email;
-    //Replace element
+    newElemTr.getElementsByClassName("name")[0].value = currentElemTr.getElementsByClassName("name")[0].innerHTML;
+    newElemTr.getElementsByClassName("email")[0].value = currentElemTr.getElementsByClassName("email")[0].innerHTML;
     table.replaceChild(newElemTr, currentElemTr);
   },
 
-  del: function (delet) {
+  del: function (currentElemTr) {
     "use strict";
-    var currentElemTr = delet.parentNode.parentNode;
     table.removeChild(currentElemTr);
     if(!table.getElementsByTagName("td").length) {
       var ElemP = document.getElementById("container").append(["p"]);
