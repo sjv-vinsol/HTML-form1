@@ -1,5 +1,5 @@
 
-var main = {  
+var main = {
 // variable name is same as the Id of the main checkbox
   color: ["red", "yellow", "green", "blue"],
   movies: ["dar", "sir"],
@@ -8,93 +8,76 @@ var main = {
 
   showOrRemoveList: function (that) {
     "use strict";
-    var that = that.parentNode;
-    if (that.getElementsByTagName("input")[0].checked == true) {
-      if (!that.getElementsByTagName("div").length) {
-        main.appendInnerCheckbox(that);
+    var containerDiv = that.parentNode;
+    if (containerDiv.getElementsByClassName("optionContainer")[0].checked == true) {
+      if (!containerDiv.getElementsByClassName("innerCheckbox").length) {
+        main.appendInnerCheckbox(containerDiv);
       }
-      main.statusOfInnerCheckbox("check", that);
-      that.parentNode.scrollTop = that.offsetTop;
+      main.changeStatusOfInnerCheckbox("check", containerDiv);
+      containerDiv.parentNode.scrollTop = containerDiv.offsetTop;
     } else {
-      main.statusOfInnerCheckbox("uncheck", that);
-      that.removeChild(that.getElementsByTagName("div")[0]);
+      main.changeStatusOfInnerCheckbox("uncheck", containerDiv);
+      containerDiv.removeChild(containerDiv.getElementsByClassName("innerCheckbox")[0]);
     }
   },
 
-  appendInnerCheckbox: function (that) {
+  appendInnerCheckbox: function (containerDiv) {
     "use strict";
-    var len = 0;
-    var fragment = document.createDocumentFragment();
-    var elemDiv = fragment.appendChild(document.createElement("div"));
-    main.setAttributes(elemDiv, ["class", "innerCheckbox"]);
-    var valueArr = main.getValueOfInnerCheckbox(that);
+    var fragment = document.createDocumentFragment(), elemDiv = fragment.appendChild(document.createElement("div")), len = 0;
+    elemDiv.classList.add("innerCheckbox");
+    var valueArr = main.getValueOfInnerCheckbox(containerDiv);
     while (len < valueArr.length) {
-      var input = elemDiv.appendChild(document.createElement("input"));
-      var attr = ["type", "checkbox", "onclick", "main.confirmAllCheckbox(this)","value", valueArr[len]];
-      main.setAttributes(input, attr);
+      var elemInput = elemDiv.appendChild(document.createElement("input"));
+      elemInput.classList.add("options");
+      var attr = ["type", "checkbox", "onclick", "main.confirmAllCheckbox(this.parentNode)","value", valueArr[len]];
+      main.setAttributes(elemInput, attr);
       elemDiv.appendChild(document.createTextNode(valueArr[len++].toUpperCase()));
       elemDiv.appendChild(document.createElement("br"));
     }
-    that.appendChild(elemDiv);
+    containerDiv.appendChild(elemDiv);
   },
 
-  confirmAllCheckbox: function (that) {
+  confirmAllCheckbox: function (elemDiv) {
     "use strict";
     //check the status of all checkbox
-    var inputTags = that.parentNode.getElementsByTagName("input");
-    var len = inputTags.length;
-    var count = 0;
+    var innerCheckboxArr = elemDiv.getElementsByClassName("options"), len = innerCheckboxArr.length, count = 0;
     while (len) {
-      if (inputTags[(--len)].checked) {
+      if (innerCheckboxArr[(--len)].checked) {
         break;
       } else {
         count++;
       }
     }
-    if (count == inputTags.length) {
-      that.parentNode.parentNode.getElementsByTagName("input")[0].checked = false;
+    if (count == innerCheckboxArr.length) {
+      elemDiv.parentNode.getElementsByClassName("optionContainer")[0].checked = false;
     } else {
-      that.parentNode.parentNode.getElementsByTagName("input")[0].checked = true;
+      elemDiv.parentNode.getElementsByClassName("optionContainer")[0].checked = true;
     }
   },
 
   setAttributes: function (obj, attr) {
     "use strict";
-    var length = 0;
-    while(length < attr.length ) {
-      obj.setAttribute(attr[length++], attr[length++]);
+    var len = 0;
+    while(len < attr.length ) {
+      obj.setAttribute(attr[len++], attr[len++]);
     }
   },
 
-  getValueOfInnerCheckbox: function (that) {
+  getValueOfInnerCheckbox: function (containerDiv) {
     "use strict";
-    switch(parseInt(that.id, 10)) {
-      case 1: {
-        return main.color;
-      }
-      break;
-      case 2: {
-        return main.movies;
-      }
-      break;
-      case 3: {
-        return main.drinks;
-      }
-      break;
-      case 4: {
-        return main.bikes;
-      }
-      break;
-    }
+    if (containerDiv.id == "1") return main.color;
+    else if (containerDiv.id == "2") return main.movies;
+    else if (containerDiv.id == "3") return main.drinks;
+    else if (containerDiv.id == "4") return main.bikes;    
   },
 
-  statusOfInnerCheckbox: function (state, parent) {
+  changeStatusOfInnerCheckbox: function (state, containerDiv) {
     "use strict";
     var value = (state == "check") ? true : false;
-    var elem = parent.getElementsByTagName("div")[0].getElementsByTagName("input");
-    var len = elem.length;
+    var elemArr = containerDiv.getElementsByClassName("options");
+    var len = elemArr.length;
     while (len) {
-      elem[--len].checked = value;
+      elemArr[--len].checked = value;
     }
   }
 };
