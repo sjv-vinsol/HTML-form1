@@ -1,10 +1,14 @@
 
 var main = {
-// variable name is same as the Id of the main checkbox
-  color: ["red", "yellow", "green", "blue"],
-  movies: ["dar", "sir"],
-  drinks: ["coke", "pepsi", "dew"],
-  bikes: ["v-rod", "pulsar", "cbz"],
+  getValueOfInnerCheckbox: function (containerDiv) {
+    "use strict";
+    if (containerDiv.id == "1") return ["red", "yellow", "green", "blue"];
+    else if (containerDiv.id == "2") return ["dar", "sir"];
+    else if (containerDiv.id == "3") return ["coke", "pepsi", "dew"];
+    else if (containerDiv.id == "4") return ["v-rod", "pulsar", "cbz"];  
+    else if (containerDiv.id == "5") return ["Accord", "audi", "porsche", "toyota"];
+    else if (containerDiv.id == "6") return ["levis", "reebok", "nike", "Adidas"];
+  },
 
   showOrRemoveList: function (that) {
     "use strict";
@@ -63,14 +67,7 @@ var main = {
     }
   },
 
-  getValueOfInnerCheckbox: function (containerDiv) {
-    "use strict";
-    if (containerDiv.id == "1") return main.color;
-    else if (containerDiv.id == "2") return main.movies;
-    else if (containerDiv.id == "3") return main.drinks;
-    else if (containerDiv.id == "4") return main.bikes;    
-  },
-
+  
   changeStatusOfInnerCheckbox: function (state, containerDiv) {
     "use strict";
     var value = (state == "check") ? true : false;
