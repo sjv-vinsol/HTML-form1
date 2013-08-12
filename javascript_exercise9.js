@@ -13,7 +13,8 @@ window.addEventListener("load", function() {
         return isValidString;
       }
       this.isValid = function() {
-        return (this.validateUsingRegex(this.email, this.emailRegex) && this.validateUsingRegex(this.homepage, this.urlRegex));
+        var temp = this.validateUsingRegex(this.email, this.emailRegex) 
+        return (this.validateUsingRegex(this.homepage, this.urlRegex) && temp);
       }
     },
   }
