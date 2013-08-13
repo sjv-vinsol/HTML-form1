@@ -1,5 +1,5 @@
-emailRegex = /^\w([\.\$\?\&\_]?\w+)*@([a-zA-Z]+\.)+[a-zA-Z]+$/;
-urlRegex = /^[\s]*(?:(?:https?|ftp):\/\/)?(?:[\w]+\.)*[\w]+\.[\w]+(?:[\/]+[^\s]*)*[\s]*$/;
+var _emailRegex = /^\w([\.\$\?\&\_]?\w+)*@([a-zA-Z]+\.)+[a-zA-Z]+$/;
+var _urlRegex = /^[\s]*(?:(?:https?|ftp):\/\/)?(?:[\w]+\.)*[\w]+\.[\w]+(?:[\/]+[^\s]*)*[\s]*$/;
 window.addEventListener("load", function() {
   var main = {
     Form: function (formName, validateFieldArr) {
@@ -13,7 +13,7 @@ window.addEventListener("load", function() {
         return isValidString;
       }
       this.isValid = function() {
-        return (this.validateUsingRegex(this.homepage, urlRegex) & this.validateUsingRegex(this.email, emailRegex));
+        return (this.validateUsingRegex(this.homepage, _urlRegex) & this.validateUsingRegex(this.email, _emailRegex));
       }
     },
   }
