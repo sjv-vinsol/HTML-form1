@@ -1,9 +1,9 @@
 window.addEventListener("load", function() {
   var table = document.getElementById("table");
-  var noRecordElem = document.getElementById('noData').cloneNode(true);
+  var noRecordMsgElem = document.getElementById('noData').cloneNode(true);
   document.getElementById("add").addEventListener("click", function() {
-    var noRecordMsgElem = document.getElementById("noData")
-    if (noRecordMsgElem) noRecordMsgElem.parentNode.removeChild(noRecordMsgElem)
+    var noRecordElem = document.getElementById("noData");
+    if (noRecordElem) noRecordElem.parentNode.removeChild(noRecordElem);
     var trElem = createOrEditRow();
   })
 
@@ -39,6 +39,6 @@ window.addEventListener("load", function() {
 
   function remove(that) {
     table.removeChild(that.parentNode.parentNode);
-    if (!table.getElementsByTagName('td').length) { table.parentNode.appendChild(noRecordElem)}
+    if (!table.getElementsByTagName('td').length) { table.parentNode.appendChild(noRecordMsgElem)}
   }
 })
