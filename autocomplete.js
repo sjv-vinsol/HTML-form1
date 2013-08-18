@@ -21,9 +21,6 @@ var nameJSON = [{"name":"Luigi Damiano"},
 {"name":"Kenichi Suzuki"},
 {"name":"Rick Olson"}]
 
-//NEED TO DISCUSS THIS ISSUE WITH TUTU. Below code works in firefox but not in chrome why??
-// var name = document.getElementById("name"); name.addEventListener();
-//var name = document.getElementById("name");
 document.getElementById("name").addEventListener("keyup", function() {
   var keyword = new RegExp(this.value.toLowerCase()), results = [], length = nameJSON.length;
   for(i=0;i<length;i++) {
