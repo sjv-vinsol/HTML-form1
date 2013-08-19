@@ -1,3 +1,4 @@
+//http://stackoverflow.com/questions/7476638/if-people-recommend-i-shouldnt-use-innerhtml-what-then-should-i-instead-use
 var main =  {
   id: 1,
   table: document.getElementById("table"),
@@ -29,16 +30,16 @@ var main =  {
     var newFrgment = document.createDocumentFragment(), newElemTr = newFrgment.append(["tr"]);
     newElemTr.setAttribute("id", currentElemTr.id);
     var tdElemArr = newElemTr.append(["sibling", "td", "td", "td"]);
-    tdElemArr[0].innerHTML = currentElemTr.getElementsByClassName("name")[0].value;
+    tdElemArr[0].appendChild(document.createTextNode(currentElemTr.getElementsByClassName("name")[0].value));
     tdElemArr[0].classList.add("name");
-    tdElemArr[1].innerHTML = currentElemTr.getElementsByClassName("email")[0].value;
+    tdElemArr[1].appendChild(document.createTextNode(currentElemTr.getElementsByClassName("email")[0].value));
     tdElemArr[1].classList.add("email");
     var edit = tdElemArr[2].append(["a"]);
-    edit.innerHTML = "edit";
+    edit.appendChild(document.createTextNode("edit"));
     main.setAttribute(edit, ["href", "#", "onclick", "main.edit(this.parentNode.parentNode)"]);
     tdElemArr[2].appendChild(document.createTextNode(" / "));
     var del = tdElemArr[2].append(["a"]);
-    del.innerHTML = "delete";
+    del.appendChild(document.createTextNode("delete"));
     main.setAttribute(del, ["href", "#", "onclick", "main.del(this.parentNode.parentNode)"]);
     return newElemTr;
   },
