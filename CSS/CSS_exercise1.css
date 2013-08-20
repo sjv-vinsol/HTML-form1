@@ -1,0 +1,159 @@
+
+ /* For the top instruction, above main menu */
+.instruction {
+  color:red;
+  font-size:18px;
+  }
+
+.italic {
+  font-style:italic;
+  } 
+
+  /* CSS for container which is used as reference for any absolute positioned element */
+.container { 
+  position:relative;
+  top:0px;  
+  left:0px;  
+  }
+ 
+  /* CSS for main menu */
+.main-menu {
+  float:left;
+  font-family:Georgia,sans-serif;
+  color:black;
+  font-size:18px;
+  background-color:#CFCFCF;
+  padding-left:20px;
+  padding-right:20px;
+  padding-top:9px;
+  padding-bottom:10px;
+  margin-left:2px; 
+ }
+ 
+ /* Hover action on main menu OR drop-down to change CSS of main menu */
+.hover-area:hover .main-menu {   
+  position:relative;
+  z-index:89;
+  font-family:Georgia,sans-serif;  
+  color:#8c8c8c;
+  background-color:white;  
+  padding:8px 19px 10px; 
+  margin-left:2px;    
+  border:1px solid #6d6d6d;
+  border-bottom:1px solid white;                                                                                    
+ }
+  
+#home { 
+  margin-left:0px; 
+ } 
+ 
+ /* CSS for drop-down box which contains the link */
+.drop-down-box { 
+  position:relative;
+  left:2px;
+  clear:left;   
+  width:178px;
+  border: 1px solid #6d6d6d; 
+  border-top-width:0px; 
+  background-color:white; 
+  padding:10px;    
+ }
+ 
+#drop-down-box-first { 
+  left:0px;
+ } 
+ 
+ /* CSS for drop-down links */
+.drop-down-link { 
+  font-family:Georgia,sans-serif;
+  margin:0px; 
+  font-size:14px;
+  padding-top:5px;
+  padding-bottom:5px;
+  border-bottom: 1px solid #cfcfcf;  
+ }
+ 
+a { text-decoration:none;}
+ 
+.hidden { display:none;} 
+ 
+ /* Provide position for div containing main menu and its drop-down */
+#hover-area1 {  
+  position:absolute;
+  top:40px;
+  left:0px; 
+  z-index:5;  
+ }
+ 
+#hover-area2 { 
+  position:absolute;
+  top:40px;
+  left:89px;
+  z-index:6; 
+ }
+ 
+#hover-area3 { 
+  position:absolute;
+  top:40px;
+  left:205px;
+  z-index:7;
+ }
+ 
+#hover-area4 { 
+  position:absolute;
+  top:40px;
+  left:347px;
+  z-index:8;
+ }
+ 
+#hover-area5 {    
+  position:absolute;
+  top:40px;
+  left:495px; 
+  z-index:9; 
+ }
+ 
+ 
+ /* Last link in the drop-down should not have bottom border */
+#lastp {
+  border-width:0px;
+ }  
+ 
+ /* To make the last drop-down opens left side instead of right */
+#drop-down-box-fifth {    
+  left:-69px;
+ }
+ 
+ /* This CSS will only read by Firefox. Its a hack. */
+@-moz-document url-prefix() { 
+#hover-area4 { left:349px; }
+#hover-area5 { left:498px; }
+#main-menu-line { top:168px; padding-top:1px !important;width:629px !important;}  
+  }
+ 
+p a { color:black; }
+a:hover { color:#bd0707; }
+ 
+ 
+ /* Hover action on menu OR drop-down */
+#hover-area1:hover #drop-down-box-first{ display:block;}
+#hover-area2:hover #drop-down-box-second{ display:block;}
+#hover-area3:hover #drop-down-box-third{ display:block;}
+#hover-area4:hover #drop-down-box-fourth{ display:block;}
+#hover-area5:hover #drop-down-box-fifth{ display:block;}
+  
+  
+ /* Bottom border for menu section */
+#main-menu-line {
+  margin:0px;
+  padding:0px;
+  font-size:0px;
+  position:fixed;
+  width:626px;
+  border-bottom:1px solid #6d6d6d;  
+  top:160px;
+  top:159px\9; /* This CSS is only read by IE8 */
+  z-index:-1;
+  } 
+  
+ 

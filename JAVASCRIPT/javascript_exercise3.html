@@ -1,0 +1,96 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    
+    <style>
+      table {
+        width: 700px;
+        border-spacing: 0px;
+        text-align: center;
+      }
+
+      #inner-container {
+        overflow: hidden;
+        display: inline-block;
+        text-align: left;
+        padding: 10px 15px 20px;
+        border: 2px solid grey;
+      }
+
+      th {
+        width: 300px;
+      }
+
+      #action {
+        width: 100px;
+      }
+
+      input {
+        padding:0px;
+        margin: 0px;
+        height:25px;
+      }
+
+
+      #save {
+        background-color: orange;
+      }
+
+      td, th {
+        padding: 10px;
+      }
+
+
+      #main {
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      #save {
+        padding:3px 10px;
+      }
+
+      p {
+        padding: 10px;
+        margin: 0px;
+        border: 2px solid grey;
+        border-top: 1px;
+        color: red;
+      }
+
+      #container {
+        float: left;
+      }
+
+      a {
+        text-decoration: none;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="main">
+      <div id="inner-container">
+        <div id="container">
+          <table id="table" border="1">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th id="action">Actions</th>
+            </tr>
+
+          </table>
+          <p id="noData"> There are no records in this table. Please click on below button to add new records.</p>
+          
+        </div>
+        <div id="button-container">
+          <input type="button" value="add new row" onclick="main.addNewRow()">
+        </div>
+      </div>
+    </div>
+  </body>
+
+  <script type="text/javascript" src="javascript_exercise3.js"></script>
+
+  
+</html>

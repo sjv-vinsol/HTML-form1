@@ -1,0 +1,108 @@
+.border {
+  border-bottom: 2px solid #db2927;
+}
+
+.top-text { 
+  position:absolute;
+  top:60px;
+  right:20px;
+  font: 13px tahoma, sans-serif;
+}
+
+.top-text span { color:#045198; }
+
+
+
+#inner-container {
+  width: 100%;
+  text-align: center;
+}
+
+#heading {
+  font: 18px tahoma, sans-serif;
+  color:#2c286d;
+  text-align: left;
+}
+
+#form-area {     
+  width: auto;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.form {  
+  width:450px;
+  margin:0px;
+  background-color:#ececec;
+  border: 1px solid #bcbcbc;
+  padding: 20px 25px;
+}
+
+.label {
+  font: 14px tahoma, sans-serif;
+  color:black;
+}
+
+.input {
+  background-color:white;
+  height:21px;
+  width:320px;
+  padding: 0px;
+}
+
+input {
+  margin-left:20px;
+}
+
+.radio {
+  font:13px tahoma, sans-serif;
+  color:#6f6f6f;
+}
+
+.select {
+  margin:0px;
+  margin-left:20px;
+  width:92px;
+  padding:0px;
+}
+
+option {
+  font: 13px tahoma, sans-serif;
+  color:#6f6f6f;
+}
+
+textarea { 
+  margin-left:20px !important;
+  height:135px;
+  width:320px;
+  resize: none;
+}
+
+#address {
+  vertical-align:top;
+}
+
+.form p {
+  height:auto;
+  width: 100%;
+  padding:0px;
+  margin:0px;
+  margin-top:10px;
+  margin-bottom:10px;
+  text-align:right;
+}
+
+#female {
+  margin-right:200px;
+}
+
+#submit {
+  font: 14px tahoma, sans-serif;
+  color:white;
+  width:130px;
+  height:32px;
+  border: 1px solid #a10200;
+  background-color:#dc2927;
+  text-align:center !important;
+  margin-right:195px;
+}
