@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      .productDiv {
+        float: left;
+        margin-right: 20px;
+        margin-top: 40px;
+      }
+      #container {
+        overflow: hidden;
+        width: 700px;
+      }
+      #name {
+        width: 100px;
+      }
+      select {
+        margin-right: 20px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h2> Filter results by : </h2>
+    <label> Color </label>
+    <select id="color">
+      <option></option>
+    </select>
+
+    <label> Brand </label>
+    <select id="brand">
+      <option></option>
+    </select>
+
+    <label> Name </label>
+    <select id="name">
+      <option></option>
+    </select>
+
+    <label> Stock </label>
+    <select id="stock">
+      <option></option>
+      <option value="0"> In Stock </option>
+      <option value="1"> Out Of Stock </option>
+    </select>
+
+    <div id="container">
+    </div>
+  </body>
+  <script type="text/javascript" src="storeFrontPage.js"></script>
+</html>
