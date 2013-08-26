@@ -6,20 +6,38 @@
         width: 200px;
         margin: 0px;
       }
-      .result {
+      
+      #autocomplete {
+        display: inline-block;
+      }
+
+      html {
+        height: 100%;
+      }
+
+      body {
+        height: 100%;
+      }
+      
+      #resultsContainer {
+        border: 1px solid grey;
+        max-height: 100px;
+        overflow: auto;
+      }
+
+      p {
+        padding: 0px;
         margin: 0px;
-        width: 206px;
-        border: 2px solid grey;
+        font-weight: normal;
       }
     </style>
   </head>
 
   <body>
     <div id="autocomplete">
-      <input type="text" id="name" placeholder="Enter Name here" autocomplete="off"> </input>
-      <div id="results">
-      </div>
-    </div>    
+      <input type="text" id="name" placeholder="Enter Name here" autocomplete="off" class="name"> </input>
+      
+    </div>
   </body>
-    <script type="text/javascript" src="autocomplete.js"></script> 
+    <script type="text/javascript" src="autocomplete.js"></script>
 </html>

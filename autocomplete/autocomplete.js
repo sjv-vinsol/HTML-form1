@@ -20,7 +20,7 @@ var nameJSON = [{"name":"Luigi Damiano"},
 {"name":"Ari Kama"},
 {"name":"Kenichi Suzuki"},
 {"name":"Rick Olson"}]
-
+  
 document.getElementById("name").addEventListener("keyup", function() {
   var keyword = new RegExp(this.value.toLowerCase()), results = [], length = nameJSON.length;
   for(i=0;i<length;i++) {
@@ -28,28 +28,26 @@ document.getElementById("name").addEventListener("keyup", function() {
       results.push(nameJSON[i].name)
     }
   }
-  if (selectbox = document.getElementsByClassName("result")[0]) { selectbox.parentNode.removeChild(selectbox)}
+  if (resultsContainer = document.getElementById("resultsContainer")) { resultsContainer.parentNode.removeChild(resultsContainer)}
   if (results.length && this.value) displayResults(results);
 });
 
-function createSelectBox() {
+function displayResults(results) {
   var fragment = document.createDocumentFragment();
-  var selectBox = fragment.appendChild(document.createElement("select"));
-  selectBox.classList.add("result");
-  selectBox.size = 8;
-  return selectBox;
+  resultsContainer = fragment.appendChild(document.createElement("div"));
+  resultsContainer.id = "resultsContainer";
+  for(i=0;i<results.length;i++) {
+    var elemP = resultsContainer.appendChild(document.createElement('p'));
+    elemP.innerHTML = results[i];
+    elemP.classList.add("name");
+    elemP.addEventListener("click", function() { 
+      document.getElementById("name").value = this.innerHTML;
+      resultsContainer.parentNode.removeChild(resultsContainer);
+    })
+  }
+  document.getElementById("autocomplete").appendChild(resultsContainer);
 }
 
-function displayResults(results) {
-  selectBox = createSelectBox();
-  for(i=0;i<results.length;i++) {
-    var optionElem = selectBox.appendChild(document.createElement('option'));
-    optionElem.value = results[i];
-    optionElem.addEventListener("click", function() { 
-      document.getElementById("name").value = this.value;
-      selectBox.parentNode.removeChild(selectBox);
-    })
-    optionElem.appendChild(document.createTextNode(results[i]));
-  }
-  document.getElementById("results").appendChild(selectBox);
-}
+document.getElementsByTagName("body")[0].addEventListener("click", function(e) {
+  if ((resultsContainer = document.getElementById("resultsContainer")) && !(e.target.className == "name")) document.getElementById("autocomplete").removeChild(resultsContainer);
+});
