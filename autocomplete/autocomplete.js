@@ -20,7 +20,7 @@ var nameJSON = [{"name":"Luigi Damiano"},
 {"name":"Ari Kama"},
 {"name":"Kenichi Suzuki"},
 {"name":"Rick Olson"}]
-  
+
 document.getElementById("name").addEventListener("keyup", function() {
   var keyword = new RegExp(this.value.toLowerCase()), results = [], length = nameJSON.length;
   for(i=0;i<length;i++) {
