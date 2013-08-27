@@ -1,4 +1,5 @@
 var storeJSON = [{"name":"1","url":"1.jpg","color":"Yellow","brand":"BRAND A","sold_out":"1"},{"name":"2","url":"2.jpg","color":"Red","brand":"BRAND B","sold_out":"0"},{"name":"3","url":"3.jpg","color":"Green","brand":"BRAND D","sold_out":"0"},{"name":"4","url":"4.jpg","color":"Red","brand":"BRAND A","sold_out":"1"},{"name":"5","url":"5.jpg","color":"Blue","brand":"BRAND B","sold_out":"0"},{"name":"6","url":"6.jpg","color":"Green","brand":"BRAND C","sold_out":"0"},{"name":"7","url":"7.jpg","color":"Red","brand":"BRAND C","sold_out":"1"},{"name":"8","url":"8.jpg","color":"Blue","brand":"BRAND D","sold_out":"0"},{"name":"9","url":"9.jpg","color":"Yellow","brand":"BRAND A","sold_out":"0"},{"name":"10","url":"10.jpg","color":"Yellow","brand":"BRAND B","sold_out":"1"},{"name":"11","url":"11.jpg","color":"Green","brand":"BRAND D","sold_out":"0"},{"name":"12","url":"12.jpg","color":"Yellow","brand":"BRAND D","sold_out":"0"},{"name":"13","url":"13.jpg","color":"Blue","brand":"BRAND A","sold_out":"0"},{"name":"14","url":"14.jpg","color":"Blue","brand":"BRAND D","sold_out":"0"},{"name":"15","url":"15.jpg","color":"Green","brand":"BRAND B","sold_out":"0"},{"name":"16","url":"16.jpg","color":"Yellow","brand":"BRAND B","sold_out":"1"},{"name":"17","url":"17.jpg","color":"Green","brand":"BRAND A","sold_out":"1"},{"name":"18","url":"18.jpg","color":"Blue","brand":"BRAND D","sold_out":"1"},{"name":"19","url":"19.jpg","color":"Green","brand":"BRAND C","sold_out":"0"},{"name":"20","url":"20.jpg","color":"Yellow","brand":"BRAND A","sold_out":"0"}]
+var selectBoxIdCollection = ["color", "brand", "name", "stock"];
 var colorArr = [], brandArr = [], nameArr = [];
 //Populate color 
 function populateUniqueValueFor(conditionString) {
@@ -70,8 +71,7 @@ window.addEventListener("load", function() {
       divElem.classList.add("productDiv");
       var imgElem = divElem.appendChild(document.createElement("img"));
       imgElem.src = "images/" + productJSON[i].url;
-      imgElem.height = "150";
-      imgElem.width = "150";
+      imgElem.height = "150", imgElem.width = "150";
     }
     document.getElementById("container").appendChild(fragment);
     }
@@ -79,6 +79,13 @@ window.addEventListener("load", function() {
   function removeChildNodes(node) {
     while(node.firstChild) {
       node.removeChild(node.firstChild);
+    }
+  }
+
+  function setDefaultSelectedIndex(idOfSelectBox) {
+    var length = selectBoxIdCollection.length;
+    while(length--) {
+      if (idOfSelectBox != selectBoxIdCollection[length]) document.getElementById(selectBoxIdCollection[length]).selectedIndex = 0;
     }
   }
 
@@ -92,12 +99,5 @@ window.addEventListener("load", function() {
       }
     }
     displayNewProducts(productJSON);
-  }  
-
-  function setDefaultSelectedIndex(idOfSelectBox) {
-    if (idOfSelectBox != "color") document.getElementById("color").selectedIndex = 0;
-    if (idOfSelectBox != "brand") document.getElementById("brand").selectedIndex = 0;
-    if (idOfSelectBox != "name") document.getElementById("name").selectedIndex = 0;
-    if (idOfSelectBox != "stock") document.getElementById("stock").selectedIndex = 0;
   }
 })
