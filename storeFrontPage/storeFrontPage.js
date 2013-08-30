@@ -2,18 +2,18 @@ var storeJSON = [{"name":"1","url":"1.jpg","color":"Yellow","brand":"BRAND A","s
 var selectBoxIdCollection = ["color", "brand", "name", "sold_out"];
 var colorArr = [], brandArr = [], nameArr = [];
 //Populate color 
-function populateUniqueValueFor(conditionString) {
+function populateUniqueValueFor(idOfSelectBox) {
   var uniqueValueArr = [];
   var productCount = storeJSON.length;
   for(i=0;i<productCount;i++) {
     var count = uniqueValueArr.length;
     var isUnique = true;
     while(count-- && isUnique) {
-      if (eval(conditionString) == uniqueValueArr[count]) isUnique = false;
+      if (storeJSON[i][idOfSelectBox] == uniqueValueArr[count]) isUnique = false;
     }
-    if (isUnique) uniqueValueArr.push(eval(conditionString));
+    if (isUnique) uniqueValueArr.push(storeJSON[i][idOfSelectBox]);
   }
-  return uniqueValueArr;
+  return uniqueValueArr.sort();
 }
 
 function addOptionsToSelectBox(uniqueValueArr, idOfSelectBox) {
@@ -28,12 +28,12 @@ function addOptionsToSelectBox(uniqueValueArr, idOfSelectBox) {
 }
 
 (function populateColor() {
-  colorArr = populateUniqueValueFor("storeJSON[i].color");
+  colorArr = populateUniqueValueFor("color");
   addOptionsToSelectBox(colorArr, "color");
 })();
 
 (function populateBrand() {
-  brandArr = populateUniqueValueFor("storeJSON[i].brand");
+  brandArr = populateUniqueValueFor("brand");
   addOptionsToSelectBox(brandArr, "brand");
 })();
 
@@ -49,18 +49,15 @@ function addOptionsToSelectBox(uniqueValueArr, idOfSelectBox) {
 window.addEventListener("load", function() {
   (function displayProductsAndAddEvents() {
     displayNewProducts(storeJSON);
-    document.getElementById("color").addEventListener("change", function() {
-      filterProductsBy("color");
-    });
-    document.getElementById("brand").addEventListener("change", function() {
-      filterProductsBy("brand");
-    });
-    document.getElementById("name").addEventListener("change", function() {
-      filterProductsBy("name");
-    });
-    document.getElementById("sold_out").addEventListener("change", function() {
-      filterProductsBy("sold_out");
-    });
+    var length = selectBoxIdCollection.length;
+    while(length--) {
+      //Each execution context has its variable scope and thus the length value is maintained.
+      (function(length) {
+        document.getElementById(selectBoxIdCollection[length]).addEventListener("change", function() {
+          filterProductsBy(selectBoxIdCollection[length]);
+        });
+      })(length);
+    }    
   })();
 
   function displayNewProducts(productJSON) {
