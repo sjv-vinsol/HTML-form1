@@ -43,8 +43,7 @@ function addOptionsToSelectBox(uniqueValueArr, idOfSelectBox) {
     nameArr.push(storeJSON[length].name);
   }
   addOptionsToSelectBox(nameArr.reverse(), "name");
-})();
-  
+})();  
 
 window.addEventListener("load", function() {
   (function displayProductsAndAddEvents() {
