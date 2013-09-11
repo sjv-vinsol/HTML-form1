@@ -55,5 +55,5 @@ function displayResults(results) {
 }
 
 document.getElementsByTagName("body")[0].addEventListener("click", function(e) {
-  if ((resultsContainer = document.getElementById("resultsContainer")) && !(e.target.className == "name")) document.getElementById("autocomplete").removeChild(resultsContainer);
+  if ((resultsContainer = document.getElementById("resultsContainer")) && e.target.className != "name") document.getElementById("autocomplete").removeChild(resultsContainer);
 });
