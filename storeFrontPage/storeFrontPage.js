@@ -2,10 +2,10 @@ var storeJSON = [{"name":"1","url":"1.jpg","color":"Yellow","brand":"BRAND A","s
 var selectBoxIdCollection = ["color", "brand", "name", "sold_out"];
 var colorArr = [], brandArr = [], nameArr = [];
 //Populate color 
-function populateUniqueValueFor(idOfSelectBox) {
+function populateUniqueValueFor (idOfSelectBox) {
   var uniqueValueArr = [];
   var productCount = storeJSON.length;
-  for(i=0;i<productCount;i++) {
+  for (i = 0; i < productCount; i++) {
     var count = uniqueValueArr.length;
     var isUnique = true;
     while(count-- && isUnique) {
@@ -16,10 +16,10 @@ function populateUniqueValueFor(idOfSelectBox) {
   return uniqueValueArr.sort();
 }
 
-function addOptionsToSelectBox(uniqueValueArr, idOfSelectBox) {
+function addOptionsToSelectBox (uniqueValueArr, idOfSelectBox) {
   var fragment = document.createDocumentFragment();
   var length = uniqueValueArr.length
-  for(i=0;i<length;i++) {
+  for (i = 0; i < length; i++) {
     var optionElem = fragment.appendChild(document.createElement("option"));
     optionElem.value = uniqueValueArr[i];
     optionElem.innerHTML = uniqueValueArr[i];
@@ -27,29 +27,29 @@ function addOptionsToSelectBox(uniqueValueArr, idOfSelectBox) {
   document.getElementById(idOfSelectBox).appendChild(fragment);
 }
 
-(function populateColor() {
+(function populateColor () {
   colorArr = populateUniqueValueFor("color");
   addOptionsToSelectBox(colorArr, "color");
 })();
 
-(function populateBrand() {
+(function populateBrand () {
   brandArr = populateUniqueValueFor("brand");
   addOptionsToSelectBox(brandArr, "brand");
 })();
 
-(function populateName() {
+(function populateName () {
   var length = storeJSON.length;
-  while(length--) {
+  while (length--) {
     nameArr.push(storeJSON[length].name);
   }
   addOptionsToSelectBox(nameArr.reverse(), "name");
 })();  
 
 window.addEventListener("load", function() {
-  (function displayProductsAndAddEvents() {
+  (function displayProductsAndAddEvents () {
     displayNewProducts(storeJSON);
     var length = selectBoxIdCollection.length;
-    while(length--) {
+    while (length--) {
       //Each execution context has its variable scope and thus the length value is maintained.
       (function(length) {
         document.getElementById(selectBoxIdCollection[length]).addEventListener("change", function() {
@@ -59,10 +59,10 @@ window.addEventListener("load", function() {
     }    
   })();
 
-  function displayNewProducts(productJSON) {
+  function displayNewProducts (productJSON) {
     removeChildNodes(document.getElementById("container"));
     var fragment = document.createDocumentFragment();
-    for(i=0;i<productJSON.length;i++) {
+    for (i = 0; i < productJSON.length; i++) {
       var divElem = fragment.appendChild(document.createElement("div"));
       divElem.classList.add("productDiv");
       var imgElem = divElem.appendChild(document.createElement("img"));
@@ -72,25 +72,25 @@ window.addEventListener("load", function() {
     document.getElementById("container").appendChild(fragment);
     }
 
-  function removeChildNodes(node) {
-    while(node.firstChild) {
+  function removeChildNodes (node) {
+    while (node.firstChild) {
       node.removeChild(node.firstChild);
     }
   }
 
-  function setDefaultSelectedIndex(idOfSelectBox) {
+  function setDefaultSelectedIndex (idOfSelectBox) {
     var length = selectBoxIdCollection.length;
-    while(length--) {
+    while (length--) {
       if (idOfSelectBox != selectBoxIdCollection[length]) document.getElementById(selectBoxIdCollection[length]).selectedIndex = 0;
     }
   }
 
-  function filterProductsBy(idOfSelectBox) {
+  function filterProductsBy (idOfSelectBox) {
     var color = document.getElementById(idOfSelectBox).value;
     setDefaultSelectedIndex(idOfSelectBox);
     var productJSON = [];
-    for(i=0;i<storeJSON.length;i++) {
-      if(color == storeJSON[i][idOfSelectBox]) {
+    for (i = 0; i < storeJSON.length; i++) {
+      if (color == storeJSON[i][idOfSelectBox]) {
         productJSON.push(storeJSON[i]);
       }
     }
