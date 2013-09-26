@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+    #instructions {
+      width: 400px;
+      /*text-align: center;*/
+    }
+
+    .alignCenter {
+      /*margin: 0 auto;*/
+    }
+
+    .redColor {
+      color: red;
+    }
+
+    .header {
+      background-color: #999999;
+      padding: 10px;
+      border-top: 2px solid red;
+      border-bottom: 2px solid red;
+    }
+
+    #submit {
+      margin-left: 20px;
+    }
+
+    #startAgain {
+      margin-left: 20px;
+    }
+
+    .floatLeft {
+      float: left;
+    }
+
+    #countDown {
+      height: 20px;
+    }
+
+    ol {
+      overflow: hidden;
+    }
+
+    #answer {
+      width: 55px;
+    }
+
+    #countDown {
+      font-size: 40px;
+      padding-bottom: 50px;
+      margin-left: 40px;
+    }
+
+    #questionContainer {
+      margin-bottom: 20px;
+    }
+
+    #score {
+      font-weight: bold;
+    }
+
+    #wrongAns {
+      margin-bottom: 20px;
+    }
+
+    </style>
+  </head>
+
+  <body>
+    <div id="instructions" class="alignCenter">
+      <p class="header"> Please read the instructions below :</p>
+      <ol>
+        <li class="floatLeft">For correct ans you will get +1.</li>
+        <li class="floatLeft">For wrong and time out case will be given 0.</li>
+      </ol>
+      <input id="start" type="button" value="Start Test">
+    </div>
+
+    <div id="countDown">
+    </div>
+
+    <div id="container">
+      <div id="questionContainer">
+      </div>
+    </div>
+
+    <p id="score">
+    </p>
+    <div id="wrongAns">      
+    </div>
+    <div id="startAgain">
+    </div>
+  </body>
+
+  <script type="text/javascript" src="arithmeticQuiz.js"></script>
+</html>
