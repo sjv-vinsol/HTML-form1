@@ -46,10 +46,4 @@ window.addEventListener("load", function() {
     return operator;
   }
 
-
-
-
-
-
-
 })

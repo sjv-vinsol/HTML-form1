@@ -4,6 +4,7 @@ var score = 0;
 var timerCounter = 20;
 var wrongOrTimesOutAns = [];
 var questionNumber = 0;
+var isTimeOut = false;
 
 function changeFontColorToRed(elem) {
   elem.classList.add("redColor");
@@ -12,11 +13,14 @@ function changeFontColorToRed(elem) {
 function timer() {
   document.getElementById("countDown").innerHTML = timerCounter;
   function decrementCounterEverySec() {
-    if (timerCounter < 7) { changeFontColorToRed(document.getElementById("countDown")) };
-    if (timerCounter > 0) { document.getElementById("countDown").innerHTML = --timerCounter }
-    else {document.getElementById("submit").click()};
+    if (timerCounter < 7) changeFontColorToRed(document.getElementById("countDown"));
+    if (timerCounter > 0) document.getElementById("countDown").innerHTML = --timerCounter
+    else {
+      isTimeOut = true;
+      document.getElementById("submit").click();
+    }
   }
-  timerHandle = setInterval(decrementCounterEverySec, 1000)
+  timerHandle = setInterval(decrementCounterEverySec, 1000);
 }
 
 function displayQuestion() {
@@ -34,7 +38,7 @@ document.getElementById("start").addEventListener("click", function () {
   displayQuestion();
   appendSubmitButtonAndAddClickEvent();
   updateAndDisplayScore();
-})
+});
 
 // get operator of -, +, *, /
 function getOperator() {
@@ -52,7 +56,7 @@ function appendSubmitButtonAndAddClickEvent() {
   submitButton.value = "submit";
   submitButton.id = "submit";
   document.getElementById("submit").addEventListener("click", function () {
-    if (checkResult(questionString)) {
+    if (!isTimeOut && checkResult(questionString)) {
       score = score + 1;
       updateAndDisplayScore();
     }
@@ -61,15 +65,14 @@ function appendSubmitButtonAndAddClickEvent() {
       clearInterval(timerHandle);
       timerCounter = 20;
       timer();
+      isTimeOut = false;
       displayQuestion();
     }
-    else {
-      quizFinish();
-    }
+    else quizFinish();
   })
 }
 
-function checkResult (questionString) {
+function checkResult(questionString) {
   var userAnswer = document.getElementById("answer").value, correctAnswer = Math.round(eval(questionString) * 100) / 100;
   if (userAnswer == correctAnswer && document.getElementById("answer").value) return true
   else wrongOrTimesOutAns.push("Q."+ questionNumber + ")&nbsp&nbsp&nbsp" + questionString + "&nbsp&nbsp=&nbsp&nbsp" + correctAnswer);
@@ -81,7 +84,8 @@ function quizFinish() {
   document.getElementById("questionContainer").parentNode.removeChild(document.getElementById("questionContainer"));
   document.getElementById("countDown").parentNode.removeChild(document.getElementById("countDown"));
   document.getElementById('score').innerHTML = "Final Score = "+score+"";
-  if (wrongOrTimesOutAns) document.getElementById("wrongAns").innerHTML = wrongOrTimesOutAns.join('</br>');
+  if (wrongOrTimesOutAns.length) document.getElementById("wrongAns").innerHTML = wrongOrTimesOutAns.join('</br>');
+  else document.getElementById("wrongAns").innerHTML = "Congratulations!! you have answered all answers correctly";
   appendStartAgain();
 }
 
