@@ -1,11 +1,11 @@
 $(document).ready(function () {
-  console.log("All div with class module  : ",$("div.module"));
+  console.log("All div with class module  : ", $("div.module"));
 
   console.log("\n");
 
   console.log("Three selectors to select third item of #myList")
   console.log("First  :  ", $(":contains(List item 3)").last());
-  console.log("Second  :  ",$("#myListItem"));
+  console.log("Second  :  ", $("#myListItem"));
   console.log("Third  :  ", $("#myList li:eq(2)"));
   console.log("In first if text of third item is changed then this will no longer work.");
   console.log("Second one is the best one as it directly searches from Id");
