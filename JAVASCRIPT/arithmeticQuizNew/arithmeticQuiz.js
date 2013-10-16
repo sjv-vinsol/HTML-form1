@@ -1,44 +1,62 @@
-var operator = ["+", "*", "-", "/"];
-var questionString = "";
-var score = 0;
-var timerCounter = 20;
-var wrongOrTimesOutAns = [];
-var questionNumber = 0;
-var isTimeOut = false;
+var operator = ["+", "*", "-", "/"], score = 0, timerCounter = 20, questionNumber = 0;
+var questionJSON = {}, question = {};
+
+document.getElementById("start").addEventListener("click", function () {
+  question = new Question();
+  question.display();
+  startTimer();
+  appendSubmitButton();
+  addEventHandlerToSubmitButton();
+  displayCurrentScore();
+  var startButton = document.getElementById("start");
+  startButton.parentNode.removeChild(startButton);
+});
+
+function Question() {
+  this.questionNumber = ++questionNumber;
+  this.questionString = generateQuestionString();
+  this.correctAnswer = Math.round(eval(this.questionString) * 100) / 100;
+  this.userAnswer = "";
+  this.isTimeOut = false;
+  this.wrongAns = false;
+
+  this.addToQuestionJSON = function () {
+    questionJSON[this.questionNumber] = this;
+  };
+
+  this.display = function () {
+    removeAllInnerNodesFrom(document.getElementById("questionContainer"));
+    var questionContainer = document.getElementById("questionContainer");
+    questionContainer.innerHTML = "Q." + (questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + this.questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
+    var textElem = questionContainer.appendChild(document.createElement("input"));
+    textElem.id = "answer";
+  };
+}
+
+function generateQuestionString() {
+  var number = getTwoRandomNumbers();
+  var operator = getOperator();
+  return (number[0] + " " + operator + " " + number[1]);
+}
 
 function changeFontColorToRed(elem) {
   elem.classList.add("redColor");
 }
 
-function timer() {
-  document.getElementById("countDown").innerHTML = timerCounter;
+function startTimer() {
+  var counterElem = document.getElementById("countDown");
+  removeAllInnerNodesFrom(counterElem);
+  counterElem.appendChild(document.createTextNode(timerCounter));
   function decrementCounterEverySec() {
-    if (timerCounter < 7) changeFontColorToRed(document.getElementById("countDown"));
-    if (timerCounter > 0) document.getElementById("countDown").innerHTML = --timerCounter
+    if (timerCounter < 7) { changeFontColorToRed(counterElem) };
+    if (timerCounter > 0) { counterElem.innerHTML = --timerCounter }
     else {
-      isTimeOut = true;
+      question.isTimeOut = true;
       document.getElementById("submit").click();
     }
   }
   timerHandle = setInterval(decrementCounterEverySec, 1000);
 }
-
-function displayQuestion() {
-  removePreviousQuestion();
-  questionString = generateQuestionString();
-  var questionContainer = document.getElementById("questionContainer");
-  questionContainer.innerHTML = "Q." + (++questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
-  var textElem = questionContainer.appendChild(document.createElement("input"));
-  textElem.id = "answer";
-}
-
-document.getElementById("start").addEventListener("click", function () {
-  document.getElementById("start").parentNode.removeChild(document.getElementById("start"));
-  timer();
-  displayQuestion();
-  appendSubmitButtonAndAddClickEvent();
-  updateAndDisplayScore();
-});
 
 // get operator of -, +, *, /
 function getOperator() {
@@ -50,32 +68,38 @@ function getTwoRandomNumbers() {
   return ([Math.floor(Math.random() * 10 + Math.random() * 10 + 1), Math.floor(Math.random() * 10 + Math.random() * 10 + 1)]);
 }
 
-function appendSubmitButtonAndAddClickEvent() {
+function appendSubmitButton() {
   var submitButton = document.getElementById("container").appendChild(document.createElement("input"));
   submitButton.type = "button";
-  submitButton.value = "submit";
+  submitButton.value = "Submit";
   submitButton.id = "submit";
+}
+
+function addEventHandlerToSubmitButton() {
   document.getElementById("submit").addEventListener("click", function () {
-    if (!isTimeOut && checkResult(questionString)) {
+    if (!question.isTimeOut && checkResult()) {
       score = score + 1;
-      updateAndDisplayScore();
+      displayCurrentScore();
     }
     if (questionNumber < 20) {
       document.getElementById("countDown").classList.remove("redColor");
       clearInterval(timerHandle);
       timerCounter = 20;
-      timer();
-      isTimeOut = false;
-      displayQuestion();
+      startTimer();
+      question.addToQuestionJSON();
+      question = new Question();
+      question.display();
+    } else {
+      question.addToQuestionJSON();
+      quizFinish();
     }
-    else quizFinish();
-  })
+  });
 }
 
-function checkResult(questionString) {
-  var userAnswer = document.getElementById("answer").value, correctAnswer = Math.round(eval(questionString) * 100) / 100;
-  if (userAnswer == correctAnswer && document.getElementById("answer").value) return true
-  else wrongOrTimesOutAns.push("Q."+ questionNumber + ")&nbsp&nbsp&nbsp" + questionString + "&nbsp&nbsp=&nbsp&nbsp" + correctAnswer);
+function checkResult() {
+  question.userAnswer = document.getElementById("answer").value;
+  if (question.userAnswer == question.correctAnswer && question.userAnswer) { return true; }
+  else { question.wrongAns = true; return false; }
 }
 
 function quizFinish() {
@@ -83,10 +107,23 @@ function quizFinish() {
   document.getElementById('submit').parentNode.removeChild(document.getElementById('submit'));
   document.getElementById("questionContainer").parentNode.removeChild(document.getElementById("questionContainer"));
   document.getElementById("countDown").parentNode.removeChild(document.getElementById("countDown"));
-  document.getElementById('score').innerHTML = "Final Score = "+score+"";
-  if (wrongOrTimesOutAns.length) document.getElementById("wrongAns").innerHTML = wrongOrTimesOutAns.join('</br>');
-  else document.getElementById("wrongAns").innerHTML = "Congratulations!! you have answered all answers correctly";
+  removeAllInnerNodesFrom(document.getElementById('score'));
+  document.getElementById('score').appendChild(document.createTextNode("Final Score = " + score));
+  displayNonCorrectAns();
   appendStartAgain();
+}
+
+function displayNonCorrectAns() {
+  var length = Object.keys(questionJSON).length, nonCorrectAnsArray = [];
+  for (i = 1; i <= length; i++) {
+    question = questionJSON[i];
+    if (question.isTimeOut || question.wrongAns) {
+      nonCorrectAnsArray.push(question.questionNumber + ") " + question.questionString + " = " + question.correctAnswer);
+    }
+  }
+  removeAllInnerNodesFrom(document.getElementById("wrongAns"));
+  if (nonCorrectAnsArray.length) { document.getElementById("wrongAns").appendChild(document.createTextNode(nonCorrectAnsArray.join(", "))) }
+  else { document.getElementById("wrongAns").appendChild(document.createTextNode("Congratulations!! you have answered all answers correctly"))};
 }
 
 function appendStartAgain() {
@@ -99,16 +136,13 @@ function appendStartAgain() {
   })
 }
 
-function generateQuestionString() {
-  var number = getTwoRandomNumbers();
-  var operator = getOperator();
-  return (number[0] + " " + operator + " " + number[1]);
+function displayCurrentScore() {
+  removeAllInnerNodesFrom(document.getElementById('score'));
+  document.getElementById('score').appendChild(document.createTextNode("Score = " + score));
 }
 
-function removePreviousQuestion() {
-  document.getElementById("questionContainer").innerHTML = "";
-}
-
-function updateAndDisplayScore() {
-  document.getElementById('score').innerHTML = "Score = "+score+"";
+function removeAllInnerNodesFrom(myNode) {
+  while (myNode.firstChild) {
+    myNode.removeChild(myNode.firstChild);
+  }
 }
