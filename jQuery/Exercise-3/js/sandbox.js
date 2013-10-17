@@ -13,7 +13,7 @@ $(document).ready(function() {
 
   console.log("\n\n2. Remove odd listed items  : ", $("#myList li").filter(":even").remove());
 
-  console.log("\n\n3. Add another h2 and another paragraph to the last div.module", $("#specials").append($("<h2/>"), $("<p/>")));
+  console.log("\n\n3. Add another h2 and another paragraph to the last div.module", $("div.module").last().append($("<h2>This is header</h2>"), $("<p>This is some para</p>")));
 
   console.log("\n\n4. Add another option to the select element; give the option the value 'Wednesday'");
   console.log($("select[name=day]").append($("<option/>").text("Wednesday").val("wednesday")));
