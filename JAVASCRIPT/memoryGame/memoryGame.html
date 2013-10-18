@@ -3,16 +3,17 @@
   <head>
     <style>
     #grid {
+      padding: 5px;
       overflow: hidden;
-      width: 550px;
+      width: 480px;
       margin: 0px auto;
       border: 2px solid green;
     }
 
     .image {
-      height: 60px;
-      width: 100px;
-    } 
+      height: 70px;
+      width: 70px;
+    }
 
     .hidden {
       visibility: hidden;
@@ -20,11 +21,13 @@
 
     .imageBox {
       float: left;
-      width: 100px;
-      height: 60px;
+      width: 70px;
+      height: 70px;
       background-color: grey;
       margin: 5px;
       overflow: hidden;
+      /*border: 2px outset black;*/
+      box-shadow: 2px 2px 2px 2px black;
     }
 
     #buttons {
@@ -43,22 +46,48 @@
       font-weight: bold;
       height: 20px;
     }
+
+    .centerAlign {
+      text-align: center;
+    }
+
+    .redBackground {
+      background-color: red;
+    }
+
+    .center {
+      display: block;
+      margin: 0px auto;
+    }
+
+    h1 {
+      font-family: "Lucida Console", monospace, Serif;
+      text-shadow: 2px 2px grey;
+    }
+
+    #timer {
+      font-size: 20px;
+    }
     
     </style>
   </head>
 
   <body>
-    <div id="instructions">
-    </div>
+    <h1 class="centerAlign"> Memory Game </h1>
+    <button id="start" class="center" value="start">Play Game</button>
+    <div id="gameContainer" class="hidden">
+      <div id="instructions">
+      </div>
 
-    <div id="grid">
-    </div>
+      <div id="grid">
+      </div>
 
-    <div id="timer">
-    </div>
+      <div id="timer">
+      </div>
 
-    <div id="buttons">
-      <input type="button" value="Play Again" id="playAgain">
+      <div id="buttons">
+        <input type="button" value="Play Again" id="playAgain">
+      </div>
     </div>
     
   </body>
