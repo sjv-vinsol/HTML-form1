@@ -4,27 +4,31 @@ var valuesToSort = ["color", "brand", "name", "sold_out"];
 
 function Store() {
   "use strict";
-  this.displayProductsAndAddEvents = function () {
-    displayNewProducts(storeJSON);
+  this.prepareHomePage = function () {
+    displayProductGrid(storeJSON);
+    this.addOptionsToSelectBox();
+    this.addOnChangeHandlerToSelectBox();
+  }
+
+  this.addOnChangeHandlerToSelectBox = function () {
     var length = valuesToSort.length, store = this;
-    document.getElementById("value").addEventListener("change", function (event) {
-      displayNewProducts(sortJSONBy(event.target.value));
+    document.getElementById("sortBy").addEventListener("change", function (event) {
+      displayProductGrid(sortJSONBy(event.target.value));
     });
   };
 
   var sortJSONBy = function (attribute) {
-    var sortedJSON = storeJSON.sort(function(a,b) {
-      if (parseInt(storeJSON[1][attribute]) == storeJSON[1][attribute]) {
-        if (parseInt(a[attribute]) > parseInt(b[attribute])) return 1;
-        if (parseInt(a[attribute]) < parseInt(b[attribute])) return -1;
-        return 0
-      }else {
-        if (a[attribute] > b[attribute]) return 1;
-        if (a[attribute] < b[attribute]) return -1;
-        return 0
-      }
-    })
-    return sortedJSON;
+    var isInteger = (parseInt(storeJSON[1][attribute]) == storeJSON[1][attribute]) ? true : false;
+    if (isInteger) {
+      return (storeJSON.sort(function(a,b) {
+        return (parseInt(a[attribute]) - parseInt(b[attribute]));
+      }))
+    } else {
+      return (storeJSON.sort(function(a,b) {
+        var x = a[attribute], y = b[attribute];
+        return ((x > y) ? 1 : ((x < y) ? -1 : 0));
+      }))
+    }
   }
 
   this.addOptionsToSelectBox = function () {
@@ -35,25 +39,25 @@ function Store() {
       optionElem.value = valuesToSort[i];
       optionElem.innerHTML = valuesToSort[i];
     }
-    document.getElementById("value").appendChild(fragment);
+    document.getElementById("sortBy").appendChild(fragment);
   };
 
-  var displayNewProducts = function (productJSON) {
-    removeChildNodes(document.getElementById("container"));
+  var displayProductGrid = function (productJSON) {
+    clearProductGrid(document.getElementById("container"));
     var fragment = document.createDocumentFragment(), i = 0, divElem = {}, imgElem = {};
     for (i = 0; i < productJSON.length; i++) {
       divElem = fragment.appendChild(document.createElement("div"));
       divElem.classList.add("productDiv");
       imgElem = divElem.appendChild(document.createElement("img"));
       imgElem.src = "images/" + productJSON[i].url;
-      imgElem.height = "150"; imgElem.width = "150";
+      imgElem.height = "100"; imgElem.width = "100";
     }
     document.getElementById("container").appendChild(fragment);
   };
 
-  var removeChildNodes = function (node) {
-    while (node.firstChild) {
-      node.removeChild(node.firstChild);
+  var clearProductGrid = function (myNode) {
+    while (myNode.firstChild) {
+      myNode.removeChild(myNode.firstChild);
     }
   };
 }
@@ -61,7 +65,5 @@ function Store() {
 window.addEventListener("load", function () {
   "use strict";
   var store = new Store();
-  store.addOptionsToSelectBox();
-  // store.populateValuesOfArrributes();
-  store.displayProductsAndAddEvents();
+  store.prepareHomePage();
 });
