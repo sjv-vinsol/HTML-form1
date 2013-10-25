@@ -1,8 +1,7 @@
-var searchElem = $("#searchField"), searchLabelElem = $("label[for='q']"), searchLabelVal = searchLabelElem.text();
+var searchElem = $("#search > input.input_text"), searchLabelElem = $("label[for='q']"), searchLabelVal = searchLabelElem.remove().text();
 searchElem.val(searchLabelVal).addClass("hint");
-searchLabelElem.remove();
 searchElem.focus(function () {
-  if (searchElem.val() == searchLabelVal && jQuery.inArray("hint",searchElem.attr('class').split(" ")) >= 0) {
+  if (searchElem.val() == searchLabelVal && searchElem.hasClass("hint") == true) {
     searchElem.val("").removeClass("hint");
   }
 });
