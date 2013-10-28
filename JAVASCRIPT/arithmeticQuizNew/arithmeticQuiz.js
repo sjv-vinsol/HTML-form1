@@ -1,4 +1,4 @@
-var operator = ["+", "*", "-", "/"], questionNumber = 0;
+var operator = ["+", "*", "-", "/"];
 
 document.getElementById("start").addEventListener("click", function () {
   var startButton = document.getElementById("start");
@@ -7,10 +7,15 @@ document.getElementById("start").addEventListener("click", function () {
   quiz.start();
 });
 
-function Question() {
-  //generate two random numbers less than 20
-  var getTwoRandomNumbers = function () {
-    return ([Math.floor(Math.random() * 10 + Math.random() * 10 + 1), Math.floor(Math.random() * 10 + Math.random() * 10 + 1)]);
+function Question(questionNumber) {
+  this.randomNumerRange = [1, 20];     // To set the random number of a question.
+  // Generate two random numbers between specified in random numberNumberRange.
+  this.getTwoRandomNumbersBetween = function () {
+    var numberArr = [], min = this.randomNumerRange[0], max = this.randomNumerRange[1];
+    while (numberArr.length < 2) {
+      numberArr.push(Math.round(Math.random() * (max - min)) + min);
+    }
+    return numberArr;
   }
 
   // get operator of -, +, *, /
@@ -18,14 +23,15 @@ function Question() {
     return operator[Math.floor(Math.random() * operator.length)];
   }
 
-  var generateQuestionString = function () {
-    var number = getTwoRandomNumbers();
+  this.generateQuestionString = function () {
+    var number = this.getTwoRandomNumbersBetween();
     var operator = getOperator();
     return (number[0] + " " + operator + " " + number[1]);
   }
-
+  
   this.questionNumber = ++questionNumber;
-  this.questionString = generateQuestionString();
+  console.log(this.questionNumber);
+  this.questionString = this.generateQuestionString();
   this.correctAnswer = Math.round(eval(this.questionString) * 100) / 100;
   this.userAnswer = "";
   this.isTimeOut = false;
@@ -45,7 +51,7 @@ function Quiz() {
   this.generateQuestions = function () {
     var length = this.maxNoOfQuestions, questionArray = [];
     for (i = 0; i < length; i++) {
-      questionArray.push(new Question());
+      questionArray.push(new Question(i));
     }
     return questionArray
   };
@@ -73,7 +79,7 @@ function Quiz() {
         document.getElementById("submit").click();
       }
     }
-    timerHandle = setInterval(decrementCounterEverySec, 1000);
+    quiz.timerHandle = setInterval(decrementCounterEverySec, 1000);
   };
 
   this.start = function() {
@@ -102,7 +108,7 @@ function Quiz() {
   };
 
   var quizFinish = function (quiz) {
-    clearInterval(timerHandle);
+    clearInterval(quiz.timerHandle);
     document.getElementById('submit').parentNode.removeChild(document.getElementById('submit'));
     removeAllInnerNodesFrom(document.getElementById("questionContainer"));
     removeAllInnerNodesFrom(document.getElementById("countDown"));
@@ -123,6 +129,7 @@ function Quiz() {
     removeAllInnerNodesFrom(document.getElementById("questionContainer"));
     var questionContainer = document.getElementById("questionContainer");
     questionContainer.innerHTML = "Q." + (quiz.currentQuestion.questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + quiz.currentQuestion.questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
+    console.log(quiz.currentQuestion.questionNumber);
     var textElem = questionContainer.appendChild(document.createElement("input"));
     textElem.id = "answer";
   };
@@ -135,7 +142,7 @@ function Quiz() {
       }
       if (quiz.currentQuestion.questionNumber < quiz.maxNoOfQuestions) {
         document.getElementById("countDown").classList.remove("redColor");
-        clearInterval(timerHandle);
+        clearInterval(quiz.timerHandle);
         quiz.currentQuestion = quiz.questions[++index];
         // timerCounter = 20;
         startTimer(quiz);
@@ -152,10 +159,10 @@ function Quiz() {
     startButton.value = "Start Again";
     startButton.id = "startAgain";
     startButton.addEventListener("click", function() {
-      questionNumber = 0;
+      // questionNumber = 0;
       removeAllInnerNodesFrom(document.getElementById("startAgain"));
       removeAllInnerNodesFrom(document.getElementById("wrongAns"));
-      quiz = new Quiz();
+      var quiz = new Quiz();
       quiz.start();
     })
   };
