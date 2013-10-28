@@ -1,10 +1,10 @@
 $(document).ready(function() {
   function add5ListElement() {
-    var length = $("#myList").children("li").length;
+    var myList = $("#myList"), length = myList.children("li").length;
     for(i=length+1;i<length+6;i++) {
       var elem = $("<li/>")
       elem.text("List item " + i);
-      elem.appendTo($("#myList"));
+      elem.appendTo(myList);
     }
   }
 
@@ -19,5 +19,6 @@ $(document).ready(function() {
   console.log($("select[name=day]").append($("<option/>").text("Wednesday").val("wednesday")));
 
   console.log("\n\n5. Add a new div.module to the page after the last one; put a copy of one of the existing images inside of it.");
-  console.log($("div.module").last().after("<div class='module'></div>").next().append("<img src='images/vegetable.jpg'>"));
+  console.log($("div.module").last().after($('<div/>', {class: 'module'})).next().append($('img').first().clone()));
+  // console.log($("div.module").last().after("<div class='module'><img alt='fruit' src='images/fruit.jpg' /></div>"));
 })
