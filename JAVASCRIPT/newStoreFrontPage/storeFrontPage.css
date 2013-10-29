@@ -1,0 +1,21 @@
+.productDiv {
+  float: left;
+  margin-right: 20px;
+  margin-top: 40px;
+}
+#container {
+  overflow: hidden;
+  width: 700px;
+}
+#name {
+  width: 100px;
+}
+
+.imgElemDimention {
+  height: 100px;
+  width: 100px;
+}
+
+select {
+  margin-right: 20px;
+}
