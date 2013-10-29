@@ -1,7 +1,9 @@
 var operator = ["+", "*", "-", "/"];
 
+// #FIXME_AB_h_1.0: use bind 
 document.getElementById("start").addEventListener("click", function () {
   var startButton = document.getElementById("start");
+  // #FIXME_AB_h_1.0: avoid using parentNode 
   startButton.parentNode.removeChild(startButton);
   quiz = new Quiz();
   quiz.start();

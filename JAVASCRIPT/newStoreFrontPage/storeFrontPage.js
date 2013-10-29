@@ -2,9 +2,11 @@ var storeJSON = [{"name": "1", "url": "1.jpg", "color": "Yellow", "brand": "BRAN
 // Put the values to sort in below array. Only below mentioned values will be show in the dropdown to sort.
 var valuesToSort = ["color", "brand", "name", "sold_out"];
 
+// #FIXME_AB_h_1.0: it would be good if we can specify the json to be used while creating the store object
 function Store() {
   "use strict";
   this.prepareHomePage = function () {
+    // #FIXME_AB_h_1.0: I think we can use this.displayProductGrid using event bind
     displayProductGrid(storeJSON);
     this.addOptionsToSelectBox();
     this.addOnChangeHandlerToSelectBox();
@@ -12,12 +14,14 @@ function Store() {
 
   this.addOnChangeHandlerToSelectBox = function () {
     var length = valuesToSort.length, store = this;
+    // #FIXME_AB_h_1.0: use bind 
     document.getElementById("sortBy").addEventListener("change", function (event) {
       displayProductGrid(sortJSONBy(event.target.value));
     });
   };
 
   var sortJSONBy = function (attribute) {
+    // #FIXME_AB_h_1.0: Always use second parameter with parseInt or parseFloat 
     var isInteger = (parseInt(storeJSON[1][attribute]) == storeJSON[1][attribute]) ? true : false;
     if (isInteger) {
       return (storeJSON.sort(function(a,b) {
@@ -50,6 +54,7 @@ function Store() {
       divElem.classList.add("productDiv");
       imgElem = divElem.appendChild(document.createElement("img"));
       imgElem.src = "images/" + productJSON[i].url;
+      // #FIXME_AB_h_1.0: don't do inline styles. use css classes 
       imgElem.height = "100"; imgElem.width = "100";
     }
     document.getElementById("container").appendChild(fragment);
