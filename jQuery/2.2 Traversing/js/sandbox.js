@@ -1,7 +1,7 @@
 $(document).ready( function () {
   console.log("1. Log each image's alt attribute");
-  $.each( $("img"), function (i, val) {
-    console.log(val.alt);
+  $.each( $("img"), function (i, imgElem) {
+    console.log(imgElem.alt);
   })
 
   console.log("\n\n2. Select search field and add class to its parent");
@@ -11,7 +11,7 @@ $(document).ready( function () {
   console.log($("#myList li.current").removeClass("current").nextAll("li").first().addClass("current"));
 
   console.log("\n\n4. Select the select element inside #specials and traverse your way to the submit button");
-  console.log($("#specials").find("select[name='day']").parents("form").first().find("input[type='submit']"));
+  console.log($("#specials").find("select[name='day']").closest("form").find("input[type='submit']"));
 
   console.log("\n\n5. Add class 'current' to first line item of #slideshow and add class 'disabled' to its siblings");
   console.log($("#slideshow > li:first").addClass('current').siblings().addClass('disabled'));
