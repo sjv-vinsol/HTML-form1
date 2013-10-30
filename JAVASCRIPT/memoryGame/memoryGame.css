@@ -1,0 +1,66 @@
+#grid {
+  padding: 5px;
+  overflow: hidden;
+  width: 480px;
+  margin: 0px auto;
+  border: 2px solid green;
+}
+
+.image {
+  height: 70px;
+  width: 70px;
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.imageBox {
+  float: left;
+  width: 70px;
+  height: 70px;
+  background-color: grey;
+  margin: 5px;
+  overflow: hidden;
+  /*border: 2px outset black;*/
+  box-shadow: 2px 2px 2px 2px black;
+}
+
+#buttons {
+  margin-top: 30px;
+
+}
+
+#playAgain {
+  display: block;
+  margin: 0px auto;
+}
+
+#timer {
+  text-align: center;
+  margin-top: 20px;
+  font-weight: bold;
+  height: 20px;
+}
+
+.centerAlign {
+  text-align: center;
+}
+
+.redBackground {
+  background-color: red;
+}
+
+.center {
+  display: block;
+  margin: 0px auto;
+}
+
+h1 {
+  font-family: "Lucida Console", monospace, Serif;
+  text-shadow: 2px 2px grey;
+}
+
+#timer {
+  font-size: 20px;
+}
