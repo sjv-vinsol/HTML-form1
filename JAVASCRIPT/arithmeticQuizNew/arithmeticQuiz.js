@@ -32,7 +32,6 @@ function Question(questionNumber) {
   }
   
   this.questionNumber = ++questionNumber;
-  console.log(this.questionNumber);
   this.questionString = this.generateQuestionString();
   this.correctAnswer = Math.round(eval(this.questionString) * 100) / 100;
   this.userAnswer = "";
@@ -90,7 +89,6 @@ function Quiz() {
     this.currentQuestion = this.questions[index];
     appendSubmitButton();
     displayCurrentScore(this);
-    // var timerCounter = this.timerForEachQuestion;
     startTimer(this);
     displayQuestion(this);
     addEventHandlerToSubmitButton(this, index);
@@ -131,7 +129,6 @@ function Quiz() {
     removeAllInnerNodesFrom(document.getElementById("questionContainer"));
     var questionContainer = document.getElementById("questionContainer");
     questionContainer.innerHTML = "Q." + (quiz.currentQuestion.questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + quiz.currentQuestion.questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
-    console.log(quiz.currentQuestion.questionNumber);
     var textElem = questionContainer.appendChild(document.createElement("input"));
     textElem.id = "answer";
   };
@@ -161,7 +158,6 @@ function Quiz() {
     startButton.value = "Start Again";
     startButton.id = "startAgain";
     startButton.addEventListener("click", function() {
-      // questionNumber = 0;
       removeAllInnerNodesFrom(document.getElementById("startAgain"));
       removeAllInnerNodesFrom(document.getElementById("wrongAns"));
       var quiz = new Quiz();

@@ -1,0 +1,60 @@
+#instructions {
+  width: 400px;
+}
+
+.redColor {
+  color: red;
+}
+
+.header {
+  background-color: #999999;
+  padding: 10px;
+  border-top: 2px solid red;
+  border-bottom: 2px solid red;
+}
+
+#submit {
+  margin-left: 20px;
+}
+
+#startAgain {
+  margin-left: 20px;
+}
+
+.floatLeft {
+  float: left;
+}
+
+#countDown {
+  height: 20px;
+}
+
+ol {
+  overflow: hidden;
+}
+
+#answer {
+  width: 55px;
+}
+
+#countDown {
+  font-size: 40px;
+  padding-bottom: 50px;
+  margin-left: 40px;
+}
+
+#questionContainer {
+  margin-bottom: 20px;
+}
+
+#score {
+  font-weight: bold;
+}
+
+#wrongAns {
+  margin-bottom: 20px;
+}
+
+#score {
+  font-size: 20px;
+}
