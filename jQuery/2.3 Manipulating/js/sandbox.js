@@ -1,7 +1,7 @@
 $(document).ready(function() {
   function add5ListElement() {
     var $myList = $("#myList"), length = $myList.children("li").length;
-    for (i = length+1; i < length+6; i++) {
+    for (i = length + 1; i < length + 6; i++) {
       var elem = $("<li/>")
       elem.text("List item " + i);
       elem.appendTo($myList);
