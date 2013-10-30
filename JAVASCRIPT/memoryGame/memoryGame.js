@@ -1,11 +1,11 @@
 var imageJSON = [ {url: "image_0.jpg"}, {url: "image_1.jpg"}, {url: "image_2.jpg"}, {url: "image_3.jpg"}, {url: "image_4.jpg"}, {url: "image_5.jpg"}, {url: "image_6.jpg"}, {url: "image_7.jpg"}, {url: "image_8.jpg"}, {url: "image_9.jpg"}, {url: "image_10.jpg"}, {url: "image_11.jpg"}, {url: "image_12.jpg"}, {url: "image_13.jpg"}, {url: "image_14.jpg"}, {url: "image_15.jpg"}, {url: "image_16.jpg"}, {url: "image_17.jpg"}, {url: "image_0.jpg"}, {url: "image_1.jpg"}, {url: "image_2.jpg"}, {url: "image_3.jpg"}, {url: "image_4.jpg"}, {url: "image_5.jpg"}, {url: "image_6.jpg"}, {url: "image_7.jpg"}, {url: "image_8.jpg"}, {url: "image_9.jpg"}, {url: "image_10.jpg"}, {url: "image_11.jpg"}, {url: "image_12.jpg"}, {url: "image_13.jpg"}, {url: "image_14.jpg"}, {url: "image_15.jpg"}, {url: "image_16.jpg"}, {url: "image_17.jpg"}];
 
 function Game() {
-  this.delayForNoMatch = false;
-  this.delayCountInSec = 2;
+  this.delayForNoMatch = 200;
+  this.isDelayForNoMatch = false;
   this.imageBoxCount = 36;
   var count = 0;
-  var totalCount = 0;
+  this.totalCount = 0;
   var previousClickImg = "";
   var addImagesToImageBox = function (imgElem) {
     imgElem.src = "images/" + imageJSON[i].url;
@@ -52,27 +52,27 @@ function Game() {
   }
 
   function logicOnImageClick(event, game, currentClickedElem) {
-    if (event.target.tagName != "IMG" && !game.delayForNoMatch) {
-      count++;
+    if (event.target.tagName != "IMG" && !game.isDelayForNoMatch) {
+      // count++;
       var elemClickImg = currentClickedElem.getElementsByTagName("img")[0];
       elemClickImg.classList.remove("hidden");
-      if (count == 1) previousClickImg = currentClickedElem.getElementsByTagName("img")[0];
+      if (++count == 1) previousClickImg = currentClickedElem.getElementsByTagName("img")[0];
       else if (count == 2) {
         if (elemClickImg.src == previousClickImg.src) {
-          totalCount += 2;
+          game.totalCount += 2;
         }
         else {
-          game.delayForNoMatch = true;
+          game.isDelayForNoMatch = true;
           setTimeout(function() {
             previousClickImg.classList.add("hidden");
             elemClickImg.classList.add("hidden");
-            game.delayForNoMatch = false;
-          }, 200);
+            game.isDelayForNoMatch = false;
+          }, game.delayForNoMatch);
         }
         count = 0;
       }
     }
-    if(totalCount == game.imageBoxCount) {
+    if(game.totalCount == game.imageBoxCount) {
       clearInterval(game.timerHandler);
       document.getElementById("playAgain").classList.add('redBackground');
     }
