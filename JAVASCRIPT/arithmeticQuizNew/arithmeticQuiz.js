@@ -2,9 +2,9 @@ var operator = ["+", "*", "-", "/"];
 
 // #FIXME_AB_h_1.0: use bind 
 document.getElementById("start").addEventListener("click", function () {
-  var startButton = document.getElementById("start");
-  // #FIXME_AB_h_1.0: avoid using parentNode 
-  startButton.parentNode.removeChild(startButton);
+  // var startButton = document.getElementById("start");
+  // #FIXME_AB: avoid using parentNode 
+  this.parentNode.removeChild(this);
   quiz = new Quiz();
   quiz.start();
 });
@@ -67,8 +67,9 @@ function Quiz() {
     elem.classList.add("redColor");
   };
 
-  var startTimer = function (quiz) {
-    var timerCounter = quiz.timerForEachQuestion;
+  this.startTimer = function () {
+    var quiz = this;
+    var timerCounter = this.timerForEachQuestion;
     var counterElem = document.getElementById("countDown");
     removeAllInnerNodesFrom(counterElem);
     counterElem.appendChild(document.createTextNode(timerCounter));
@@ -80,24 +81,25 @@ function Quiz() {
         document.getElementById("submit").click();
       }
     }
-    quiz.timerHandle = setInterval(decrementCounterEverySec, 1000);
+    this.timerHandle = setInterval(decrementCounterEverySec, 1000);
   };
 
   this.start = function() {
     var index = 0;
     this.questions = this.generateQuestions();
     this.currentQuestion = this.questions[index];
+    console.log("CURRENT QUESTION   :     ", this.currentQuestion);
     appendSubmitButton();
-    displayCurrentScore(this);
-    startTimer(this);
-    displayQuestion(this);
-    addEventHandlerToSubmitButton(this, index);
+    this.displayCurrentScore();
+    this.startTimer();
+    this.displayQuestion();
+    this.addEventHandlerToSubmitButton(index);
   };  
 
-  var displayNonCorrectAns = function(quiz) {
-    var length = Object.keys(quiz.questions).length, nonCorrectAnsArray = [], question = {};
+  this.displayNonCorrectAns = function() {
+    var length = Object.keys(this.questions).length, nonCorrectAnsArray = [], question = {};
     for (i = 0; i < length; i++) {
-      question = quiz.questions[i];
+      question = this.questions[i];
       if (question.isTimeOut || question.wrongAns) {
         nonCorrectAnsArray.push(question.questionNumber + ") " + question.questionString + " = " + question.correctAnswer);
       }
@@ -107,14 +109,14 @@ function Quiz() {
     else { document.getElementById("wrongAns").appendChild(document.createTextNode("Congratulations!! you have answered all answers correctly"))};
   };
 
-  var quizFinish = function (quiz) {
-    clearInterval(quiz.timerHandle);
+  this.quizFinish = function () {
+    clearInterval(this.timerHandle);
     document.getElementById('submit').parentNode.removeChild(document.getElementById('submit'));
     removeAllInnerNodesFrom(document.getElementById("questionContainer"));
     removeAllInnerNodesFrom(document.getElementById("countDown"));
     removeAllInnerNodesFrom(document.getElementById('score'));
-    document.getElementById('score').appendChild(document.createTextNode("Final Score = " + quiz.score));
-    displayNonCorrectAns(quiz);
+    document.getElementById('score').appendChild(document.createTextNode("Final Score = " + this.score));
+    this.displayNonCorrectAns();
     appendStartAgain();
   };
 
@@ -125,31 +127,32 @@ function Quiz() {
     submitButton.id = "submit";
   };
 
-  var displayQuestion = function (quiz) {
+  this.displayQuestion = function () {
     removeAllInnerNodesFrom(document.getElementById("questionContainer"));
     var questionContainer = document.getElementById("questionContainer");
-    questionContainer.innerHTML = "Q." + (quiz.currentQuestion.questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + quiz.currentQuestion.questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
+    questionContainer.innerHTML = "Q." + (this.currentQuestion.questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + this.currentQuestion.questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
     var textElem = questionContainer.appendChild(document.createElement("input"));
     textElem.id = "answer";
   };
 
-  function addEventHandlerToSubmitButton(quiz, index) {
+  this.addEventHandlerToSubmitButton = function (index) {
+    // console.log(document.getElementById("submit"));
     document.getElementById("submit").addEventListener("click", function () {
-      if (!quiz.currentQuestion.isTimeOut && checkResult(quiz.currentQuestion)) {
-        quiz.score = quiz.score + 1;
-        displayCurrentScore(quiz);
+      if (!this.currentQuestion.isTimeOut && checkResult(this.currentQuestion)) {
+        this.score = this.score + 1;
+        this.displayCurrentScore();
       }
-      if (quiz.currentQuestion.questionNumber < quiz.maxNoOfQuestions) {
+      if (this.currentQuestion.questionNumber < this.maxNoOfQuestions) {
         document.getElementById("countDown").classList.remove("redColor");
-        clearInterval(quiz.timerHandle);
-        quiz.currentQuestion = quiz.questions[++index];
+        clearInterval(this.timerHandle);
+        this.currentQuestion = this.questions[++index];
         // timerCounter = 20;
-        startTimer(quiz);
-        displayQuestion(quiz);
+        this.startTimer();
+        this.displayQuestion();
       } else {
-        quizFinish(quiz);
+        this.quizFinish();
       }
-    });
+    }.bind(this));
   };
 
   var appendStartAgain = function () {
@@ -171,8 +174,8 @@ function Quiz() {
     else { question.wrongAns = true; return false; }
   };
 
-  var displayCurrentScore = function (quiz) {
+  this.displayCurrentScore = function () {
     removeAllInnerNodesFrom(document.getElementById('score'));
-    document.getElementById('score').appendChild(document.createTextNode("Score = " + quiz.score));
+    document.getElementById('score').appendChild(document.createTextNode("Score = " + this.score));
   };
 };
