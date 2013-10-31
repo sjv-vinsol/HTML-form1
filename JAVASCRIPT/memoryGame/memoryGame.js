@@ -7,7 +7,7 @@ function Game() {
   var count = 0;
   this.totalCount = 0;
   var previousClickImg = "";
-  var addImagesToImageBox = function (imgElem) {
+  var addImagesToImageBox = function (imgElem, i) {
     imgElem.src = "images/" + imageJSON[i].url;
     imgElem.classList.add("image");
     imgElem.classList.add("hidden");
@@ -18,8 +18,7 @@ function Game() {
   }
 
   this.shuffleImages = function () {
-    var length = imageJSON.length;
-    var randomIndex = 0;
+    var length = imageJSON.length, randomIndex = 0;
     while(--length) {
       randomIndex = generateRandomNoBelow20();
       temp = imageJSON[randomIndex];
@@ -29,16 +28,16 @@ function Game() {
   }
 
   this.start = function() {
-    var game = this;
+    var imgElem = "";
     fragment = document.createDocumentFragment();
-    for (i = 0; i < this.imageBoxCount; i++) {
+    for (var i = 0; i < this.imageBoxCount; i++) {
       div = fragment.appendChild(document.createElement("div"));
       div.classList.add("imageBox");
       imgElem = div.appendChild(document.createElement("img"));
       addImagesToImageBox(imgElem, i);
       div.addEventListener("click", function(event) {
-        logicOnImageClick(event, game, this);
-      })
+        this.logicOnImageClick(event);
+      }.bind(this))
     }
     document.getElementById("grid").appendChild(fragment);
   }
@@ -51,29 +50,29 @@ function Game() {
     }, 1000);
   }
 
-  function logicOnImageClick(event, game, currentClickedElem) {
-    if (event.target.tagName != "IMG" && !game.isDelayForNoMatch) {
-      // count++;
+  this.logicOnImageClick = function (event) {
+    var currentClickedElem = event.currentTarget;
+    if (event.target.tagName != "IMG" && !this.isDelayForNoMatch) {
       var elemClickImg = currentClickedElem.getElementsByTagName("img")[0];
       elemClickImg.classList.remove("hidden");
       if (++count == 1) previousClickImg = currentClickedElem.getElementsByTagName("img")[0];
       else if (count == 2) {
         if (elemClickImg.src == previousClickImg.src) {
-          game.totalCount += 2;
+          this.totalCount += 2;
         }
         else {
-          game.isDelayForNoMatch = true;
+          this.isDelayForNoMatch = true;
           setTimeout(function() {
             previousClickImg.classList.add("hidden");
             elemClickImg.classList.add("hidden");
-            game.isDelayForNoMatch = false;
-          }, game.delayForNoMatch);
+            this.isDelayForNoMatch = false;
+          }.bind(this), this.delayForNoMatch);
         }
         count = 0;
       }
     }
-    if(game.totalCount == game.imageBoxCount) {
-      clearInterval(game.timerHandler);
+    if(this.totalCount == this.imageBoxCount) {
+      clearInterval(this.timerHandler);
       document.getElementById("playAgain").classList.add('redBackground');
     }
   }

@@ -17,7 +17,7 @@ function Store(storeJSON) {
     // #FIXME_AB: use bind
     document.getElementById("sortBy").addEventListener("change", function(event) {
       displayProductGrid(sortJSONBy(event.target.value));
-    }.bind(this));    
+    }.bind(this));
   };
 
   var sortJSONBy = function (attribute) {
