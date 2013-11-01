@@ -4,7 +4,8 @@
 // Below code will work fine on production wiht http:// url.
 var pathname = "data/blog.html";
 var $headlines = $( '#blog' ).find("h3").after($( '<div/>', {class: "blogPost"} )).find("a");
-referenceIdArr = ["post1", "post2", "post3" ];       // These are the ID which are present in the reference file.
+// These are the ID which are present in the reference file.
+referenceIdArr = ["post1", "post2", "post3" ];
 
 $.each($( '#blog' ).find("h3"), function(index, data){
   $(this).data("referenceId", referenceIdArr[index]);
