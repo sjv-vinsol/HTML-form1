@@ -1,7 +1,10 @@
-$(document).ready(function() {
-  $('#nav').children('li').hover(function(event){
+$(document).ready(function () {
+  function handlerIn() {
     $(this).children("ul").addClass("hover");
-  }, function() {
+  }
+  function handlerOut() {
     $(this).children("ul").removeClass("hover");
-  });
+  }
+
+  $('#nav').children('li').hover(handlerIn, handlerOut);
 });
