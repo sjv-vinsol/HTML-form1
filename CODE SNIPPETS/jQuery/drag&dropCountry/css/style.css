@@ -1,0 +1,28 @@
+#rightCountries {
+  width: 150px;
+}
+
+#test {
+  height: 100px;
+  width: 100px;
+  background-color: grey;
+}
+
+option {
+  border: 1px solid grey;
+  /*position: relative !important;*/
+}
+
+#blankSpace {
+  width: 200px;
+  display: inline-block;
+}
+
+#leftCountries {
+  width: 150px;
+}
+
+#container {
+  /*margin: auto 0px;*/
+  text-align: center;
+}
