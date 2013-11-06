@@ -1,0 +1,18 @@
+#productRating th,td {
+  width: 100px;
+  height: 40px;
+  text-align: center;
+  cursor: default;
+}
+
+.visible {
+  visibility: visible;
+}
+
+.selected {
+  background-color: #A3CEDC !important;
+}
+
+.hidden {
+  visibility: hidden;
+}
