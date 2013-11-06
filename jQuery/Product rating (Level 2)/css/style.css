@@ -5,12 +5,23 @@
   cursor: default;
 }
 
+#productRating th,td {
+  border-right: 1px solid black;
+}
+
 .visible {
   visibility: visible;
+}
+.product {
+  border-right: 0px;
 }
 
 .selected {
   background-color: #A3CEDC !important;
+}
+
+#blank {
+  border-right: 0px !important;
 }
 
 .hidden {
