@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+
+  <title>jQuery Fundamentals :: Home</title>
+  <link href="css/reset.css" rel="stylesheet" type="text/css" media="all" />
+  <link href="css/style.css" rel="stylesheet" type="text/css" media="all" />
+  <script src="libs/jquery-1.10.2.js"></script>
+  <script src="js/cart.js"></script>
+
+</head>
+
+<body>
+  <div id="container">
+      <div id="navBar">
+        <span class="tab" id="productTab">Products</span>
+        <span class="tab" id="myCartTab">My Cart (0)</span>
+      </div>
+
+    <div id="innerContainer">
+      <table id="product" class="hidden table">
+      </table>
+
+      <table id="myCart" class="hidden table">
+        <tr id="header">
+          <th>Products</th>
+          <th>Price</th>
+          <th>Qty</th>
+          <th>Subtotal</th>
+          <th>Action</th>
+        </tr>
+      </table>
+
+      <!-- Hidden template for cloning #product-->
+      <table>
+        <tr id="productTemplate" class="hidden"> 
+          <td class="product">
+            <div class="imgContainer">
+              <img class="productImg" src="images/onions.jpg">
+            </div>
+            <div class="productDetails">
+              <p class="name"></p>
+              <p class="category"></p>
+              <p class="description"></p>
+              <p class="price"></p>
+            </div>           
+          </td>
+          <td class="productQty">Quantity: <input class="qtyInput" type="text"></td>
+          <td class="button"><input class="addToCart blue" type="button" value="Add To Cart"></td>
+        </tr>
+      </table>
+
+      <!-- Hidden template for cloning #myCart-->
+      <table>
+        <tr class="hidden" id="cartTemplate">
+          <td class="product cartProduct">
+            <div class="imgContainer">
+              <img class="productImg" src="images/onions.jpg">
+            </div>
+            <div class="productDetails">
+              <p class="name">Dell Inspiron</p>
+            </div>
+          </td>
+          <td class="cartPrice smallFont"> Price </td>
+          <td class="productQty cartQty"><input class="qtyInput" type="text"/></td>
+          <td class="subTotal smallFont">123132</td>
+          <td class="button"><input class="remove blue" type="button" value="Remove"></td>
+        </tr>
+      </table>
+    </div>
+    <div id="footer">
+      <div id="footerContainer">
+        <span id="total" class="largeFont">Total : 0</span>
+        <span id="checkout" class="button"><input id="btnCheckout" class="blue" type="button" value="Checkout"> </span>
+      </div>
+      
+    </div>
+  </div>
+</body>
+
+</html>

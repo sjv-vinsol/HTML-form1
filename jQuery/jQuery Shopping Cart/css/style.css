@@ -1,0 +1,178 @@
+#container {
+  font-family: "Times New Roman";
+  border: 2px solid black;
+}
+body {
+  text-align: center;
+}
+
+.blue {
+  background-color: #A3CEDC;
+  border-radius:40px;
+}
+
+.category {
+  font-family: "Courier New";
+}
+
+.description {
+  font-family: "Courier New";
+}
+
+#footerContainer {
+  padding-top: 10px;
+}
+
+#productTab {
+  margin-left: 10px;
+}
+
+.largeFont {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.selected {
+  background-color: #d3d3d3 !important;
+  border-bottom: 1px solid #d3d3d3 !important;
+}
+
+#navBar {
+  text-align: left;
+  border-bottom: 1px solid black;
+}
+
+.tab {
+  border: 1px solid black;
+  background-color: grey;
+  padding: 10px 20px;
+  cursor: default;
+  display: inline-block;
+  margin-bottom: 20px;
+  position: relative;
+  top: 9px;
+}
+
+.price {
+  font-weight: bold;
+}
+
+.product {
+  width: 70%;
+  text-align: left;
+}
+
+.grey {
+  background-color: #d3d3d3;
+}
+
+#navBar, #footer {
+  height: 10%;
+  background-color: #d3d3d3;
+}
+
+.name {
+  font-weight: bold;
+}
+
+.cartProduct {
+  width: 60% !important;
+}
+
+#container {
+  height: 500px;
+  display: inline-block;
+}
+
+#total {
+  display: inline-block;
+  width: 230px;
+}
+
+#footer {
+  text-align: center;
+}
+
+#innerContainer {
+  display: inline-block;
+  height: 79%;
+  overflow: scroll;
+  width: 800px;
+}
+
+tr {
+  background-color: #d3d3d3;
+}
+
+.qtyInput {
+  width: 30px;
+}
+
+td {
+  text-align: center;
+}
+
+.centerAlign {
+  text-align: left;
+}
+
+.hidden {
+  display: none;
+}
+
+.smallFont {
+  font-size: 15px;
+}
+
+.productDetails p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.productDetails {
+  overflow: hidden;
+  padding-top: 5px;
+}
+
+.imgContainer {
+  display: inline-block;
+  float: left;
+}
+
+.productImg {
+  height: 30px;
+  width: 30px;
+  margin: 10px;
+  border: 1px solid black;
+}
+
+#btnCheckout {
+  height: 30px;
+  width: 100px;
+  font-size: 18px;
+  color: red;
+}
+
+.productQty {
+  width: 15%;
+}
+
+.subTotal {
+  width: 30%;
+}
+
+.button {
+  width: 20%;
+}
+
+.cartQty {
+  width: 10% !important;
+}
+
+.cartPrice {
+  width: 12% !important;
+}
+
+.table {
+  width: 100%;
+}
