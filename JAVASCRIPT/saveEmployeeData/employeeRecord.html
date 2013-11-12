@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script type="text/javascript" src="employeeRecord.js"></script>
+    <style>
+    </style>
+  </head>
+  <body>
+
+    <div id="container">
+
+      <div id="form_container">
+        <div id="search">
+          <input id="mob_search" placeholder="Search by mobile #">
+
+        </div>
+        <div id="form">
+          <form id="employee_create">
+            <input id="emp_name" placeholder="Enter full name">
+            <input id="emp_email" placeholder="Enter email">
+            <input id="emp_mobile" placeholder="Enter 10 digit mobile #">
+            <input type="submit" id="save_emp" value="Save">
+          </form>
+
+        </div>
+      </div>
+
+      <div id="button">
+        <input type="button" id="show_grid" value="GRID">
+        <input type="button" id="show_list" value="LIST">
+      </div>
+
+      <div id="grid_view" class="hidden">
+        <!-- <div class="grid_emp">
+          <p class="grid_emp_detail"> Name : Sanjeev kumar </p>
+          <p class="grid_emp_detail"> Email : Sanjeev@kuma.com </p>
+          <p class="grid_emp_detail"> Mobile : 121212121 </p>
+          <div id="test"> R </div>
+        </div> -->
+      </div>
+
+      <div id="list_view" class="hidden">
+        <table id="list_table" border="1">
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Action</th>
+          </tr>
+          <!-- <tr>
+            <td>Sanjeev Kumar</td>
+            <td>Sanjeev Kumar</td>
+            <td>Sanjeev Kumar</td>
+            <td><a class="remove_list_record"> remove </a></td>
+          </tr> -->
+
+        </table>
+      </div>
+
+
+      
+
+    </div>
+    
+  </body>
+</html>

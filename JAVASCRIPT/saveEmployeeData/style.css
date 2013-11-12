@@ -1,0 +1,54 @@
+.invalidInput {
+  border: 2px solid red;
+}
+
+#button {
+  padding-top: 30px;
+}
+
+.hidden {
+  display: none;
+}
+
+#grid_view {
+  width: 1000px;
+  font-size: 15px;
+  overflow: hidden;
+}
+
+.grid_emp_detail {
+  padding: 0px;
+  margin: 0px;
+}
+
+.grid_emp {
+  float: left;
+  margin: 10px;
+  background-color: grey;
+  width: 17%;
+  height: 100px;
+}
+
+.selected {
+  background-color: red;
+}
+
+#list_table {
+  width: 65%;  
+  text-align: center;
+}
+.remove_list_record {
+  cursor: pointer;
+  color: red;
+}
+
+.remove_grid {
+  display: inline-block;
+  float: right;
+  background-color: red;
+  cursor: pointer;
+}
+
+.highlight {
+  background-color: yellow !important;
+}
