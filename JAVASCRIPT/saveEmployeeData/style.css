@@ -2,18 +2,51 @@
   border: 2px solid red;
 }
 
+#mob_search {
+  border-radius: 20px;
+  height: 20px;  
+  width: 200px;
+  font-size: 18px;
+}
+
+#list_view {
+  padding: 20px;
+  text-align: center;
+}
+
+#list_table {
+  /*display: inline-block;*/
+  margin: 0px auto;
+}
+
+#search {
+  padding: 30px;
+  background-color: #c0362c;
+  text-align: center;
+}
+
+#button_container {
+  text-align: center; 
+}
+
 #button {
   padding-top: 30px;
+  display: inline-block;
 }
 
 .hidden {
   display: none;
 }
 
+#grid_container {
+  padding: 20px;
+}
+
 #grid_view {
   width: 1000px;
   font-size: 15px;
   overflow: hidden;
+  margin: 0px auto;
 }
 
 .grid_emp_detail {
@@ -24,13 +57,13 @@
 .grid_emp {
   float: left;
   margin: 10px;
-  background-color: grey;
+  background-color: #2cabe2;
   width: 17%;
   height: 100px;
 }
 
 .selected {
-  background-color: red;
+  background-color: red !important;
 }
 
 #list_table {
@@ -42,6 +75,15 @@
   color: red;
 }
 
+#form input {
+  margin-bottom: 10px;
+}
+
+#search p {
+  margin: 0px;
+  /*font-weight: bold;*/
+}
+
 .remove_grid {
   display: inline-block;
   float: right;
@@ -49,6 +91,16 @@
   cursor: pointer;
 }
 
+.button {
+  background-color: #666666;
+  width: 80px;
+  height: 30px;
+}
+
 .highlight {
   background-color: yellow !important;
+}
+
+#form {
+  padding: 30px;
 }

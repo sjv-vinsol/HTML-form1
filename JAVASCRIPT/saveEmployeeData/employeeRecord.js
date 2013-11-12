@@ -50,7 +50,7 @@ window.addEventListener("load", function () {
     this.isValidEmail = function () {
       var emailElem = document.getElementById( "emp_email" );
       var email = emailElem.value.trim();
-      if (/^[a-zA-Z]+[\$\_]?[0-9a-zA-Z]*@[a-zA-Z]+([\.][a-zA-Z]+){1,4}$/.test(email) && this.isUnique("email", email)) {
+      if (/^[a-zA-Z]+[\$\_\.]?[0-9a-zA-Z]*@[a-zA-Z]+([\.][a-zA-Z]+){1,4}$/.test(email) && this.isUnique("email", email)) {
         emailElem.classList.remove( "invalidInput" );
         return true
       }else {
@@ -154,6 +154,7 @@ window.addEventListener("load", function () {
     this.startManaging = function () {
       //Create employee on click on save button
       page.saveButton.addEventListener("click", function(e) {
+        if (!this.empList.length) document.getElementById("button_container").classList.remove("hidden");
         e.preventDefault();
         if (this.isValidEmployeeDetails()) {
           var employee = new Employee(employeeId++);
@@ -182,7 +183,7 @@ window.addEventListener("load", function () {
       displayListElem.appendChild(document.createElement( "td" )).appendChild(document.createTextNode(employee.mobile));
       var removeLink = displayListElem.appendChild(document.createElement( "td" )).appendChild(document.createElement("a"));
       removeLink.classList.add( "remove_list_record" );
-      removeLink.appendChild(document.createTextNode( "remove" ));
+      removeLink.appendChild(document.createTextNode( "Delete" ));
       removeLink.addEventListener("click", function(e) {
         e.preventDefault();
         if( confirm("This record will be deleted permanently. Are you sure want to remove it.")) {
@@ -200,7 +201,7 @@ window.addEventListener("load", function () {
 
       var removeButton = displayGridElem.appendChild(document.createElement( "div" ));
       removeButton.classList.add( "remove_grid" );
-      removeButton.appendChild(document.createTextNode( "R" ));
+      removeButton.appendChild(document.createTextNode( "D" ));
 
       var pElement = displayGridElem.appendChild(document.createElement( 'p' ));
       pElement.classList.add( "grid_emp_detail" );

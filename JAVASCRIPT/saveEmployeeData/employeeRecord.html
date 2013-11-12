@@ -12,36 +12,42 @@
 
       <div id="form_container">
         <div id="search">
+          <p> Enter mobile number to SEARCH </p>
           <input id="mob_search" placeholder="Search by mobile #">
 
         </div>
         <div id="form">
+          <p> Create Employee :</p>
           <form id="employee_create">
-            <input id="emp_name" placeholder="Enter full name">
-            <input id="emp_email" placeholder="Enter email">
-            <input id="emp_mobile" placeholder="Enter 10 digit mobile #">
-            <input type="submit" id="save_emp" value="Save">
+            <input id="emp_name" placeholder="Enter full name"><br>
+            <input id="emp_email" placeholder="Enter email"><br>
+            <input id="emp_mobile" placeholder="Enter 10 digit mobile #"><br>
+            <input type="submit" id="save_emp" value="Create">
           </form>
 
         </div>
       </div>
 
-      <div id="button">
-        <input type="button" id="show_grid" value="GRID">
-        <input type="button" id="show_list" value="LIST">
+      <div id="button_container" class="hidden">
+        <div id="button">
+          <input type="button" id="show_grid" class="button" value="GRID">
+          <input type="button" id="show_list" class="button" value="LIST">
+        </div>
       </div>
 
-      <div id="grid_view" class="hidden">
-        <!-- <div class="grid_emp">
-          <p class="grid_emp_detail"> Name : Sanjeev kumar </p>
-          <p class="grid_emp_detail"> Email : Sanjeev@kuma.com </p>
-          <p class="grid_emp_detail"> Mobile : 121212121 </p>
-          <div id="test"> R </div>
-        </div> -->
+      <div id="grid_container">
+        <div id="grid_view" class="hidden">
+          <!-- <div class="grid_emp">
+            <p class="grid_emp_detail"> Name : Sanjeev kumar </p>
+            <p class="grid_emp_detail"> Email : Sanjeev@kuma.com </p>
+            <p class="grid_emp_detail"> Mobile : 121212121 </p>
+            <div id="test"> R </div>
+          </div> -->
+        </div>
       </div>
 
       <div id="list_view" class="hidden">
-        <table id="list_table" border="1">
+        <table id="list_table" border="3">
           <tr>
             <th>Name</th>
             <th>Email</th>
