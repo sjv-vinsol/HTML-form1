@@ -2,6 +2,16 @@
   background-color: yellow !important;
 }
 
+#divContainer {
+  width: 70%;
+}
+
+#addButton {
+  float: right;
+  width: 80px;
+  height: 35px;
+}
+
 .innerDiv {
   background-color: grey;
   margin: 4px;
