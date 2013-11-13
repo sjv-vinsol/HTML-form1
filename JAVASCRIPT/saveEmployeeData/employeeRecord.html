@@ -28,44 +28,43 @@
         </div>
       </div>
 
-      <div id="button_container" class="hidden">
-        <div id="button">
-          <input type="button" id="show_grid" class="button" value="GRID">
-          <input type="button" id="show_list" class="button" value="LIST">
+      <div id="display_employee" class="hidden">
+        <div id="button_container">
+          <div id="button">
+            <input type="button" id="show_grid" class="button" value="GRID">
+            <input type="button" id="show_list" class="button" value="LIST">
+          </div>
         </div>
-      </div>
 
-      <div id="grid_container">
-        <div id="grid_view" class="hidden">
-          <!-- <div class="grid_emp">
-            <p class="grid_emp_detail"> Name : Sanjeev kumar </p>
-            <p class="grid_emp_detail"> Email : Sanjeev@kuma.com </p>
-            <p class="grid_emp_detail"> Mobile : 121212121 </p>
-            <div id="test"> R </div>
-          </div> -->
+        <div id="grid_container">
+          <div id="grid_view" class="hidden">
+            <div class="grid_emp hidden" id="grid_template">
+              <div class="remove_grid"></div>
+              <p class="grid_emp_detail"></p>
+              <p class="grid_emp_detail"></p>
+              <p class="grid_emp_detail"></p>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div id="list_view" class="hidden">
-        <table id="list_table" border="3">
-          <tr>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Mobile</th>
-            <th>Action</th>
-          </tr>
-          <!-- <tr>
-            <td>Sanjeev Kumar</td>
-            <td>Sanjeev Kumar</td>
-            <td>Sanjeev Kumar</td>
-            <td><a class="remove_list_record"> remove </a></td>
-          </tr> -->
+        <div id="list_view" class="hidden">
+          <table id="list_table" border="3">
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Mobile</th>
+              <th>Action</th>
+            </tr>
+            <tr id="list_template" class="hidden">
+              <td class="list_emp_detail"></td>
+              <td class="list_emp_detail"></td>
+              <td class="list_emp_detail"></td>
+              <td><a class="remove_list_record"> Remove </a></td>
+            </tr>
 
-        </table>
-      </div>
-
-
-      
+          </table>
+        </div>
+      </div>     
 
     </div>
     

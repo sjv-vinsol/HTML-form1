@@ -8,10 +8,12 @@ window.addEventListener("load", function () {
     saveButton: document.getElementById( "save_emp" ),
     gridButton: document.getElementById( "show_grid" ),
     listButton: document.getElementById( "show_list" ),
+    grid: document.getElementById("grid_view"),
+    list: document.getElementById("list_view"),
     searchElem: document.getElementById( "mob_search" )
   }
 
-  var isValidEmployee = false, employeeId = 0;
+  var employeeId = 0;
 
   function Employee (employeeId) {
     this.name = document.getElementById( "emp_name" ).value;
@@ -23,7 +25,7 @@ window.addEventListener("load", function () {
   function EmployeeManageSystem () {
     this.currentView = "grid_view";
     // Select between grid_view OR list_view
-    this.defaultView = "grid_view";
+    this.defaultView = "list_view";
     this.empList = [];
     this.matchedResult = [];
 
@@ -118,11 +120,11 @@ window.addEventListener("load", function () {
     this.searchByMobileNo();
 
     this.displayDefaultView = function() {
-      if (this.defaultView = "grid_view") {
-        document.getElementById( "grid_view" ).classList.remove( "hidden" );
+      if (this.defaultView == "grid_view") {
+        page.grid.classList.remove( "hidden" );
         page.gridButton.classList.add( "selected" );
-      }else if (this.defaultView = "list_view") {
-        document.getElementById( "list_view" ).classList.remove( "hidden" );
+      }else if (this.defaultView == "list_view") {
+        page.list.classList.remove( "hidden" );
         page.listButton.classList.add( "selected" );
       }
     }
@@ -133,8 +135,8 @@ window.addEventListener("load", function () {
       page.gridButton.addEventListener("click", function() {
         page.gridButton.classList.add( 'selected' );
         page.listButton.classList.remove( "selected" );
-        document.getElementById( "grid_view" ).classList.remove( "hidden" );
-        document.getElementById( "list_view" ).classList.add( "hidden" );
+        page.grid.classList.remove( "hidden" );
+        page.list.classList.add( "hidden" );
         this.currentView = "grid_view";
       }.bind(this))
     }
@@ -143,8 +145,8 @@ window.addEventListener("load", function () {
       page.listButton.addEventListener("click", function() {
         page.gridButton.classList.remove( 'selected' );
         page.listButton.classList.add( "selected" );
-        document.getElementById( "grid_view" ).classList.add( "hidden" );
-        document.getElementById( "list_view" ).classList.remove( "hidden" );
+        page.grid.classList.add( "hidden" );
+        page.list.classList.remove( "hidden" );
         this.currentView = "list_view";
       }.bind(this));
     }
@@ -154,7 +156,7 @@ window.addEventListener("load", function () {
     this.startManaging = function () {
       //Create employee on click on save button
       page.saveButton.addEventListener("click", function(e) {
-        if (!this.empList.length) document.getElementById("button_container").classList.remove("hidden");
+        if (!this.empList.length) document.getElementById("display_employee").classList.remove("hidden")
         e.preventDefault();
         if (this.isValidEmployeeDetails()) {
           var employee = new Employee(employeeId++);
@@ -175,53 +177,40 @@ window.addEventListener("load", function () {
     }
 
     this.appendEmployeeListView = function (employee) {
-      var fragment = document.createDocumentFragment();
-      var displayListElem = fragment.appendChild(document.createElement( "tr" ));
+      var displayListElem = document.getElementById("list_template").cloneNode(true);
+      displayListElem.classList.remove("hidden");
       displayListElem.classList.add(employee.uniqueId);
-      displayListElem.appendChild(document.createElement( "td" )).appendChild(document.createTextNode(employee.name));
-      displayListElem.appendChild(document.createElement( "td" )).appendChild(document.createTextNode(employee.email));
-      displayListElem.appendChild(document.createElement( "td" )).appendChild(document.createTextNode(employee.mobile));
-      var removeLink = displayListElem.appendChild(document.createElement( "td" )).appendChild(document.createElement("a"));
-      removeLink.classList.add( "remove_list_record" );
-      removeLink.appendChild(document.createTextNode( "Delete" ));
+      var details = displayListElem.getElementsByClassName("list_emp_detail");
+      details[0].appendChild(document.createTextNode(employee.name));
+      details[1].appendChild(document.createTextNode(employee.email))
+      details[2].appendChild(document.createTextNode(employee.mobile));
+      var removeLink = displayListElem.getElementsByClassName("remove_list_record")[0];
+      document.getElementById( "list_table" ).appendChild(displayListElem);
       removeLink.addEventListener("click", function(e) {
         e.preventDefault();
         if( confirm("This record will be deleted permanently. Are you sure want to remove it.")) {
           this.removeRecords(employee.uniqueId);
         }
       }.bind(this));
-      document.getElementById( "list_table" ).appendChild(displayListElem);
     }
 
     this.appendEmployeeGridView = function(employee) {
-      var fragment = document.createDocumentFragment();
-      var displayGridElem = fragment.appendChild(document.createElement( "div" ));
+      var displayGridElem = document.getElementById("grid_template").cloneNode(true);
+      displayGridElem.classList.remove("hidden");
       displayGridElem.classList.add(employee.uniqueId);
-      displayGridElem.classList.add( "grid_emp" );
+      var removeButton = displayGridElem.getElementsByClassName("remove_grid")[0];
+      removeButton.appendChild(document.createTextNode("D"));
+      var pElement = displayGridElem.getElementsByClassName("grid_emp_detail");
+      pElement[0].appendChild(document.createTextNode("Name :  "+employee.name+""));
+      pElement[1].appendChild(document.createTextNode("Email :  "+employee.email+""));
+      pElement[2].appendChild(document.createTextNode("Mobile :  "+employee.mobile+""));
 
-      var removeButton = displayGridElem.appendChild(document.createElement( "div" ));
-      removeButton.classList.add( "remove_grid" );
-      removeButton.appendChild(document.createTextNode( "D" ));
-
-      var pElement = displayGridElem.appendChild(document.createElement( 'p' ));
-      pElement.classList.add( "grid_emp_detail" );
-      pElement.appendChild(document.createTextNode("Name :  "+employee.name+""));
-
-      var pElement = displayGridElem.appendChild(document.createElement( 'p' ));
-      pElement.classList.add( "grid_emp_detail" );
-      pElement.appendChild(document.createTextNode("Email :  "+employee.email+""));
-
-      var pElement = displayGridElem.appendChild(document.createElement( 'p' ));
-      pElement.classList.add( "grid_emp_detail" );
-      pElement.appendChild(document.createTextNode("Mobile :  "+employee.mobile+""));
-
-      
       removeButton.addEventListener("click", function() {
         if (confirm("This record will be deleted permanently. Are you sure want to remove it.")) {
           this.removeRecords(employee.uniqueId);
         }
       }.bind(this));
-      document.getElementById( "grid_view" ).appendChild(displayGridElem);
+      page.grid.appendChild(displayGridElem);
     }
   }
 

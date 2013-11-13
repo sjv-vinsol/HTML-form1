@@ -38,6 +38,10 @@
   display: none;
 }
 
+#display_employee {
+  overflow: hidden;
+}
+
 #grid_container {
   padding: 20px;
 }
