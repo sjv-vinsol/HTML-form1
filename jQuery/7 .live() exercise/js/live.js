@@ -5,8 +5,8 @@ $( 'body' ).append($addButton).append( $divContainer ).delegate( 'input#addButto
     $divContainer.append($( "<div/>" , {text: (++divNumber), class: "innerDiv grey"}));
 })
   .delegate( 'div.innerDiv', "click", function (event){
-    var $clickedDiv = $(event.target), $innerDivs = $divContainer.children( ".innerDiv" );
-    if ($clickedDiv.is($innerDivs.last())) {
+    var $clickedDiv = $(event.target);
+    if ($clickedDiv.is($divContainer.find(".innerDiv:last"))) {
       $clickedDiv.remove();
     }else {
       $clickedDiv.addClass( "heighlight" );
