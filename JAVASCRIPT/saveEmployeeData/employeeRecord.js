@@ -26,6 +26,8 @@ window.addEventListener("load", function () {
     this.currentView = "grid_view";
     // Select between grid_view OR list_view
     this.defaultView = "grid_view";
+    this.emailRegex = /^[a-zA-Z]+[\$\_\.]?[0-9a-zA-Z]*@[a-zA-Z]+([\.][a-zA-Z]+){1,4}$/;
+    this.nameRegex = /^[ a-zA-Z]+$/;
     this.empList = {};
     this.matchedResult = [];
 
@@ -41,7 +43,7 @@ window.addEventListener("load", function () {
     this.isValidName = function () {
       var nameElem = document.getElementById( "emp_name" );
       var name = nameElem.value.trim();
-      if (name && /^[ a-zA-Z]+$/.test(name)) {
+      if (this.nameRegex.test(name)) {
         nameElem.classList.remove( "invalidInput" );
         return true
       }else { 
@@ -53,7 +55,7 @@ window.addEventListener("load", function () {
     this.isValidEmail = function () {
       var emailElem = document.getElementById( "emp_email" );
       var email = emailElem.value.trim();
-      if (/^[a-zA-Z]+[\$\_\.]?[0-9a-zA-Z]*@[a-zA-Z]+([\.][a-zA-Z]+){1,4}$/.test(email) && this.isUnique("email", email)) {
+      if (this.emailRegex.test(email) && this.isUnique("email", email)) {
         emailElem.classList.remove( "invalidInput" );
         return true
       }else {
@@ -65,7 +67,6 @@ window.addEventListener("load", function () {
     this.isValidMobile = function () {
       var mobileElem = document.getElementById( "emp_mobile" );
       var mobile = mobileElem.value.trim();
-      // TODO trim mobile
       if (this.isUnique("mobile", mobile) && mobile.length == 10) {
         mobileElem.classList.remove( "invalidInput" );
         return true;
@@ -158,9 +159,7 @@ window.addEventListener("load", function () {
     this.startManaging = function () {
       //Create employee on click on save button
       page.saveButton.addEventListener("click", function(e) {
-        // console.log(this.empList.length);
         e.preventDefault();
-        console.log(this.isValidEmployeeDetails());
         if (this.isValidEmployeeDetails()) {
           var employee = new Employee(employeeId++);
           this.empList[employee.uniqueId] = employee;
