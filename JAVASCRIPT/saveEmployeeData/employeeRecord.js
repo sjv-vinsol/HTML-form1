@@ -26,13 +26,14 @@ window.addEventListener("load", function () {
     this.currentView = "grid_view";
     // Select between grid_view OR list_view
     this.defaultView = "grid_view";
-    this.empList = [];
+    this.empList = {};
     this.matchedResult = [];
 
     this.isUnique = function (attr, value) {
-      var length = this.empList.length;
+      var objectKeys = Object.keys(this.empList);
+      var length = objectKeys.length;
       while (length--) {
-        if (this.empList[length][attr] == value) return false
+        if (this.empList[objectKeys[length]][attr] == value) return false
       }
       return true;
     }
@@ -104,10 +105,11 @@ window.addEventListener("load", function () {
         system.removeHighlightedResult();
         var str = this.value;
         var regex = new RegExp(str);
-        var length = system.empList.length;
+        var employeeIdCollection = Object.keys(system.empList);
+        var length = employeeIdCollection.length;
         while (length--) {
-          if (str && system.empList[length].mobile.match(regex)) {
-            empId = system.empList[length].uniqueId;
+          if (str && system.empList[employeeIdCollection[length]].mobile.match(regex)) {
+            empId = employeeIdCollection[length];
             var elem = document.getElementsByClassName(empId);
             system.matchedResult.push(elem[0]);
             system.matchedResult.push(elem[1]);
@@ -156,12 +158,12 @@ window.addEventListener("load", function () {
     this.startManaging = function () {
       //Create employee on click on save button
       page.saveButton.addEventListener("click", function(e) {
-        console.log(this.empList.length);
+        // console.log(this.empList.length);
         e.preventDefault();
         console.log(this.isValidEmployeeDetails());
         if (this.isValidEmployeeDetails()) {
           var employee = new Employee(employeeId++);
-          this.empList.push(employee);
+          this.empList[employee.uniqueId] = employee;
           document.getElementById("display_employee").classList.remove("hidden");
           this.appendEmployeeGridView(employee);
           this.appendEmployeeListView(employee);
@@ -169,8 +171,9 @@ window.addEventListener("load", function () {
       }.bind(this))
     }
 
-    this.removeRecords = function (employeeId) {
-      var recordsToRemove = document.getElementsByClassName(employeeId);
+    this.removeRecords = function (employee) {
+      delete this.empList[employee.uniqueId];
+      var recordsToRemove = document.getElementsByClassName(employee.uniqueId);
       var length = recordsToRemove.length, record = "";
       while (length--) {
         record = recordsToRemove[0];
@@ -191,7 +194,7 @@ window.addEventListener("load", function () {
       removeLink.addEventListener("click", function(e) {
         e.preventDefault();
         if( confirm("This record will be deleted permanently. Are you sure want to remove it.")) {
-          this.removeRecords(employee.uniqueId);
+          this.removeRecords(employee);
         }
       }.bind(this));
     }
@@ -209,7 +212,7 @@ window.addEventListener("load", function () {
 
       removeButton.addEventListener("click", function() {
         if (confirm("This record will be deleted permanently. Are you sure want to remove it.")) {
-          this.removeRecords(employee.uniqueId);
+          this.removeRecords(employee);
         }
       }.bind(this));
       page.grid.appendChild(displayGridElem);
