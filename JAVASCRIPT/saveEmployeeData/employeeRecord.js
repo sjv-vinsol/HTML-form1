@@ -25,7 +25,7 @@ window.addEventListener("load", function () {
   function EmployeeManageSystem () {
     this.currentView = "grid_view";
     // Select between grid_view OR list_view
-    this.defaultView = "list_view";
+    this.defaultView = "grid_view";
     this.empList = [];
     this.matchedResult = [];
 
@@ -156,11 +156,13 @@ window.addEventListener("load", function () {
     this.startManaging = function () {
       //Create employee on click on save button
       page.saveButton.addEventListener("click", function(e) {
-        if (!this.empList.length) document.getElementById("display_employee").classList.remove("hidden")
+        console.log(this.empList.length);
         e.preventDefault();
+        console.log(this.isValidEmployeeDetails());
         if (this.isValidEmployeeDetails()) {
           var employee = new Employee(employeeId++);
           this.empList.push(employee);
+          document.getElementById("display_employee").classList.remove("hidden");
           this.appendEmployeeGridView(employee);
           this.appendEmployeeListView(employee);
         }
