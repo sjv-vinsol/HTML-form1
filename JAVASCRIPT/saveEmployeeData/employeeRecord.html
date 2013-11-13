@@ -11,16 +11,21 @@
     <div id="container">
 
       <div id="form_container">
-        <div id="search">
-          <p> Enter mobile number to SEARCH </p>
-          <input id="mob_search" placeholder="Search by mobile #">
 
+        <div id="search">
+          <input id="mob_search" placeholder="Search by mobile #">
+        </div>
+
+        <div id="errors_container">
+          <ul id="errors">
+
+          </ul>
         </div>
         <div id="form">
           <p> Create Employee :</p>
           <form id="employee_create">
-            <span class="red">* </span><input id="emp_name" placeholder="Enter full name"><br>
-            <span class="red">* </span><input id="emp_email" placeholder="Enter email"><br>
+            <span class="red">* </span><input id="emp_name" placeholder="Enter full name">
+            <span class="red">* </span><input id="emp_email" placeholder="Enter email">
             <span class="red">* </span><input id="emp_mobile" placeholder="Enter 10 digit mobile #"><br>
             <input type="submit" id="save_emp" value="Create">
           </form>

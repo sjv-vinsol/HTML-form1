@@ -11,6 +11,9 @@
   height: 20px;  
   width: 200px;
   font-size: 18px;
+  float: right;
+  display: block;
+  /*margin-bottom: 20px;*/
 }
 
 #list_view {
@@ -24,13 +27,14 @@
 }
 
 #search {
-  padding: 30px;
-  background-color: #c0362c;
+  overflow: hidden;
+  padding: 4px;
   text-align: center;
 }
 
 #button_container {
   text-align: center; 
+  /*background-color: grey;*/
 }
 
 #button {
@@ -40,6 +44,12 @@
 
 .hidden {
   display: none;
+}
+
+#errors li {
+  margin-bottom: 2px;
+  background-color: yellow;
+  width: 40%;
 }
 
 #display_employee {
@@ -55,6 +65,10 @@
   font-size: 15px;
   overflow: hidden;
   margin: 0px auto;
+}
+
+#save_emp {
+  margin-left: 10px;
 }
 
 .grid_emp_detail {
@@ -85,6 +99,8 @@
 
 #form input {
   margin-bottom: 10px;
+  margin-right: 30px;
+
 }
 
 #search p {
@@ -97,12 +113,19 @@
   float: right;
   background-color: red;
   cursor: pointer;
+  padding: 0px 4px;
+}
+
+#form_container {
+  background-color: #c0362c;
+
 }
 
 .button {
   background-color: #666666;
   width: 80px;
   height: 30px;
+  border-radius: 5px;
 }
 
 .highlight {
@@ -110,5 +133,7 @@
 }
 
 #form {
-  padding: 30px;
+  padding: 0px 30px;
+  /*padding-top: 0px;*/
+  /*padding-bottom: 0px;*/
 }

@@ -10,7 +10,8 @@ window.addEventListener("load", function () {
     listButton: document.getElementById( "show_list" ),
     grid: document.getElementById("grid_view"),
     list: document.getElementById("list_view"),
-    searchElem: document.getElementById( "mob_search" )
+    searchElem: document.getElementById( "mob_search" ),
+    errorContainer: document.getElementById("errors")
   }
 
   var employeeId = 0;
@@ -28,9 +29,11 @@ window.addEventListener("load", function () {
     this.defaultView = "grid_view";
     this.emailRegex = /^[a-zA-Z]+[\$\_\.]?[0-9a-zA-Z]*@[a-zA-Z]+([\.][a-zA-Z]+){1,4}$/;
     this.nameRegex = /^[ a-zA-Z]+$/;
+    this.mobileRegex = /^[0-9]{10}$/;
     this.empList = {};
     this.matchedResult = [];
-
+    this.errors = [];
+    
     this.isUnique = function (attr, value) {
       var objectKeys = Object.keys(this.empList);
       var length = objectKeys.length;
@@ -40,44 +43,36 @@ window.addEventListener("load", function () {
       return true;
     }
 
-    this.isValidName = function () {
-      var nameElem = document.getElementById( "emp_name" );
-      var name = nameElem.value.trim();
-      if (this.nameRegex.test(name)) {
-        nameElem.classList.remove( "invalidInput" );
-        return true
-      }else { 
-        nameElem.classList.add( "invalidInput" );
-        return false;
+    this.isValid = function (attr, elemId, regex, checkUniqueness) {
+      var elem = document.getElementById(elemId);
+      var isValid = true;
+      var elemValue = elem.value.trim();
+      if (!elemValue) {
+        this.errors.push(""+attr+" cant be blank");
+        isValid = false;
+      } else if ( regex && !regex.test(elemValue)) {
+        if (attr == "name") this.errors.push("Name should include only alphabets")
+        else if (attr == "email") this.errors.push("Email is invalid")
+        else if (attr == "mobile") this.errors.push("Mobile should include 10 Digits only")
+        isValid = false;
       }
-    }    
-
-    this.isValidEmail = function () {
-      var emailElem = document.getElementById( "emp_email" );
-      var email = emailElem.value.trim();
-      if (this.emailRegex.test(email) && this.isUnique("email", email)) {
-        emailElem.classList.remove( "invalidInput" );
-        return true
-      }else {
-        emailElem.classList.add( "invalidInput" );
-        return false;
+      // uniqueness is false for name
+      else if(checkUniqueness && !this.isUnique(attr, elemValue)) {
+        this.errors.push(""+attr+" is already taken");
+        isValid = false;
       }
-    }
 
-    this.isValidMobile = function () {
-      var mobileElem = document.getElementById( "emp_mobile" );
-      var mobile = mobileElem.value.trim();
-      if (this.isUnique("mobile", mobile) && mobile.length == 10) {
-        mobileElem.classList.remove( "invalidInput" );
+      if (isValid) {
+        elem.classList.remove("invalidInput");
         return true;
       }else {
-        mobileElem.classList.add( "invalidInput" );
+        elem.classList.add("invalidInput");
         return false;
       }
     }
 
     this.isValidEmployeeDetails = function () {
-      if (this.isValidName() & this.isValidEmail() & this.isValidMobile()) { return true }
+      if (this.isValid("name", "emp_name", this.nameRegex, false) & this.isValid("email", "emp_email", this.emailRegex, true) & this.isValid("mobile", "emp_mobile", this.mobileRegex, true)) { return true }
         else { return false };
     }
 
@@ -100,23 +95,27 @@ window.addEventListener("load", function () {
       this.matchedResult = [];
     }
 
+    function searchHandler(system) {
+      system.removeHighlightedResult();
+      var str = page.searchElem.value;
+      var regex = new RegExp(str);
+      var employeeIdCollection = Object.keys(system.empList);
+      var length = employeeIdCollection.length;
+      while (length--) {
+        if (str && system.empList[employeeIdCollection[length]].mobile.match(regex)) {
+          empId = employeeIdCollection[length];
+          var elem = document.getElementsByClassName(empId);
+          system.matchedResult.push(elem[0]);
+          system.matchedResult.push(elem[1]);
+        }
+      }
+      system.heightlightMatchedResults();
+    }
+
     this.searchByMobileNo = function () {
       var system = this;
       page.searchElem.addEventListener("keyup", function() {
-        system.removeHighlightedResult();
-        var str = this.value;
-        var regex = new RegExp(str);
-        var employeeIdCollection = Object.keys(system.empList);
-        var length = employeeIdCollection.length;
-        while (length--) {
-          if (str && system.empList[employeeIdCollection[length]].mobile.match(regex)) {
-            empId = employeeIdCollection[length];
-            var elem = document.getElementsByClassName(empId);
-            system.matchedResult.push(elem[0]);
-            system.matchedResult.push(elem[1]);
-          }
-        }
-        system.heightlightMatchedResults();
+        searchHandler(system, this);
       })
     }
       
@@ -156,9 +155,23 @@ window.addEventListener("load", function () {
     this.showListView();
     this.showGridView();
 
+    this.displayErrors = function () {
+      for (i = 0; i < this.errors.length; i++) {
+        page.errorContainer.appendChild(document.createElement("li")).appendChild(document.createTextNode(this.errors[i]));
+      }
+    }
+
+    this.removeAllChildNodesOf = function (elem) {
+      while (elem.firstChild) {
+        elem.removeChild(elem.firstChild);
+      }
+    }
+
     this.startManaging = function () {
       //Create employee on click on save button
       page.saveButton.addEventListener("click", function(e) {
+        this.errors = [];
+        this.removeAllChildNodesOf(document.getElementById("errors"));
         e.preventDefault();
         if (this.isValidEmployeeDetails()) {
           var employee = new Employee(employeeId++);
@@ -166,6 +179,9 @@ window.addEventListener("load", function () {
           document.getElementById("display_employee").classList.remove("hidden");
           this.appendEmployeeGridView(employee);
           this.appendEmployeeListView(employee);
+          searchHandler(this);
+        }else {
+          this.displayErrors();
         }
       }.bind(this))
     }
