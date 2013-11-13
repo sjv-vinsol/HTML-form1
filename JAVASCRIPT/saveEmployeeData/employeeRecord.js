@@ -179,6 +179,7 @@ window.addEventListener("load", function () {
         record = recordsToRemove[0];
         record.parentNode.removeChild(record)
       }
+      if (!Object.keys(this.empList).length) document.getElementById("display_employee").classList.add("hidden");
     }
 
     this.appendEmployeeListView = function (employee) {
