@@ -5,6 +5,14 @@
   cursor: default;
 }
 
+.product, th {
+  cursor: pointer;
+}
+
+#blank {
+  background-color: white !important;
+}
+
 #productRating th,td {
   border-right: 1px solid black;
 }
