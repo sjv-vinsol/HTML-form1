@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+<body>
+  <div class='container';>
+    <div class='header'>
+      <span class='heading'>
+        Product grid
+      </span>
+    </div>
+  <div class="container1">
+  <div class="left">
+    <ul class="main accordion">
+      <li><a id="fruits" href="">fruits</a>
+        <ul class="accordion">
+          <li><a id="apple" href="allornone.html">Apple</a>
+            <ul class="accordion">
+              <li><a href="allornone.html">Red Apple</a></li>
+              <li><a href="allornone.html">Green Apple</a></li>
+              <li><a href="allornone.html">yellow Apple</a></li>
+            </ul>
+          </li>
+          <li><a href="allornone.html">Grapes</a></li>
+          <li><a href="allornone.html">Bananan</a></li>
+          <li><a href="allornone.html">papaya</a></li>
+        </ul>
+      </li>
+      <li><a id="vegetables" href="allornone.html">vegetables</a>
+        <ul class="accordion">
+          <li><a href="weekday.html">potato</a></li>
+          <li><a href="weekday.html">spinach</a></li>
+          <li><a href="weekday.html">brinjal</a></li>
+        </ul>
+      </li>
+      <li><a id="breads" href="weekday.html">breads</a>
+        <ul class="accordion">
+          <li><a id="wheat" href="exercise4.html">wheat</a>
+            <ul class="accordion">
+              <li><a href="exercise4.html">oregano</a></li>
+              <li><a href="exercise4.html">simple</a></li>
+              <li><a href="exercise4.html">sweet</a></li>
+              <li><a href="exercise4.html">salty</a></li>
+            </ul>
+          </li>
+          <li><a href="exercise4.html">Oats</a></li>
+          <li><a href="exercise4.html">Brown</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="right">
+  </div>
+</div>
+
+<div class='footer'>
+  <span class='heading'>
+    This is footer
+  </span>
+</div>
+</div> 
+  
+  <script src="lib/jquery-1.10.2.js" type="text/javascript" charset="utf-8"></script>  
+  <script src="lib/jquery.dcjqaccordion.2.9.js" type="text/javascript" charset="utf-8"></script>
+  <script src="lib/jquery.cookie.js" type="text/javascript" charset="utf-8"></script>
+  <script src="accordion.js" type="text/javascript" charset="utf-8"></script>
+  <script type="text/javascript">
+    // <![CDATA[
+    $(document).ready(function () {
+      $('ul:first').dcAccordion();
+    });
+
+    // ]]>
+  </script>
+</body>
+</html>
