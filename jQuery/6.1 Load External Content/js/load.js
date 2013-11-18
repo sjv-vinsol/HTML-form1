@@ -17,5 +17,5 @@ $headlines.click(function(event) {
     $displayBlogDiv.load(pathname + " #" + referenceId);
   } else {
     $displayBlogDiv.toggle();
-  }  
+  }
 });
