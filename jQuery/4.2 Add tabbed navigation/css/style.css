@@ -1,4 +1,19 @@
 /* general */
+#header {
+  margin-top: 100px !important;
+  clear: left;
+}
+
+.drag {
+  overflow: hidden;
+  background-color: grey;
+  margin: 10px;
+  float: left;
+  height: 50px;
+  width: 50px;
+  /*position: absolute;*/
+}
+
 .ulList {
   font-weight: bold;
   background-color: #00adee;  
