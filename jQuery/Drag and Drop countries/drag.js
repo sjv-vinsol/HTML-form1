@@ -20,8 +20,8 @@ $(document).ready(function () {
   }
 
   function onDifferentCountrySection(draggedElem, countrySection) {
-    if (!countrySection.is(draggedElem.parent())) return true
-      else return false;
+    if (countrySection.is(draggedElem.parent())) return false
+      else return true;
   }
 
   appendCountriesToSelecBox("leftCountries");
@@ -50,7 +50,10 @@ $(document).ready(function () {
       if (onDifferentCountrySection(draggedElem, droppableElem)) {
         var idOfCountryContainer = droppableElem.attr("id");
         // sort the children in droppableElem by Id
-        var sortedElems = sortJqueryObjectBy("id", droppableElem.children().detach().add(draggedElem.detach()))
+        // detach all the children of droppable counntries container
+        var detachedCountries = droppableElem.children().detach();
+        // detach dragged element from DOM and add it to detachedCountries array then sort it.
+        var sortedElems = sortJqueryObjectBy("id", detachedCountries.add(draggedElem.detach()));
         droppableElem.append(sortedElems);
       }
     }
