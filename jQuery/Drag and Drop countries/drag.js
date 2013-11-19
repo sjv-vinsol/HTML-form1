@@ -2,13 +2,11 @@ $(document).ready(function () {
   var countriesJSON = { leftCountries: ["India", "China", "Nepal", "Sri Lanka"], rightCountries: ["Usa", "Australia", "Quatar", "New Zealand"]};
 
   function appendCountriesToSelecBox (idOfCountryContainer) {
-    var containerElem = $("#"+ idOfCountryContainer +"");
-    containerElem.html("");
-    var soretedCountryArr = countriesJSON[idOfCountryContainer].sort();
+    var sortedCountryArr = countriesJSON[idOfCountryContainer].sort();
     var length = countriesJSON[idOfCountryContainer].length, optionElem = {};
     while (length--) {
-      optionElem = $('<p/>', {class: "country", id: soretedCountryArr[length]}).text(soretedCountryArr[length]);
-      containerElem.prepend(optionElem);
+      optionElem = $('<p/>').attr({id: sortedCountryArr[length], class: "country"}).text(sortedCountryArr[length]);
+      $("#"+ idOfCountryContainer).prepend(optionElem);
     }
   }
 
@@ -19,9 +17,8 @@ $(document).ready(function () {
     return obj;
   }
 
-  function onDifferentCountrySection(draggedElem, countrySection) {
-    if (countrySection.is(draggedElem.parent())) return false
-      else return true;
+  function isPresentOnDifferentContainer(draggedElem, container) {
+    return (!container.is(draggedElem.parent()));
   }
 
   appendCountriesToSelecBox("leftCountries");
@@ -31,7 +28,7 @@ $(document).ready(function () {
   $('.selectBox').droppable({
     accept: ".country",
     over: function (event, elemObj) {
-      if ( onDifferentCountrySection(elemObj.draggable, $(this))) {
+      if ( isPresentOnDifferentContainer(elemObj.draggable, $(this))) {
         elemObj.draggable.addClass("yellow");
       }
     },
@@ -47,7 +44,7 @@ $(document).ready(function () {
     drop: function (event, elemObj) {
       var draggedElem = elemObj.draggable, droppableElem = $(this);
       draggedElem.removeClass("yellow");
-      if (onDifferentCountrySection(draggedElem, droppableElem)) {
+      if (isPresentOnDifferentContainer(draggedElem, droppableElem)) {
         var idOfCountryContainer = droppableElem.attr("id");
         // sort the children in droppableElem by Id
         // detach all the children of droppable counntries container
