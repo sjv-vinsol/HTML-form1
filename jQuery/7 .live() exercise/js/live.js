@@ -8,6 +8,7 @@ $( 'body' ).append($addButton).append( $divContainer ).delegate( 'input#addButto
     var $clickedDiv = $(event.target);
     if ($clickedDiv.is($divContainer.find(".innerDiv:last"))) {
       $clickedDiv.remove();
+      divNumber--;
     }else {
       $clickedDiv.addClass( "heighlight" );
       $clickedDiv.siblings().removeClass( "heighlight" );
