@@ -2,7 +2,6 @@ var $displaySpecialDiv = $("#specialContent").removeClass("hidden");
 $("#specials").find("form").after($displaySpecialDiv);
 
 function displaySpecials(specialData) {
-  console.log("Special Data  :   ", specialData);
   $("#title").html(specialData["title"]);
   $("#text").html(specialData["text"]);
   $("#image").attr("src", specialData["image"]);
