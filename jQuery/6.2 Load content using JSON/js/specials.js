@@ -1,5 +1,15 @@
-var $displaySpecialDiv = $("#specialContent").removeClass("hidden");
-$("#specials").find("form").after($displaySpecialDiv);
+function createDisplayContainer() {
+  var displayContainer = $("<div/>").attr({id: "specialContent"});
+  $('<h3/>').attr("id", "title").appendTo(displayContainer);
+  $('<p/>').attr("id", "text").appendTo(displayContainer);
+  $('<img/>').attr("id", "image").appendTo(displayContainer);
+  $('<h4/>').attr("id", "color").appendTo(displayContainer);
+  return displayContainer;
+}
+
+(function appendDisplayContainer() {
+  $("#specials").find("form").after(createDisplayContainer());
+})();
 
 function displaySpecials(specialData) {
   $("#title").html(specialData["title"]);
@@ -7,22 +17,26 @@ function displaySpecials(specialData) {
   $("#image").attr("src", specialData["image"]);
   $("#color").html(specialData["color"]);
 }
-var jsonFetched = false, response = {};
+var response = {};
 
-$("#specials form select").on("change", function(){
+$("#specials form select").one("change", function(){
   var day = $(this).val();
-  if (!jsonFetched) {
-    $.ajax({
-      url: "data/specials.json",
-      dataType: "json",
-      success: function(jsonResponse) {
-        response = jsonResponse;
-        jsonFetched = true;
-        displaySpecials(response[day]);
-      }
-    })
-  } else {
-    if (day) displaySpecials(response[day]);
-  }
+  $.ajax({
+    url: "data/specials.json",
+    dataType: "json",
+    success: function(jsonResponse) {
+      response = jsonResponse;
+      displaySpecials(response[day]);
+      bindChangeEvent();
+    }
+  })
 })
+
+function bindChangeEvent() {
+  $("#specials form select").on("change", function(){
+    var day = $(this).val();
+    if (day) displaySpecials(response[day]);
+  })
+}
+
 $("#specials form li.buttons").remove();
