@@ -1,0 +1,23 @@
+[
+  {
+    "name": "1Dell Inspiron", 
+    "category": "1Laptop", 
+    "description": "1product of dell.",
+    "price": 31000, 
+    "imgName": "bread.jpg"
+  },
+  {
+    "name": "2Apple Makbook", 
+    "category": "2Laptop", 
+    "description": "2product of dell.",
+    "price": 32000, 
+    "imgName": "curry.jpg"
+    },
+  {
+    "name": "3Sony Vaio", 
+    "category": "3Laptop", 
+    "description": "3product of dell.",
+    "price": 33000, 
+    "imgName": "fruit.jpg"
+  }
+]

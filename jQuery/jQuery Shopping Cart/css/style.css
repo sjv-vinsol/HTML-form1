@@ -51,6 +51,7 @@ body {
   margin-bottom: 20px;
   position: relative;
   top: 9px;
+  cursor: pointer;
 }
 
 .price {
