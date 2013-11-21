@@ -6,8 +6,11 @@ $.each($moduleElem, function() {
   $liElem = $( "<li/>", {id: "new" + h2ElemText, class: "ulList", text: h2ElemText} ).appendTo($moduleList);
   (function bindClickEvent ($liElem) {
     $liElem.on( "click", function(event){
+    	$('.ulList').removeClass('current');
+    	$liElem.addClass('current');
       $moduleElem.filter(':visible').hide();
       $moduleElem.eq($liElem.index()).show();
     })
   })($liElem);
 })
+$('.ulList').first().trigger("click");
