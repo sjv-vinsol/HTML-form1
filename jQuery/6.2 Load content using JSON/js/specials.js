@@ -17,7 +17,6 @@ function displaySpecials(specialData) {
   $("#image").attr("src", specialData["image"]);
   $("#color").html(specialData["color"]);
 }
-var response = {};
 
 $("#specials form select").one("change", function(){
   var day = $(this).val();
@@ -25,17 +24,16 @@ $("#specials form select").one("change", function(){
     url: "data/specials.json",
     dataType: "json",
     success: function(jsonResponse) {
-      response = jsonResponse;
-      displaySpecials(response[day]);
-      bindChangeEvent();
+      displaySpecials(jsonResponse[day]);
+      bindChangeEvent(jsonResponse);
     }
   })
 })
 
-function bindChangeEvent() {
+function bindChangeEvent(jsonResponse) {
   $("#specials form select").on("change", function(){
     var day = $(this).val();
-    if (day) displaySpecials(response[day]);
+    if (day) displaySpecials(jsonResponse[day]);
   })
 }
 
