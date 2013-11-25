@@ -1,23 +1,30 @@
-[
-  {
-    "name": "1Dell Inspiron", 
-    "category": "1Laptop", 
+{
+  "1": {
+    "name": "Dell Inspiron",
+    "category": "Laptop",
     "description": "1product of dell.",
-    "price": 31000, 
+    "price": 31000,
     "imgName": "bread.jpg"
   },
-  {
-    "name": "2Apple Makbook", 
-    "category": "2Laptop", 
-    "description": "2product of dell.",
+  "2": {
+    "name": "Apple Macbook",
+    "category": "Laptop",
+    "description": "This is a short description about Apple macbook.",
     "price": 32000, 
     "imgName": "curry.jpg"
     },
-  {
-    "name": "3Sony Vaio", 
-    "category": "3Laptop", 
-    "description": "3product of dell.",
-    "price": 33000, 
+  "3": {
+    "name": "Sony Vaio",
+    "category": "Laptop",
+    "description": "Product of Sony. Suprb sound and graphics.",
+    "price": 33000,
     "imgName": "fruit.jpg"
+  },
+  "4": {
+    "name": "Nokia lumia 620",
+    "category": "Mobile",
+    "description": "Product of Nokia. Later accuired by Microsoft.",
+    "price": 330,
+    "imgName": "bread.jpg"
   }
-]
+}

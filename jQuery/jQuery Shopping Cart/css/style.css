@@ -6,6 +6,27 @@ body {
   text-align: center;
 }
 
+.search_button {
+  background-color: #A3CEDC;
+  border-radius: 8px;
+}
+
+form {
+  text-align: right;
+}
+
+.qtyInput:focus:hover {
+  background-color: yellow;
+}
+
+#search_box:focus:hover {
+  background-color: yellow;
+}
+
+#search_container {
+  background-color: brown;
+}
+
 .blue {
   background-color: #A3CEDC;
   border-radius:40px;

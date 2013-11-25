@@ -21,8 +21,19 @@
       </div>
 
     <div id="innerContainer">
-      <table id="product" class="hidden table">
-      </table>
+      
+
+      <div id="allProductList" class="hidden">
+        <form id="search_container">
+          <input type="text" id="search_box" placeholder="Search By category"/>
+          <input type="button" value="Search" id="search" class="search_button">
+          <input type="button" value="Show All" id="show_all_category" class="search_button">
+        </form>
+
+        <table id="product" class="table">
+        </table>
+
+      </div>
 
       <table id="myCart" class="hidden table">
         <tr id="header">
@@ -36,7 +47,7 @@
 
       <!-- Hidden template for cloning #product-->
       <table>
-        <tr id="productTemplate" class="hidden"> 
+        <tr id="productTemplate" class="hidden productRecord"> 
           <td class="product">
             <div class="imgContainer">
               <img class="productImg" src="images/onions.jpg">
@@ -64,9 +75,9 @@
               <p class="name">Dell Inspiron</p>
             </div>
           </td>
-          <td class="cartPrice smallFont"> Price </td>
+          <td class="price smallFont"> Price </td>
           <td class="productQty cartQty"><input class="qtyInput" type="text"/></td>
-          <td class="subTotal smallFont">123132</td>
+          <td class="subTotal smallFont"></td>
           <td class="button"><input class="remove blue" type="button" value="Remove"></td>
         </tr>
       </table>
