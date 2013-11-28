@@ -1,9 +1,30 @@
+.bold {
+  font-weight: bold;
+}
+
+#finalPage {
+  margin-left: 20px;
+}
+
+.color {
+  color: brown;
+}
+
+.displayAnswer {
+  margin-left: 20px;
+}
+
+#questionSection {
+  margin-bottom: 30px;
+  margin-left: 20px;
+}
+
 #instructions {
   width: 400px;
 }
 
-.redColor {
-  color: red;
+#next {
+  margin-left: 100px;
 }
 
 .header {
@@ -25,8 +46,8 @@
   float: left;
 }
 
-#countDown {
-  height: 20px;
+.hidden {
+  display: none;
 }
 
 ol {
@@ -40,6 +61,7 @@ ol {
 #countDown {
   font-size: 40px;
   padding-bottom: 50px;
+  height: 20px;
   margin-left: 40px;
 }
 
@@ -49,12 +71,6 @@ ol {
 
 #score {
   font-weight: bold;
-}
-
-#wrongAns {
-  margin-bottom: 20px;
-}
-
-#score {
   font-size: 20px;
+  margin-left: 20px;
 }

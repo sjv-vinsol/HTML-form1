@@ -15,25 +15,41 @@
       <input id="start" type="button" value="Start Test">
     </div>
 
-    <div id="countDown">
-    </div>
-
     <div id="container">
-      <div id="questionContainer">
+      <div id="questionSection" class="hidden">
+        <div id="countDown">
+        </div>
+
+        <div id="questionContainer">
+          <span id="question"></span>
+          <span> = </span>
+          <span id="answer"><input type="text" id="answerInput"></span>
+        </div>
+        <input type="button" value="Next" id="next">
+        
       </div>
     </div>
-
-    <div id="score">
+    <div id="score" class="hidden">
+      Score : 0
     </div>
 
-    <div id="wrongAns">      
-    </div>
+    <div id="finalPage" class="hidden">
+      <h2> Displaying questions that are not answered correctly :-</h2>
+      <div id="displayQuestionContainer">        
+      </div>
 
-    <div id="timeOut"> 
-    </div>
+      <div id="homeBtnContainer">
+        <input id="home" type="button" value="Go To Home Page">
+      </div>
 
-    <div id="startAgain">
-    </div>
+      <div id="worngQuestionTemplate" class="hidden">
+        <p class="question bold"></p>
+        <div class="displayAnswer">
+          <p><span class="bold color"> Your Answer : </span><span class="userAns"></span></p>
+          <p><span class="bold color">Correct Answer : </span><span class="correctAns"></span></p>
+        </div>
+      </div>
+    </div>    
   </body>
 
   <script type="text/javascript" src="arithmeticQuiz.js"></script>

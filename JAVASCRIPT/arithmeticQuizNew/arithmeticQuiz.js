@@ -1,181 +1,235 @@
-var operator = ["+", "*", "-", "/"];
-
-// #FIXME_AB_h_1.0: use bind 
-document.getElementById("start").addEventListener("click", function () {
-  // var startButton = document.getElementById("start");
-  // #FIXME_AB: avoid using parentNode 
-  this.parentNode.removeChild(this);
-  quiz = new Quiz();
+window.addEventListener("load", function () {
+  // Arguments to Quiz(NoOfQuestion, time, rangeOfRandomVariables)
+  var quiz = new Quiz(20, 5, [1, 20]);
+  quiz.init();
   quiz.start();
 });
 
-function Question(questionNumber) {
-  this.randomNumerRange = [1, 20];     // To set the random number of a question.
-  // Generate two random numbers between specified in random numberNumberRange.
-  this.getTwoRandomNumbersBetween = function () {
-    var numberArr = [], min = this.randomNumerRange[0], max = this.randomNumerRange[1];
-    while (numberArr.length < 2) {
-      numberArr.push(Math.round(Math.random() * (max - min)) + min);
-    }
-    return numberArr;
+function Question(questionNumber, randomNumberRange) {
+  this.randomNumberRange = randomNumberRange;
+  // Generate random number between digits specified in random numberNumberRange.
+  this.generateRandomNumber = function () {
+    var min = this.randomNumberRange[0], max = this.randomNumberRange[1];
+    return (Math.round(Math.random() * (max - min)) + min);
   }
 
   // get operator of -, +, *, /
-  var getOperator = function() {
-    return operator[Math.floor(Math.random() * operator.length)];
+  this.getOperator = function() {
+    return this.operators[Math.floor(Math.random() * this.operators.length)];
   }
 
   this.generateQuestionString = function () {
-    var number = this.getTwoRandomNumbersBetween();
-    var operator = getOperator();
-    return (number[0] + " " + operator + " " + number[1]);
+    this.operand1 = this.generateRandomNumber();
+    this.operand2 = this.generateRandomNumber();
+    this.operator = this.getOperator();
+    return ("Q." + this.questionNumber + ") " + this.operand1 + " " + this.operator + " " + this.operand2);
   }
-  
-  this.questionNumber = ++questionNumber;
+
+  this.evaluateAns = function (operatorIndex) {
+    switch (operatorIndex) {
+      case 0:
+        return (this.operand1 * this.operand2);
+      case 1:
+        return Math.round((this.operand1 / this.operand2) * 100)/100;
+      case 2:
+        return (this.operand1 + this.operand2);
+      case 3:
+        return (this.operand1 - this.operand2);
+    }
+  }
+
+  Question.prototype.operators = ["*", "/", "+", "-"];
+  this.questionNumber = questionNumber;
   this.questionString = this.generateQuestionString();
-  this.correctAnswer = Math.round(eval(this.questionString) * 100) / 100;
+  this.correctAnswer = this.evaluateAns(this.operators.indexOf(this.operator));
   this.userAnswer = "";
   this.isTimeOut = false;
-  this.wrongAns = false;
-
-  this.addToQuestionJSON = function () {
-    questionJSON[this.questionNumber] = this;
-  };
 }
 
-function Quiz() {
-  this.timerForEachQuestion = 20;
-  this.score = 0;
-  this.questions = [];
+function Quiz(noOfQuestions, timeForEachQuestion, randomNumberRange) {
+
+  this.noOfQuestions = noOfQuestions;
+  this.timeForEachQuestion = timeForEachQuestion;
+  this.questions = {};
   this.currentQuestion = {};
-  this.maxNoOfQuestions = 20;
-  this.generateQuestions = function () {
-    var length = this.maxNoOfQuestions, questionArray = [];
-    for (i = 0; i < length; i++) {
-      questionArray.push(new Question(i));
-    }
-    return questionArray
+  this.score = 0;
+  this.nonCorrectAnsArray = [];
+  this.timerCount = timeForEachQuestion;
+
+  this.init = function () {
+    this.generateQuestions();
   };
 
-  var removeAllInnerNodesFrom = function (myNode) {
+  this.generateQuestions = function () {
+    var noOfQuestions = this.noOfQuestions;
+    for (var questionNumber = 1; questionNumber <= noOfQuestions; questionNumber++) {
+      var question = new Question(questionNumber, randomNumberRange);
+      this.questions[questionNumber] = question;
+    }
+  };
+
+  this.hideStartButton = function (startButton) {
+    startButton.classList.add("hidden");
+  }
+
+  this.checkResult = function () {
+    this.currentQuestion.userAnswer = document.getElementById("answerInput").value;
+    if (this.currentQuestion.correctAnswer != parseInt(this.currentQuestion.userAnswer, 10)) {
+      this.nonCorrectAnsArray.push(this.currentQuestion);
+    }
+  }
+
+  this.displayQuestionSection = function () {
+    document.getElementById("questionSection").classList.remove("hidden");
+  }
+
+  this.clearAnsInputField = function () {
+    document.getElementById("answerInput").value = "";
+  }
+
+  this.timerHandler = function (counterElem){
+    if ((--this.timerCount) == 0) {
+      this.currentQuestion.isTimeOut = true;
+      this.currentQuestion.userAnswer = "Time Out"
+      this.nonCorrectAnsArray.push(this.currentQuestion);
+      this.displayNextQuestion();
+    }
+    counterElem.innerHTML = this.timerCount;
+  }
+
+  this.startTimer = function () {
+    var counterElem = document.getElementById("countDown");
+    this.timerCount = this.timeForEachQuestion;
+    counterElem.innerHTML = this.timerCount;
+    timer = setInterval( function () {
+      this.timerHandler(counterElem);
+    }.bind(this), 1000);
+  }
+
+  this.displayNextQuestion = function () {
+    document.getElementById("next").click();
+  }
+
+  this.displayFirstQuestion = function () {
+    this.displayQuestionSection();
+    this.currentQuestion = this.questions[1];
+    this.nextBtn = document.getElementById("next");
+    this.displayQuestion();
+    this.startTimer();
+    this.displayScore();
+  }
+
+  this.displayScore = function () {
+    document.getElementById("score").classList.remove("hidden");
+  }
+
+  this.focusOnUserInput = function () {
+    document.getElementById("answerInput").focus();
+  }
+
+  function handlerForNext() {
+    this.focusOnUserInput();
+    clearInterval(timer);
+    if (!this.currentQuestion.isTimeOut) {
+      this.checkResult();
+      this.updateScore();
+    }
+    if (this.currentQuestion.questionNumber == this.noOfQuestions) {
+      this.finish();
+    } else {
+      this.clearAnsInputField();
+      this.currentQuestion = this.nextQuestion();
+      this.displayQuestion();
+      this.startTimer();
+    }
+  }
+
+  this.hideInstructions = function () {
+    document.getElementById("instructions").classList.add("hidden");
+  }
+
+  this.start = function () {
+    var quiz = this;
+    document.getElementById("start").addEventListener("click", function () {
+      quiz.hideStartButton(this);
+      quiz.hideInstructions();
+      quiz.displayFirstQuestion();
+      quiz.focusOnUserInput();
+    })
+    document.getElementById("next").addEventListener("click", handlerForNext.bind(quiz));
+  };
+
+  this.hideCurrentQuestionContainer = function () {
+    document.getElementById("container").classList.add("hidden");
+  }
+
+  this.finish = function () {
+    this.hideCurrentQuestionContainer();
+    this.displayFinalScore();
+    this.displayNonCorrectAns();
+  }
+
+  this.removeAllInnerNodesFrom = function (myNode) {
     while (myNode.firstChild) {
       myNode.removeChild(myNode.firstChild);
     }
-  };
+  }
 
-  var changeFontColorToRed = function (elem) {
-    elem.classList.add("redColor");
-  };
-
-  this.startTimer = function () {
+  this.displayNonCorrectAns = function () {
     var quiz = this;
-    var timerCounter = this.timerForEachQuestion;
-    var counterElem = document.getElementById("countDown");
-    removeAllInnerNodesFrom(counterElem);
-    counterElem.appendChild(document.createTextNode(timerCounter));
-    function decrementCounterEverySec() {
-      if (timerCounter < 7) { changeFontColorToRed(counterElem) };
-      if (timerCounter > 0) { counterElem.innerHTML = --timerCounter }
-      else {
-        quiz.currentQuestion.isTimeOut = true;
-        document.getElementById("submit").click();
-      }
-    }
-    this.timerHandle = setInterval(decrementCounterEverySec, 1000);
-  };
+    this.appendAllNonCorrectQuestionsTo(document.getElementById("displayQuestionContainer"));
+    this.displayFinalPage();
+    this.addClickEventOnHomeButton();
+  }
 
-  this.start = function() {
-    var index = 0;
-    this.questions = this.generateQuestions();
-    this.currentQuestion = this.questions[index];
-    console.log("CURRENT QUESTION   :     ", this.currentQuestion);
-    appendSubmitButton();
-    this.displayCurrentScore();
-    this.startTimer();
-    this.displayQuestion();
-    this.addEventHandlerToSubmitButton(index);
-  };  
+  this.addClickEventOnHomeButton = function () {
+    var quiz = this;
+    document.getElementById("home").addEventListener("click", function() {
+      quiz.goToHomePage();
+    });
+  }
 
-  this.displayNonCorrectAns = function() {
-    var length = Object.keys(this.questions).length, nonCorrectAnsArray = [], question = {};
+  this.displayFinalPage = function () {
+    document.getElementById("finalPage").classList.remove("hidden");
+  }
+
+  this.appendAllNonCorrectQuestionsTo = function (questionContainer) {
+    var fragment = document.createDocumentFragment(), length = this.nonCorrectAnsArray.length;
     for (i = 0; i < length; i++) {
-      question = this.questions[i];
-      if (question.isTimeOut || question.wrongAns) {
-        nonCorrectAnsArray.push(question.questionNumber + ") " + question.questionString + " = " + question.correctAnswer);
-      }
+      var question = this.nonCorrectAnsArray[i];
+      this.appendQuestionElem(question, fragment);
     }
-    removeAllInnerNodesFrom(document.getElementById("wrongAns"));
-    if (nonCorrectAnsArray.length) { document.getElementById("wrongAns").appendChild(document.createTextNode(nonCorrectAnsArray.join(", "))) }
-    else { document.getElementById("wrongAns").appendChild(document.createTextNode("Congratulations!! you have answered all answers correctly"))};
-  };
+    questionContainer.appendChild(fragment);
+  }
 
-  this.quizFinish = function () {
-    clearInterval(this.timerHandle);
-    document.getElementById('submit').parentNode.removeChild(document.getElementById('submit'));
-    removeAllInnerNodesFrom(document.getElementById("questionContainer"));
-    removeAllInnerNodesFrom(document.getElementById("countDown"));
-    removeAllInnerNodesFrom(document.getElementById('score'));
-    document.getElementById('score').appendChild(document.createTextNode("Final Score = " + this.score));
-    this.displayNonCorrectAns();
-    appendStartAgain();
-  };
+  this.goToHomePage = function () {
+    location.reload();    
+  }
 
-  var appendSubmitButton = function() {
-    var submitButton = document.getElementById("container").appendChild(document.createElement("input"));
-    submitButton.type = "button";
-    submitButton.value = "Submit";
-    submitButton.id = "submit";
-  };
+  this.appendQuestionElem = function (question, fragment) {
+    questionElem = fragment.appendChild(document.getElementById("worngQuestionTemplate").cloneNode(true));
+    questionElem.classList.remove("hidden");
+    questionElem.getElementsByClassName("question")[0].innerHTML = question.questionString;
+    questionElem.getElementsByClassName("userAns")[0].innerHTML = question.userAnswer;
+    questionElem.getElementsByClassName("correctAns")[0].innerHTML = question.correctAnswer;
+  }
+
+  this.displayFinalScore = function () {
+    document.getElementById("score").innerHTML = "Your Final Score : " + this.score;
+  }
+
+  this.updateScore = function () {
+    if (parseInt(this.currentQuestion.userAnswer, 10) == this.currentQuestion.correctAnswer) {
+      this.score += 1;
+      document.getElementById("score").innerHTML = "Score : " + this.score;
+    }
+  }
+
+  this.nextQuestion = function () {
+    return this.questions[this.currentQuestion.questionNumber + 1];
+  }
 
   this.displayQuestion = function () {
-    removeAllInnerNodesFrom(document.getElementById("questionContainer"));
-    var questionContainer = document.getElementById("questionContainer");
-    questionContainer.innerHTML = "Q." + (this.currentQuestion.questionNumber) + ") &nbsp&nbsp&nbsp&nbsp" + this.currentQuestion.questionString + " " + " " + "&nbsp&nbsp=&nbsp&nbsp";
-    var textElem = questionContainer.appendChild(document.createElement("input"));
-    textElem.id = "answer";
-  };
-
-  this.addEventHandlerToSubmitButton = function (index) {
-    // console.log(document.getElementById("submit"));
-    document.getElementById("submit").addEventListener("click", function () {
-      if (!this.currentQuestion.isTimeOut && checkResult(this.currentQuestion)) {
-        this.score = this.score + 1;
-        this.displayCurrentScore();
-      }
-      if (this.currentQuestion.questionNumber < this.maxNoOfQuestions) {
-        document.getElementById("countDown").classList.remove("redColor");
-        clearInterval(this.timerHandle);
-        this.currentQuestion = this.questions[++index];
-        // timerCounter = 20;
-        this.startTimer();
-        this.displayQuestion();
-      } else {
-        this.quizFinish();
-      }
-    }.bind(this));
-  };
-
-  var appendStartAgain = function () {
-    var startButton = document.getElementById("startAgain").appendChild(document.createElement("input"));
-    startButton.type = "button";
-    startButton.value = "Start Again";
-    startButton.id = "startAgain";
-    startButton.addEventListener("click", function() {
-      removeAllInnerNodesFrom(document.getElementById("startAgain"));
-      removeAllInnerNodesFrom(document.getElementById("wrongAns"));
-      var quiz = new Quiz();
-      quiz.start();
-    })
-  };
-
-  var checkResult = function(question) {
-    question.userAnswer = document.getElementById("answer").value;
-    if (question.userAnswer == question.correctAnswer && question.userAnswer) { return true; }
-    else { question.wrongAns = true; return false; }
-  };
-
-  this.displayCurrentScore = function () {
-    removeAllInnerNodesFrom(document.getElementById('score'));
-    document.getElementById('score').appendChild(document.createTextNode("Score = " + this.score));
-  };
-};
+    document.getElementById("question").innerHTML = this.currentQuestion.questionString;
+  }
+}
