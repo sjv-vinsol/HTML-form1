@@ -34,6 +34,8 @@
 #playAgain {
   display: block;
   margin: 0px auto;
+  margin-top: 20px;
+  margin-bottom: 300px;
 }
 
 #timer {
@@ -47,8 +49,8 @@
   text-align: center;
 }
 
-.redBackground {
-  background-color: red;
+.highlight {
+  background-color: yellow;
 }
 
 .center {
