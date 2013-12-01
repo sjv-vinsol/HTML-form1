@@ -1,26 +1,22 @@
-var noOfImageBoxes = 36, delayForNoMatch = 300;
+var noOfImageBox = 2, delayForNoMatch = 600;
 window.addEventListener("load", function () {
   // arguments to game specifies noOfImageBoxes, delayForNoMatch
   // noOfImageBoxes can be maximum 36 as there are only 18 images in JSON.
-  var game = new Game(noOfImageBoxes, delayForNoMatch);
+  var game = new Game();
   game.init();
 })
 
 // var imageJSON = [ {url: "image_0.jpg"}, {url: "image_1.jpg"}, {url: "image_2.jpg"}, {url: "image_3.jpg"}, {url: "image_4.jpg"}, {url: "image_5.jpg"}, {url: "image_6.jpg"}, {url: "image_7.jpg"}, {url: "image_8.jpg"}, {url: "image_9.jpg"}, {url: "image_10.jpg"}, {url: "image_11.jpg"}, {url: "image_12.jpg"}, {url: "image_13.jpg"}, {url: "image_14.jpg"}, {url: "image_15.jpg"}, {url: "image_16.jpg"}, {url: "image_17.jpg"}, {url: "image_0.jpg"}, {url: "image_1.jpg"}, {url: "image_2.jpg"}, {url: "image_3.jpg"}, {url: "image_4.jpg"}, {url: "image_5.jpg"}, {url: "image_6.jpg"}, {url: "image_7.jpg"}, {url: "image_8.jpg"}, {url: "image_9.jpg"}, {url: "image_10.jpg"}, {url: "image_11.jpg"}, {url: "image_12.jpg"}, {url: "image_13.jpg"}, {url: "image_14.jpg"}, {url: "image_15.jpg"}, {url: "image_16.jpg"}, {url: "image_17.jpg"}];
 
-function Game(noOfImageBox, delayForNoMatch) {
+function Game() {
   var count = 0;
-  this.delayForNoMatch = delayForNoMatch;
   this.isDelayForNoMatch = false;
-  this.noOfImageBox = noOfImageBox;
   this.totalCount = 0;
 
   this.getImages = function () {
     var gameImageJSON = this.imageJSON.slice(0, (noOfImageBox/2));
-    var length = gameImageJSON.length;
-    while (length--) {
-      gameImageJSON.push(gameImageJSON[length]);
-    }
+    // Double the same array ie making array = ["a", "b"] TO ["a", "b", "a", "b"]
+    gameImageJSON.push.apply(gameImageJSON, gameImageJSON);
     this.images = gameImageJSON;
   }
 
@@ -42,7 +38,7 @@ function Game(noOfImageBox, delayForNoMatch) {
   this.shuffleImages = function () {
     var length = this.images.length, randomIndex = 0;
     while(--length) {
-      randomIndex = this.generateRandomNoBelow(this.noOfImageBox);
+      randomIndex = this.generateRandomNoBelow(noOfImageBox);
       temp = this.images[randomIndex];
       this.images[randomIndex] = this.images[length];
       this.images[length] = temp;
@@ -69,7 +65,7 @@ function Game(noOfImageBox, delayForNoMatch) {
   this.appendImagesToContainer = function() {
     var imgElem = "", div = "";
     fragment = document.createDocumentFragment();
-    for (var i = 0; i < this.noOfImageBox; i++) {
+    for (var i = 0; i < noOfImageBox; i++) {
       div = fragment.appendChild(document.createElement("div"));
       this.appendImageToContainer(div, i);
     }
@@ -95,7 +91,7 @@ function Game(noOfImageBox, delayForNoMatch) {
       this.previousImg.classList.add("hidden");
       this.currentImg.classList.add("hidden");
       this.isDelayForNoMatch = false;
-    }.bind(this), this.delayForNoMatch);
+    }.bind(this), delayForNoMatch);
   }
 
   this.showClickedImage = function (event) {
@@ -125,7 +121,7 @@ function Game(noOfImageBox, delayForNoMatch) {
   }
 
   this.gameFinish = function () {
-    if (this.totalCount == this.noOfImageBox) return true;
+    if (this.totalCount == noOfImageBox) return true;
     else return false
   }
 
@@ -163,7 +159,7 @@ function Game(noOfImageBox, delayForNoMatch) {
       clearInterval(this.timerHandler);
       emptyGrid(document.getElementById('grid'));
       this.removePlayAgain();
-      var game = new Game(noOfImageBox, delayForNoMatch);
+      var game = new Game();
       game.getImages();
       game.startNewGame(false);
     }
