@@ -1,0 +1,5 @@
+SELECT * FROM locations WHERE lName = ANY (SELECT DISTINCT location FROM sandwitches WHERE filling = ANY (SELECT filling FROM tastes WHERE name = 'jones'));
+
+SELECT DISTINCT l.lName, l.phone, l.address FROM tastes t JOIN sandwiches s ON s.filling = t.filling JOIN locations l ON l.lName = s.location AND t.name = 'jones';
+
+SELECT s.location, COUNT(distinct t.name) FROM tastes t JOIN sandwiches s ON t.filling = s.filling GROUP BY s.location;

@@ -1,0 +1,4 @@
+SELECT title FROM titles WHERE publisher = 'Macmillan';
+SELECT DISTINCT branch FROM holdings WHERE title = ANY(SELECT title FROM titles WHERE author='Ann Brown');
+SELECT distinct h.branch FROM titles t JOIN holdings h ON t.title = h.title WHERE t.author = 'Ann Brown';
+SELECT branch, sum(copies) FROM holdings GROUP BY branch;
