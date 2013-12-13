@@ -1,0 +1,28 @@
+
+2. USING JOIN
+    SELECT ar.id, ar.title, ar.description FROM authors au JOIN articles ar ON au.id=ar.author_id WHERE au.name='user3';
+
+    USING VARIABLES
+    SET @author = 'user3'
+    SELECT ar.id, ar.title, ar.description FROM authors au JOIN articles ar ON au.id=ar.author_id WHERE au.name=@author;
+
+3. USING JOINS :
+    SELECT ar.id, ar.title, ar.description, cm.id, cm.comment FROM authors au JOIN articles ar ON au.id=ar.author_id AND au.name='sjv' JOIN comments cm ON cm.article_id=ar.id;
+
+    USING NESTED SUBQUERY :
+    SELECT id, comment FROM comments WHERE article_id = ANY(SELECT id FROM articles WHERE author_id=(SELECT id FROM authors WHERE name='sjv'));
+
+4. USING NESTED SUBQUERY:
+    SELECT * FROM articles WHERE id NOT IN(SELECT distinct article_id FROM comments);
+
+    USING JOINS:
+    SELECT * FROM articles ar LEFT JOIN comments cm ON ar.id = cm.article_id WHERE cm.id IS NULL;
+
+5. SET @max_count = (SELECT count(*) c FROM comments GROUP BY article_id ORDER BY c DESC LIMIT 1);
+SELECT * FROM articles WHERE id = ANY(SELECT article_id FROM comments GROUP BY article_id HAVING count(*) = @max_count);
+
+6. SELECT DISTINCT ar.* FROM articles ar JOIN comments cm ON ar.id = cm.article_id GROUP BY cm.user_id, cm.article_id HAVING count(*) = 1;
+
+
+
+
