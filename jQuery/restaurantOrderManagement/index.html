@@ -7,35 +7,38 @@
 
 <body>
 
-  <div id="total_sale">
-    Total Sale : 0
+  <div id="total_sale_container">
+    Total Sale : <span id="total_sale"> 0 </span>
   </div>
 
   <div id="containerLeft">
-    <p> Menu For Today : </p>
+    <p class="bold"> Menu For Today : </p>
 
     <div id="menu_container">
     </div>
 
     <div id="order_summary_container">
       <span class="bold"> Order Summary : </span>
+      <p id='noItemText'> Your cart is empty. </p>
       <div id="order_summary">
         
       </div>
-      <p id="order_total">
+      <p id="order_price_container">
+        <b>Order Total : </b> <span id="order_total"> </span>
       </p>
-      <input type="button" id="placeOrder" value="Place Order"/>
+      <input type="button" id="placeOrder" value="Place Order >>"/>
     </div>
   </div>
 
   <div id="finalOrders" class="hidden">
-    <span class='bold'> Orders : </span>
+    <p class='bold'> Orders : </p>
   </div>
 
   <div id="total_sale_summary">
+
   </div>
   
-<script src="libs/jquery-1.5.0.js"></script>
+<script src="libs/jquery-1.10.2.js"></script>
 <script src="js/restaurantOrderManagement.js"></script>
 
 </body>

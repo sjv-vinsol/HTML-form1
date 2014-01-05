@@ -1,22 +1,18 @@
 $(document).ready(function() {
-  createProducts();
-  selectItemOnClick();
-  addEventOnPlaceOrder();
+  init();
 })
 
 var main = {
-  totalOrderPrice: 0,
   idCount: 0,
-  validNameRegex: /^[a-z ]*$/i,
+  validNameRegex: /^ *[a-z]+( [a-z]*)* *$/i,
   orderId: 0,
   totalSale: 0,
-  productsCollection: {},
-  productInOrderSummary: {}
+  productsCollection: {}
 }
 
 var menuJSON = {
-    'bread': {'wheat': 10, 'brown': 20, 'multigrain': 25}, 
-    'sauce': {'tomato': 5, 'mustard': 15, 'mix': 10}, 
+    'bread': {'wheat': 10, 'brown': 20, 'multigrain': 25},
+    'sauce': {'tomato': 5, 'mustard': 15, 'mix': 10, 'chilli': 100},
     'filling': {'veg': 30, 'chicken': 50, 'pork': 40}
   }
 
@@ -27,9 +23,15 @@ function Product (name, price, type){
   this.type = type;
 }
 
-function displayProduct(product, elem) {
+function init() {
+  createItems();
+  order = new Order();
+  order.init();
+}
+
+function displayItem(product, elem) {
   var productDisplayText = product.name + " (" + product.price + ") ";
-  var option = $('<p/>', {text: productDisplayText, product_id: product.id});
+  var option = $('<p/>', {text: productDisplayText, product_id: product.id, class: "item "+product.type+""});
   main.productsCollection[product.id] = product;
   elem.append(option);
 }
@@ -38,143 +40,217 @@ function displayHeader(elem, header) {
   elem.append($('<p/>', {class: 'header', text: header.toUpperCase()}));
 }
 
-function createProducts() {
+function createItems() {
   $.each(menuJSON, function(header,values){
     var elem = $('<div/>', {id: header, class: 'optionsDiv'});
     displayHeader(elem, header);
     $.each(values, function(name, price) {
       var product = new Product(name, price, header);
-      displayProduct(product, elem);
+      displayItem(product, elem);
     })
     $('#menu_container').append(elem);
   })
 }
 
-function selectItemOnClick() {
-  $('#menu_container').find("p:not('.header')").bind("click", function () {
-    var option = $(this);
-    var product = main.productsCollection[option.attr("product_id")];
-    option.closest('.optionsDiv').find("p").not($(this)).removeClass('selected');
-    option.toggleClass("selected");
-    updateOrderSummary(product);
-  })
-}
-
-function presentInOrderList(id) {
-  if ($("#" + id).length) {
-    return true
-  } else {
-    return false;
-  }
-}
-
-function productIsSame(product) {
-  if (main.productInOrderSummary[product.type].id == product.id) {
-    return true
-  } else {
-    return false;
-  }
-}
-
-function removeProduct(type) {
-  var product = main.productInOrderSummary[type]
-  $('#order_summary').find("[product_id="+product.id+"]").remove();
-  main.totalOrderPrice -= product.price;
-  delete main.productInOrderSummary[type];
-}
-
-function addNewProduct(product) {
-  var item = $('<p/>', {text: "-->   " + product.type + " : " + product.name + "  =  " + product.price, product_id: product.id});
-  $('#order_summary').append(item);
-  main.productInOrderSummary[product.type] = product;
-  main.totalOrderPrice += product.price;
-}
-
-function updateOrderPrice() {
-  $('#order_total').text("Order Total :" + main.totalOrderPrice);
-}
-
-function productOfSameTypeIsPresent(product) {
-  if ($.inArray(product.type, Object.keys(main.productInOrderSummary)) >= 0) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-function updateOrderSummary(product) {
-  if (productOfSameTypeIsPresent(product)) {
-    if (productIsSame(product)) {
-      removeProduct(product.type);
-    } else {
-      removeProduct(product.type);
-      addNewProduct(product);
-    }
-  } else {
-    addNewProduct(product);
-  }
-  updateOrderPrice();
-}
-
-function makeOrdersSectionVisible() {
-  $("#finalOrders").removeClass("hidden");
-}
-
-function addEventOnPlaceOrder() {
-  $("#placeOrder").bind("click", function () {
-    var customerName = prompt("Please enter you name!!").trim();
-    if (main.validNameRegex.test(customerName) && customerName && main.totalOrderPrice) {
-      makeOrdersSectionVisible();
-      createOrder(customerName);
-    }
-  })
-}
-
-function Order(customerName) {
+function Order() {
   this.id = ++main.orderId;
-  this.customerName = customerName;
+  this.customerName = "";
   this.products = [];
-  this.totalPrice = 0;
+  this.orderTotal = 0;
+  this.types = [];
+  this.items = {};
+  this.itemCount = 0;
+
+  this.selectElement = function (item, itemElem) {
+    $('.' + item.type).not(itemElem).removeClass("selected");
+    itemElem.toggleClass("selected");
+  }  
+
+  this.resetOrderTotal = function () {
+    $("#order_total").text(0);
+  }
+
+  this.deselectItems = function () {
+    $(".selected").removeClass("selected");
+  }
+
+  this.unbindPlaceOrderEvent = function () {
+    $("#placeOrder").unbind("click");
+  }
+
+  this.addItemHandler = function (itemElem) {
+    var item = main.productsCollection[itemElem.attr('product_id')];
+    this.selectElement(item, itemElem);
+    // check if item of same type is already present in cart
+    if (this.checkForValueInArray(this.types, item.type)) {
+      // check if the same item is present in cart
+      if (this.checkForValueInArray(Object.keys(this.items), item.id)) {
+        this.removeItem(item)
+      } else {
+        this.changeItem(item);
+      }
+    } else {
+      this.addItemToOrder(item);
+    }
+    this.updateOrderSummary();
+  }
+
+  this.unbindAddItemHandler = function () {
+    $('.item').unbind('click');
+  }
+
+  this.init = function () {
+    var order = this;
+    this.showNoItemText();
+    this.unbindAddItemHandler();    
+    this.unbindPlaceOrderEvent();
+    this.clearOrderSummary($("#order_summary"));
+    this.resetOrderTotal();
+    this.deselectItems();
+    this.placeOrderOnClick();
+    $('.item').bind('click', function () {
+      var itemElem = $(this);
+      order.addItemHandler(itemElem);      
+    })
+  }
+
+  this.checkForValueInArray = function (array, value) {
+    var returnValue = false;
+    $.each(array, function(index, val) {
+      if (val == value) {
+        returnValue = true;
+      }
+    })
+    return returnValue;
+  }
+
+  this.getItemOfType = function (type) {
+    var returnValue = "";
+    $.each(this.items, function (key, val) {
+      if (val.type == type) {
+        returnValue = val;
+      }
+    })
+    return returnValue;
+  }
+
+  this.updateOrderTotal = function () {
+    var order = this;
+    this.orderTotal = 0;
+    $.each(this.items, function(index, val) {
+      order.orderTotal += val.price;
+    })
+    this.displayOrderTotal();
+  }
+
+  this.displayOrderTotal = function () {
+    console.log("Order Total  :  ", this.orderTotal);
+    $("#order_total").text(this.orderTotal);
+  }
+
+  this.changeItem = function(item) {
+    var itemToBeChanged = this.getItemOfType(item.type);
+    this.removeItem(itemToBeChanged);
+    this.addItemToOrder(item);
+  }
+
+  this.addItemToOrder = function (item) {
+    this.types.push(item.type);
+    this.items[item.id] = item;
+    this.updateOrderTotal();
+    this.hideNoItemText()
+  }
+
+  this.hideNoItemText = function () {
+    $("#noItemText").addClass('noDisplay');
+  }
+
+  this.removeItem = function (item) {
+    delete this.items[item.id];
+    this.updateOrderTotal();
+    this.updateOrderSummary();
+    this.removeItemTypeFromOrder(item.type);
+    this.showNoItemText()
+  }
+
+  this.showNoItemText = function () {
+    if (!this.types.length) {
+      $("#noItemText").removeClass('noDisplay');
+    }
+  }
+
+  this.removeItemTypeFromOrder = function (type) {
+    var index = this.types.indexOf(type);
+    this.types.splice(index, 1);
+  }
+
+  this.clearOrderSummary = function (orderSummary) {
+    orderSummary.html("");
+    this.itemCount = 0;
+  }
+
+  this.placeOrderOnClick = function () {
+    $("#placeOrder").bind("click", function() {
+      if (this.types.length) {
+        var name = prompt("Enter Your Name.");
+        if (main.validNameRegex.test(name.trim())) {
+          this.customerName = name;
+          addToOrderList(this);
+        }
+      } else {
+        alert("Cart can\'t be blank");
+      }
+      
+    }.bind(this))
+  }
+
+  this.updateOrderSummary = function () {
+    var order = this;
+    if (this.types.length) {
+      var orderSummary = $("#order_summary");
+      order.clearOrderSummary(orderSummary);
+      $.each(this.items, function (index, val) {
+        var text = ++order.itemCount + ")  " + val.type.toUpperCase() + " : " + val.name + " = " + val.price;
+        var elem = $('<p/>', {text: text});
+        orderSummary.append(elem);
+      })
+    }
+  }
 }
 
-function appendproductsToOrderContainer(order, orderElem, product) {
-  order.products.push(product);
-  var text = "-->  " + product.type + "  :  " + product.name + "  =  " + product.price;
-  orderElem.append($('<p/>', {text: text}));
+function displayNameAndId(order, orderElem) {
+  var idElem = $("<span/>", {text: "Order Id : " + order.id, class: "order_id"});
+  var nameElem = $("<span/>", {text: "Customer Name : " + order.customerName});
+  var elem = $('<p/>', {text: "Item List :"});
+  orderElem.append(idElem, nameElem, elem);
 }
 
-function displayCustomerNameIdAndPrice(order, orderElem) {
-  orderElem.prepend($('<p/>', {text: "Order Id : #" + order.id + ",  " + "Customer Name : "+ order.customerName}))
-  orderElem.append($('<p/>', {text: "Total Price :  " + order.totalPrice}));
+function displayOrderItems(orderElem) {
+  var orderItems = $("#order_summary").clone();
+  orderElem.append(orderItems);
 }
 
-function resetDefaultValues() {
-  main.totalOrderPrice = 0;
-  $('#order_summary').html("");
-  $('#order_total').html("Order Total : " + main.totalOrderPrice);
-  main.productInOrderSummary = {};
-  $("#menu_container p").removeClass("selected");
+function diplayOrderTotal(orderElem, order) {
+  var orderTotalElem = $("<p/>", {text: "Order Total : " + order.orderTotal});
+  orderElem.append(orderTotalElem);
 }
 
-function updateTotalSale() {
-  $("#total_sale").text("Total Sale : " + main.totalSale);
+function createNewOrder() {
+  var order = new Order();
+  order.init();
 }
 
-function appendOrderToContainer(orderElem, orderContainer) {
-  orderContainer.append(orderElem);
-  resetDefaultValues();
-  updateTotalSale();
+function updateTotalSale(order) {
+  main.totalSale += order.orderTotal;
+  $("#total_sale").text(main.totalSale);
 }
 
-function createOrder(customerName) {
-  var orderContainer = $('#finalOrders'), price = 0;
-  var orderElem = $("<div/>", {class: "orderElem", id: main.orderId});
-  var order = new Order(customerName);
-  order.totalPrice = main.totalOrderPrice;
-  main.totalSale +=  order.totalPrice;
-  $.each(main.productInOrderSummary, function (type, product){
-    appendproductsToOrderContainer(order, orderElem, product);
-  })
-  displayCustomerNameIdAndPrice(order, orderElem);
-  appendOrderToContainer(orderElem, orderContainer);
+function addToOrderList(order) {
+  updateTotalSale(order);
+  var orderElem = $("<div/>", {class: "orderElem", id: order.id});
+  displayNameAndId(order, orderElem);
+  displayOrderItems(orderElem);
+  diplayOrderTotal(orderElem, order);
+  $('#finalOrders').removeClass("hidden").append(orderElem);
+  createNewOrder();
 }
