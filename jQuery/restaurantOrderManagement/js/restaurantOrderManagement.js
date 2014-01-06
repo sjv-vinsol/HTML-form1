@@ -4,10 +4,10 @@ $(document).ready(function() {
 
 var main = {
   idCount: 0,
-  validNameRegex: /^ *[a-z]+( [a-z]*)* *$/i,
+  validNameRegex: /^[a-z]+( [a-z]*)*$/i,
   orderId: 0,
   totalSale: 0,
-  productsCollection: {}
+  itemsCollection: {}
 }
 
 var menuJSON = {
@@ -16,7 +16,7 @@ var menuJSON = {
     'filling': {'veg': 30, 'chicken': 50, 'pork': 40}
   }
 
-function Product (name, price, type){
+function Item (name, price, type){
   this.id = ++main.idCount;
   this.name = name;
   this.price = price;
@@ -29,10 +29,10 @@ function init() {
   order.init();
 }
 
-function displayItem(product, elem) {
-  var productDisplayText = product.name + " (" + product.price + ") ";
-  var option = $('<p/>', {text: productDisplayText, product_id: product.id, class: "item "+product.type+""});
-  main.productsCollection[product.id] = product;
+function displayItem(item, elem) {
+  var text = item.name + " (" + item.price + ") ";
+  var option = $('<p/>', {text: text, product_id: item.id, class: "item "+item.type+""});
+  main.itemsCollection[item.id] = item;
   elem.append(option);
 }
 
@@ -45,8 +45,8 @@ function createItems() {
     var elem = $('<div/>', {id: header, class: 'optionsDiv'});
     displayHeader(elem, header);
     $.each(values, function(name, price) {
-      var product = new Product(name, price, header);
-      displayItem(product, elem);
+      var item = new Item(name, price, header);
+      displayItem(item, elem);
     })
     $('#menu_container').append(elem);
   })
@@ -55,7 +55,6 @@ function createItems() {
 function Order() {
   this.id = ++main.orderId;
   this.customerName = "";
-  this.products = [];
   this.orderTotal = 0;
   this.types = [];
   this.items = {};
@@ -79,7 +78,7 @@ function Order() {
   }
 
   this.addItemHandler = function (itemElem) {
-    var item = main.productsCollection[itemElem.attr('product_id')];
+    var item = main.itemsCollection[itemElem.attr('product_id')];
     this.selectElement(item, itemElem);
     // check if item of same type is already present in cart
     if (this.checkForValueInArray(this.types, item.type)) {
@@ -102,7 +101,7 @@ function Order() {
   this.init = function () {
     var order = this;
     this.showNoItemText();
-    this.unbindAddItemHandler();    
+    this.unbindAddItemHandler();
     this.unbindPlaceOrderEvent();
     this.clearOrderSummary($("#order_summary"));
     this.resetOrderTotal();
@@ -110,7 +109,7 @@ function Order() {
     this.placeOrderOnClick();
     $('.item').bind('click', function () {
       var itemElem = $(this);
-      order.addItemHandler(itemElem);      
+      order.addItemHandler(itemElem);
     })
   }
 
@@ -124,11 +123,12 @@ function Order() {
     return returnValue;
   }
 
-  this.getItemOfType = function (type) {
+  this.getItemFromCart = function (type) {
     var returnValue = "";
     $.each(this.items, function (key, val) {
       if (val.type == type) {
         returnValue = val;
+        // break;
       }
     })
     return returnValue;
@@ -144,12 +144,11 @@ function Order() {
   }
 
   this.displayOrderTotal = function () {
-    console.log("Order Total  :  ", this.orderTotal);
     $("#order_total").text(this.orderTotal);
   }
 
   this.changeItem = function(item) {
-    var itemToBeChanged = this.getItemOfType(item.type);
+    var itemToBeChanged = this.getItemFromCart(item.type);
     this.removeItem(itemToBeChanged);
     this.addItemToOrder(item);
   }
@@ -200,7 +199,6 @@ function Order() {
       } else {
         alert("Cart can\'t be blank");
       }
-      
     }.bind(this))
   }
 
@@ -219,8 +217,8 @@ function Order() {
 }
 
 function displayNameAndId(order, orderElem) {
-  var idElem = $("<span/>", {text: "Order Id : " + order.id, class: "order_id"});
-  var nameElem = $("<span/>", {text: "Customer Name : " + order.customerName});
+  var idElem = $("<span/>", {text: "Order #" + order.id, class: "order_id"});
+  var nameElem = $("<span/>", {text: "By : " + order.customerName});
   var elem = $('<p/>', {text: "Item List :"});
   orderElem.append(idElem, nameElem, elem);
 }

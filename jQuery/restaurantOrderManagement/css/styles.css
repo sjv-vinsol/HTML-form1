@@ -1,107 +1,142 @@
 .header {
-	background-color: #d28f35;	
-	font-weight: bold;
-	text-align: center;
+  background-color: #d28f35;  
+  font-weight: bold;
+  text-align: center;
+  margin: 0px;
+  padding: 10px 0px;
+}
+
+#menu_for_today {
+  font-size: 20px;
+  text-align: center;
 }
 
 #order_total {
-	font-size: 20px;
-	color: red;
+  font-size: 20px;
+  color: red;
 }
 
 #order_summary {
-	margin-left: 30px;
+  margin-left: 30px;
 }
 
 .noDisplay {
-	display: none;
+  display: none;
 }
 
 #noItemText {
-	color: red;
-	text-align: center;
+  color: red;
+  text-align: center;
 }
 
 #total_sale_container {
-	margin-bottom: 20px;
-	font-weight: bold;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: right;
+  font-size: 20px;
+  margin-right: 50px;
 }
 
 #containerLeft {
-	margin-right: 50px;
-	border: 2px solid brown;
-	float:left;
+  margin-right: 50px;
+  border: 2px solid brown;
+  float:left;
+  width: 60%;
 }
 
 .hidden {
-	visibility: hidden;
+  visibility: hidden;
 }
 
 .visible {
-	visibility: visible;
+  visibility: visible;
+}
+
+#res_name {
+  font-size: 40px;
+  text-align: center;
+  font-style: italic;
+  border-bottom: 1px solid black;
+  background-color: #ed7a4e;
 }
 
 .bold {
-	font-weight: bold;
+  font-weight: bold;
+}
+
+.item:hover {
+  background-color: #e8bd22;
+}
+
+.item {
+  margin: 0px;
+  padding: 10px;
+  font-size: 17px;
 }
 
 .orderElem span.order_id {
-	margin-right: 10px;
-	font-weight: bold;
+  margin-right: 10px;
+  font-weight: bold;
 }
 
 .optionsDiv {
-	float: left;
-	margin-right: 1px;
-	padding: 10px;
-	background-color: #cccc99;
+  float: left;
+  margin-right: 20px;
+  background-color: #cccc99;
+  border-radius: 0px 20px;
 }
 
 #placeOrder {
-	display: block;
-	border-radius: 12px;
-	margin: 0px auto;
+  display: block;
+  margin: 0px auto;
+  height: 30px;
+  font-weight: bold;
+}
+
+#placeOrder:hover {
+  background-color: lightblue;
 }
 
 #menu_container {
-	padding: 10px;
+  padding: 10px;
+  display: table;
+  margin: 0px auto;
 }
 
 #menu_container p:not(.header){
-	cursor: pointer;
+  cursor: pointer;
 }
 
 #menu_container .header {
-	cursor: default;
+  cursor: default;
 }
 
 .selected {
-	background-color: yellow;
+  background-color: #e8bd22;
 }
 
 #menu_container {
-	overflow: hidden;
+  overflow: hidden;
 }
 
 #order_summary_container {
-	margin-top: 30px;
-	border-top: 2px solid brown;
-	padding: 10px;
+  margin-top: 30px;
+  border-top: 2px solid brown;
+  padding: 10px;
 }
 
 #finalOrders span {
-	padding-bottom: 20px;
+  padding-bottom: 20px;
 }
 
 .orderElem {
-	background-color: #cccc99;
-	margin-bottom: 3px;
-	padding: 10px;
+  background-color: #cccc99;
+  margin-bottom: 3px;
+  padding: 10px;
 }
 
 #finalOrders {
-	margin-top: 70px;
-	border: 3px solid brown;
-	margin-left: 50px;
-	overflow: hidden;
+  border: 3px solid brown;
+  float: right;
+  overflow: hidden;
 }
