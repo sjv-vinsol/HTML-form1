@@ -6,6 +6,17 @@
   padding: 10px 0px;
 }
 
+.order_id {
+  margin: 0px;
+}
+
+.order_total {
+  text-align: right;
+  font-weight: bold;
+  color: red;
+  margin: 0px;
+}
+
 #menu_for_today {
   font-size: 20px;
   text-align: center;
@@ -66,6 +77,7 @@
 
 .item:hover {
   background-color: #e8bd22;
+  border-radius: 0px 20px;
 }
 
 .item {
@@ -113,6 +125,7 @@
 
 .highlight {
   background-color: #e8bd22;
+  border-radius: 0px 20px;
 }
 
 #menu_container {
@@ -139,4 +152,5 @@
   border: 3px solid brown;
   float: right;
   overflow: hidden;
+  width: 25%;
 }
