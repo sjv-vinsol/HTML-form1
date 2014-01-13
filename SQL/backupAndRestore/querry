@@ -1,0 +1,5 @@
+Backup data :
+mysqldump -u root -p usrArticle > ~/usrArticleDump.txt
+
+Restore data :
+mysql -u root -p newDatabase < ~/usrArticleDump.txt
