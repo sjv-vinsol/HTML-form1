@@ -1,5 +1,8 @@
 Backup data :
 mysqldump -u root -p usrArticle > ~/usrArticleDump.txt
 
+Create database "restored" :
+create database restored;
+
 Restore data :
-mysql -u root -p newDatabase < ~/usrArticleDump.txt
+mysql -u root -p restored < ~/usrArticleDump.txt
