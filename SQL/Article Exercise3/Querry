@@ -18,8 +18,7 @@
     USING JOINS:
     SELECT * FROM articles ar LEFT JOIN comments cm ON ar.id = cm.article_id WHERE cm.id IS NULL;
 
-5. SET @max_count = (SELECT count(*) c FROM comments GROUP BY article_id ORDER BY c DESC LIMIT 1);
-SELECT * FROM articles WHERE id = ANY(SELECT article_id FROM comments GROUP BY article_id HAVING count(*) = @max_count);
+5.SELECT ar.*, COUNT(cm.article_id) AS noOfComments FROM articles ar JOIN comments cm ON cm.article_id = ar.id GROUP BY article_id HAVING noOfcomments = (SELECT count(*) c FROM comments GROUP BY article_id ORDER BY c DESC LIMIT 1);
 
 6. SELECT DISTINCT ar.* FROM articles ar JOIN comments cm ON ar.id = cm.article_id GROUP BY cm.user_id, cm.article_id HAVING count(*) = 1;
 
