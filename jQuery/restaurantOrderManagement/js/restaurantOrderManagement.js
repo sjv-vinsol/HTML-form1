@@ -43,7 +43,7 @@ function Kioski() {
 
   this.createItems = function () {
     $.each(menuJSON, function(header,values){
-      var elem = $('<div/>', {id: header, class: 'optionsDiv'});
+      var elem = $('<div/>', {id: header, class: 'item_list_by_type'});
       displayHeader(elem, header);
       $.each(values, function(name, price) {
         var item = new Item(name, price, header);
