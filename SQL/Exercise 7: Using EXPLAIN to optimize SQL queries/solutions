@@ -1,0 +1,80 @@
+A1. EXPLAIN has following outputs :
+1. id : This refers to the sequential number of "select" within the query.
+2. select_type :
+    This represents the type of "SELECT" in a query. This can be of various types :
+    1. SIMPLE : simple "SELECT" not using subquery or union.
+    2. PRIMARY : It is the outermost "SELECT" in a query.
+    3. UNION : Second or later select statement in a union.
+    4. SUBQUERY : First SELECT in subquery.
+
+3. Type : 
+    This represents the type of join. It can have below mentioned values :
+    1. system : When the table has only one row.
+    2. const : This is when a PRIMARY or UNIQUELY indexed key is compared with a constant value.
+    3. eq ref : When in a join the comparison is done on a uniquely indexed or primary key which returns only one row.
+    4. ref : When in a join the comparison is done on a indexed column which may return more than one row.
+    5. fulltext : When join is performed using a fulltext index.
+    6. range : When the comparison is done on a indexed column using range comparators LIKE =, <>, >=, BETWEEN, IN etc.
+    7. index : This is same as ALL except that index is used. There are two scenarios :
+        1. The index is a covering index thus all the data is available in the index. This is efficient than reading the whole table. The EXTRA column has value "uses index".
+        2. Full table scan is performed using index. The EXTRA column does not have value "uses index".
+    8. ALL : Full table scan is performed with no index.
+
+5. possible keys : represents keys which mysql choose from to look up for rows in a table.
+6. keys : key which mysql used from the possible keys to find the row.
+7. key_len : length of the key that it is using.
+8. ref : It represents which columns are compared with the index to look for the rows in a table.
+9. rows : the rows column is the no of column that mysql examin to execute the query.
+10. Extra : This column is used to display the extra info related to the execution of query.
+
+
+A2 : 
+2.1) It means that mysql has to examin all the rows to execute the query. This is the worst case scenario.
+2.2) The select query is not optimal as it is examining all the rows. user_id can be indexed so as to optimize the query.
+
+A3. Will create compound index on (commentable_type, commentable_id). And a simple index on user_id.
+
+A4. 1 The explain output is shown below :
+
+mysql> EXPLAIN SELECT * FROM articles ar JOIN comments cm ON ar.id = cm.article_id;
++----+-------------+-------+------+---------------+------------+---------+----------------+------+-------------+
+| id | select_type | table | type | possible_keys | key        | key_len | ref            | rows | Extra       |
++----+-------------+-------+------+---------------+------------+---------+----------------+------+-------------+
+|  1 | SIMPLE      | ar    | ALL  | PRIMARY       | NULL       | NULL    | NULL           |    4 |             |
+|  1 | SIMPLE      | cm    | ref  | article_id    | article_id | 5       | testDump.ar.id |    1 | Using where |
++----+-------------+-------+------+---------------+------------+---------+----------------+------+-------------+
+
+The no. of columns will exactly equal to the no of tables we are referencing. 
+1. select_type : SIMPLE for both column as there is no union or subquery.
+2. table : first column is for article table i.e ar. And second column is for comment table i.e cm.
+3. type : All in first row represents that there is full table read for article table.
+                ref in 2nd row represents that an non unique index is used and can match more than 1 result.
+4. possible_keys : display what all possible indexes are there for each table.
+5. key : Name the used index. For article table, no index is used.
+                For comments table article_id is used.
+6. key_len : Length of the key that mysql decides to use. Gives information about how many parts of a multipart key does mysql descides to use. NULL for articles table as key column is NULL. For comments table t it is 5.
+7. ref : This represents the column that is compared with the index.
+8. rows : represents the no of row reads from the table.
+
+4.2 EXPLAIN SELECT * FROM articles WHERE id = ANY(select article_id from comments);
++----+--------------------+----------+----------------+---------------+------------+---------+------+------+--------------------------+
+| id | select_type                             | table      | type           | possible_keys | key        | key_len | ref  | rows | Extra                    |
++----+--------------------+----------+----------------+---------------+------------+---------+------+------+--------------------------+
+|  1 | PRIMARY                          | articles | ALL            | NULL          | NULL       | NULL    | NULL |    4 | Using where              |
+|  2 | DEPENDENT SUBQUERY | comments | index_subquery | article_id    | article_id | 5       | func |    1 | Using index; Using where |
++----+--------------------+----------+----------------+---------------+------------+---------+------+------+--------------------------+
+
+The query using join is more optimised compared to using subquery as this one has type "index_subquery" which is less optimized than "ref".
+
+
+
+
+
+
+
+
+
+
+
+
+
