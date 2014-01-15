@@ -1,17 +1,12 @@
-START TRANSACTION;
-
-SET @useraAccountNo = (SELECT account_no FROM users WHERE name = "userA");
-
 # userA deposit Rs 1000 to his account_no
-UPDATE accounts SET balance = balance + 1000 WHERE account_no = @useraAccountNo;
+UPDATE accounts SET balance = balance + 1000 WHERE account_no = 123456789;
 
 # userA withdraw Rs 500 to his account_no
-UPDATE accounts SET balance = balance - 500 WHERE account_no = @useraAccountNo;
+UPDATE accounts SET balance = balance - 500 WHERE account_no = 123456789;
 
-SET @userbAccountNo = (SELECT account_no FROM users WHERE name = "userB");
-
+START TRANSACTION;
 # userA transfer Rs200 to userB's account
-UPDATE accounts SET balance = balance - 200 WHERE account_no = @useraAccountNo;
-UPDATE accounts SET balance = balance + 200 WHERE account_no = @userbAccountNo;
+UPDATE accounts SET balance = balance - 200 WHERE account_no = 123456789;
+UPDATE accounts SET balance = balance + 200 WHERE account_no = 987654321;
 
 COMMIT;
