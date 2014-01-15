@@ -20,8 +20,7 @@
 
 5.SELECT ar.*, COUNT(cm.article_id) AS noOfComments FROM articles ar JOIN comments cm ON cm.article_id = ar.id GROUP BY article_id HAVING noOfcomments = (SELECT count(*) c FROM comments GROUP BY article_id ORDER BY c DESC LIMIT 1);
 
-6. SELECT DISTINCT ar.* FROM articles ar JOIN comments cm ON ar.id = cm.article_id GROUP BY cm.user_id, cm.article_id HAVING count(*) = 1;
-
+6. SELECT * FROM articles ar LEFT JOIN (SELECT article_id FROM comments GROUP BY article_id, user_id HAVING count(*) > 1) t ON ar.id = t.article_id WHERE t.article_id IS NULL;
 
 
 
