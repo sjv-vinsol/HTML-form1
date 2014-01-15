@@ -32,7 +32,7 @@ A2 :
 2.1) It means that mysql has to examin all the rows to execute the query. This is the worst case scenario.
 2.2) The select query is not optimal as it is examining all the rows. user_id can be indexed so as to optimize the query.
 
-A3. Will create compound index on (commentable_type, commentable_id). And a simple index on user_id.
+A3. Will create composite index on (commentable_type, commentable_id). And a simple index on user_id.
 
 A4. 1 The explain output is shown below :
 
