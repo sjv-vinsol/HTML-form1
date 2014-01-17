@@ -1,0 +1,7 @@
+1. SELECT i.* FROM images i JOIN tags t ON i.id = t.image_id GROUP BY t.image_id HAVING count(*) = (SELECT count(*) FROM tags GROUP BY image_id LIMIT 1);
+
+2. SELECT * FROM images WHERE image_user = ANY(SELECT friend FROM friends WHERE user_id = 2);
+
+3. SELECT t1.friend FROM (SELECT f.friend, GROUP_CONCAT(IF(t.tagged = u.id, u.id, NULL)) x from users u JOIN friends f ON u.id = f.user_id INNER JOIN images i ON f.friend = i.image_user LEFT JOIN tags t ON t.image_id = i.id where u.name = "userC" group by f.friend, i.id) t1 group by t1.friend having (if(count(*) = count(t1.x), GROUP_CONCAT(t1.x), NULL) IS NOT NULL);
+
+4. select u.name, f.*, i.*, t.*, count(*) user_tag_count from users u join friends f ON u.id = f.user_id join images i ON i.image_user = f.friend join tags t ON t.image_id = i.id AND t.tagged = 1 where u.name = "userA" group by i.image_user order by user_tag_count desc limit 1;
