@@ -2,10 +2,17 @@
 <html>
 <head>
   <link rel="stylesheet" type="text/css" href="css/styles.css">
-  
 </head>
 
 <body>
+  <script type="text/x-jquery-tmpl" id="order_template">
+    <p class="bold order_id"> Order # ${orderId} </p>
+    <p class="bold c_name"> Customer Name : ${customerName} </p>
+    {{each stringCollection}}
+      <p> ${this} </p>
+    {{/each}}
+    <p class="order_total"> Order Total : ${orderTotal} </p>
+  </script>
 
   <div id="res_name">
     Food House Junction
@@ -36,20 +43,13 @@
 
   <div id="finalOrders" class="hidden">
     <p class='bold'> Orders : </p>
-    <div id="order_container_template" class="noDisplay orderElem">
-      <p class="bold order_id">  </p>
-      <p class="bold c_name">  </p>
-      <div class="order_items">
-      </div>
-      <p class="order_total"> </p>
-    </div>
   </div>
 
   <div id="total_sale_summary">
-
   </div>
   
-<script src="libs/jquery-1.10.2.js"></script>
+<script src="libs/jquery-2.0.3.js"></script>
+<script src="libs/jquery.tmpl.js"></script>
 <script src="js/restaurantOrderManagement.js"></script>
 
 </body>

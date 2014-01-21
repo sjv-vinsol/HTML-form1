@@ -14,6 +14,10 @@ function Item (name, price, type){
   this.name = name;
   this.price = price;
   this.type = type;
+
+  this.getDisplayString = function (count) {
+    return count + ") " + this.type.toUpperCase() + " : " + this.name + " = " + this.price;
+  }
 }
 
 function Order() {
@@ -42,33 +46,32 @@ function Kioski() {
   }
 
   this.createItems = function () {
-    $.each(menuJSON, function(header,values){
-      var elem = $('<div/>', {id: header, class: 'item_list_by_type'});
-      displayHeader(elem, header);
+    $.each(menuJSON, function(section_name,values){
+      var section = $('<div/>', {id: section_name, class: 'item_list_by_type'});
+      displayHeader(section, section_name);
       $.each(values, function(name, price) {
-        var item = new Item(name, price, header);
-        kioski.displayItem(item, elem);
+        var item = new Item(name, price, section_name);
+        kioski.displayItem(item, section);
       })
-      $('#menu_container').append(elem);
+      $('#menu_container').append(section);
     })
   }
 
-  this.displayItem = function (item, elem) {
+  this.displayItem = function (item, section) {
     var text = item.name + " (" + item.price + ") ";
     var itemElem = $('<p/>', {text: text, id: item.id , class: "item "+item.type+""});
-    // itemElem.data('item_id', item.id);
     this.itemsCollection[item.id] = item;
-    elem.append(itemElem);
+    section.append(itemElem);
   }
 
-  function displayHeader(elem, header) {
-    elem.append($('<p/>', {class: 'header', text: header.toUpperCase()}));
+  function displayHeader(elem, section_name) {
+    elem.append($('<p/>', {class: 'section_name', text: section_name.toUpperCase()}));
   }
 
   this.placeOrderHandler = function () {
     if (this.cartIsNotEmpty()) {
       var name = prompt("Enter your name!!");
-      if (this.validName(name)) {
+      if (this.validateName(name)) {
         this.current_order.customerName = name;
         this.orders.push(this.current_order);
         this.displayFinalOrder();
@@ -85,15 +88,13 @@ function Kioski() {
     return Object.keys(this.current_order.items).length;
   }
 
-  this.validName = function (name) {
+  this.validateName = function (name) {
     return this.validNameRegex.test(name.trim());
   }
 
   this.addToCartHandler = function (itemElem) {
-    console.log(itemElem);
     var item = this.itemsCollection[itemElem.attr("id")];
-    // console.log
-    if (this.isItemAlreadyPresentInOrder(itemElem)) {
+    if (this.isItemAlreadyPresentInOrder(item.type)) {
       this.removeItemFromCurrentOrder(item);
     } else if (this.itemOfSameTypePresentInCart(item.type)) {
       this.removeItemFromCurrentOrder(this.getItemToBeRemoved(item));
@@ -105,12 +106,23 @@ function Kioski() {
   }
 
   this.displayFinalOrder = function () {
-    var containerElem = $("#order_container_template").clone().removeClass("noDisplay").attr("id", "");
-    containerElem.find(".order_id").text("Order #" + this.orders.length);
-    containerElem.find(".c_name").text("Customer Name :  " + this.current_order.customerName);
-    containerElem.find(".order_total").text("Order Total :" + this.current_order.orderTotal);
-    this.appendItems(containerElem.find(".order_items"));
-    $("#finalOrders").removeClass("hidden").append(containerElem);
+    var orderItemsColection = [], counter = 0;
+    $.each(this.current_order.items, function (key, item) {
+      orderItemsColection.push(item.getDisplayString(++counter));
+    })
+
+    var order = {orderId: this.orders.length, 
+      orderTotal: this.current_order.orderTotal, 
+      customerName: this.current_order.customerName, 
+      stringCollection: orderItemsColection
+    };
+
+    $("#order_template").tmpl(order).appendTo("#finalOrders");
+    this.displayOrdersSection();
+  }
+
+  this.displayOrdersSection = function () {
+    $("#finalOrders").removeClass("hidden");
   }
 
   this.updateTotalSale = function () {
@@ -156,18 +168,32 @@ function Kioski() {
   this.appendItems = function (container) {
     var counter = 0;
     $.each(this.current_order.items, function (id, item) {
-      var textString = ++counter + ") " +item.type.toUpperCase() + " : " + item.name;
-      container.append($("<p/>", {text: textString}));
+      container.append($("<p/>", {text: item.getDisplayString(++counter)}));
     })
   }
 
   this.emptyCartMessage = function () {
     var emptyMessageElem = $("#empty_cart_message");
-    (Object.keys(this.current_order.items).length) ? emptyMessageElem.addClass("noDisplay") : emptyMessageElem.removeClass("noDisplay");
+    if (this.totalItemsInCart()) {
+      emptyMessageElem.addClass("noDisplay");
+    }else {
+      emptyMessageElem.removeClass("noDisplay");
+    }
   }
 
-  this.isItemAlreadyPresentInOrder = function (itemElem) {
-    return itemElem.hasClass('highlight');
+  this.totalItemsInCart = function () {
+    return Object.keys(this.current_order.items).length
+  }
+
+  this.isItemAlreadyPresentInOrder = function (type) {
+    var returnValue = false;
+    $.each(this.current_order.items, function (key, item) {
+      if (item.type == type) {
+        returnValue = true;
+        return false;
+      }
+    })
+    return returnValue;
   }
 
   this.itemOfSameTypePresentInCart = function (type) {
@@ -181,19 +207,22 @@ function Kioski() {
   }
 
   this.highlightItem = function (item) {
-    $('#' + item.id).addClass('highlight');
+    $(this.idSelector(item.id)).addClass('highlight');
+  }
+
+  this.idSelector = function (id) {
+    return "#" + id;
   }
 
   this.unHighlightItem = function (item) {
-    $('#' + item.id).removeClass('highlight');
+    $(this.idSelector(item.id)).removeClass('highlight');
   }
 
   this.updateCart = function () {
     this.cleanOrderSummary();
     var count = 0, orderSummary = $('#order_summary');
     $.each(this.current_order.items, function (id, item) {
-      var textString = ++count + ") " + item.type.toUpperCase() + " : " + item.name + " = " + item.price;
-      var elem = $("<p/>", {text: textString});
+      var elem = $("<p/>", {text: item.getDisplayString(++count)});
       orderSummary.append(elem);
     })
     $("#order_total").text(this.current_order.orderTotal);
