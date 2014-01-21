@@ -94,9 +94,9 @@ function Kioski() {
 
   this.addToCartHandler = function (itemElem) {
     var item = this.itemsCollection[itemElem.attr("id")];
-    if (this.isItemAlreadyPresentInOrder(item.type)) {
+    if (this.isCartHasItemWithSame("id", item.id)) {
       this.removeItemFromCurrentOrder(item);
-    } else if (this.itemOfSameTypePresentInCart(item.type)) {
+    } else if (this.isCartHasItemWithSame("type", item.type)) {
       this.removeItemFromCurrentOrder(this.getItemToBeRemoved(item));
       this.addItemToCurrentOrder(item);
     } else {
@@ -111,9 +111,9 @@ function Kioski() {
       orderItemsColection.push(item.getDisplayString(++counter));
     })
 
-    var order = {orderId: this.orders.length, 
-      orderTotal: this.current_order.orderTotal, 
-      customerName: this.current_order.customerName, 
+    var order = {orderId: this.orders.length,
+      orderTotal: this.current_order.orderTotal,
+      customerName: this.current_order.customerName,
       stringCollection: orderItemsColection
     };
 
@@ -185,21 +185,10 @@ function Kioski() {
     return Object.keys(this.current_order.items).length
   }
 
-  this.isItemAlreadyPresentInOrder = function (type) {
-    var returnValue = false;
-    $.each(this.current_order.items, function (key, item) {
-      if (item.type == type) {
-        returnValue = true;
-        return false;
-      }
-    })
-    return returnValue;
-  }
-
-  this.itemOfSameTypePresentInCart = function (type) {
+  this.isCartHasItemWithSame = function (attr, val) {
     var returnValue = false;
     $.each(kioski.current_order.items, function (id, item) {
-      if (item.type == type) {
+      if (item[attr] == val) {
         returnValue = true;
       }
     })
