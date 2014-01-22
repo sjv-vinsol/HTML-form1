@@ -4,10 +4,7 @@
 	height: 70px;
 	float: left;
 	margin-left: 10px;
-}
-
-.filter_options {
-	/*display: block;*/
+	margin-top: 10px;
 }
 
 .hidden {
@@ -20,8 +17,6 @@
 }
 
 #right_container {
-	/*float: left;*/
 	overflow: hidden;
 	width: 60%;
 }
-
