@@ -1,9 +1,12 @@
 #NOTE : Make sure the file name is same as the name of the table.
 Shell> mysqlimport -u root -p --fields-terminated-by=',' --local bank testing.csv -c email,ph_no,city
 
-SELECT DISTINCT(city) city FROM testing ORDER BY city;
+SELECT DISTINCT(city) city FROM testing;
+
 SELECT city, count(*) response_count FROM testing GROUP BY city;
-SELECT city, count(*) respondents FROM testing GROUP BY city HAVING respondents = (SELECT count(*) FROM testing GROUP BY city LIMIT 1);
+
+SELECT city, count(*) respondents FROM testing GROUP BY city HAVING respondents = (SELECT count(*) c FROM testing GROUP BY city ORDER BY c DESC LIMIT 1 );
+
 SELECT DISTINCT(SUBSTRING(email, INSTR(email, "@")+1)) domains FROM testing;
 
 SELECT SUBSTRING(email, INSTR(email, "@")+1) domains, count(*) count FROM testing GROUP BY domains HAVING count = (SELECT count(*) count FROM testing GROUP BY SUBSTRING(email, INSTR(email, "@")+1) ORDER BY count DESC LIMIT 1);
