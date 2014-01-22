@@ -7,6 +7,16 @@
 	margin-top: 10px;
 }
 
+.filter_options_container {
+	display: inline-block;
+	margin: 0px;
+	margin-bottom: 4px;
+}
+
+.filter_options_container:hover {
+	cursor: default;
+}
+
 .hidden {
 	visibility: hidden;
 }

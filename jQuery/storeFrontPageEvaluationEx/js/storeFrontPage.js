@@ -52,12 +52,20 @@ function Store() {
     this.bindEvents();
   }
 
+  this.toggleCheckBox = function (checkbox) {
+    if (checkbox.prop("checked")) {
+      checkbox.prop("checked", false);
+    } else {
+      checkbox.prop("checked", true);
+    }
+  }
+
   this.bindEvents = function () {
     var store = this;
-    $(".filter_options").bind("click", function () {
+    $(".filter_options_container").bind("click", function (e) {
+      store.toggleCheckBox($(this).find("input"));
       store.filterHandler();
     })
-    console.log($("#all_products"))
     $("#all_products").bind("click", function () {
       store.displayAllProducts();
     });
@@ -91,7 +99,6 @@ function Store() {
     var store =  this;
     this.currentProducts = this.productsCollection;
     var filter = {brand: [], color: []};
-    console.log($("#left_container input:checked"));
     $("#left_container input:checked").each(function() {
       var elem = $(this);
       filter[elem.data("type")].push(elem.val());
@@ -121,13 +128,16 @@ function Store() {
   }
 
   this.displayBrandFilterOptions = function () {
-    var brandHash = { attrArray: this.brands};
-    $("#filter_li_template").tmpl(brandHash).appendTo("#brand_container").data("type", "brand");
+    var brandHash = { attrArray: this.brands.sort()};
+    $("#filter_li_template")
+      .tmpl(brandHash).appendTo("#brand_container")
+      .find("input").data("type", "brand");
   }
 
   this.displayColorFilterOptions = function () {
-    var colorHash = { attrArray: this.colors};
-    $("#filter_li_template").tmpl(colorHash).appendTo("#color_container").data("type", "color");
+    var colorHash = { attrArray: this.colors.sort()};
+    $("#filter_li_template").tmpl(colorHash).appendTo("#color_container")
+      .find("input").data("type", "color");
   }
 
   this.createProducts = function () {
@@ -143,7 +153,8 @@ function Store() {
   this.displayProducts = function () {
     this.cleanProductContainer();
     $.each(this.currentProducts, function (i, product) {
-      $("#product_template").clone().attr("src", product.url).removeClass("hidden").appendTo("#product_container");
+      $("#product_template").clone().attr("src", product.url)
+        .removeClass("hidden").appendTo("#product_container");
     })
   }
 

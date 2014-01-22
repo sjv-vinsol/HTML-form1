@@ -9,7 +9,7 @@
 
   <script type="text/x-jquery-tmpl" id="filter_li_template">
     {{each attrArray}}
-    <input type="checkbox" class="filter_options" value="${this}"> ${this}
+    <span class="filter_options_container"> <input type="checkbox" class="filter_options" value="${this}"> ${this} </span>
     <br/>
     {{/each}}
   </script>
