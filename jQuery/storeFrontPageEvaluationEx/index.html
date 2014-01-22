@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="css/storeFrontPage.css">
+</head>
+
+<body>
+  <img id="product_template" class="product hidden">
+
+  <script type="text/x-jquery-tmpl" id="filter_li_template">
+    {{each attrArray}}
+    <input type="checkbox" class="filter_options" value="${this}"> ${this}
+    <br/>
+    {{/each}}
+  </script>
+
+  <div id="left_container">
+
+    <input id="all_products" type="button" value="All products">
+    <input id="available_products" type="button" value="Available products">
+    <div id="brand_container"> Brands : <br/>
+
+    </div>
+
+    <div id="color_container"> Colors : <br/>
+
+    </div>
+
+  </div>
+
+  <div id="right_container">
+    <div id="product_container">
+    </div>
+  </div>
+  
+  
+<script src="libs/jquery-2.0.3.js"></script>
+<script src="libs/jquery.tmpl.js"></script>
+<script src="js/storeFrontPage.js"></script>
+
+</body>
+</html>
