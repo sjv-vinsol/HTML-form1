@@ -52,19 +52,14 @@ function Store() {
     this.bindEvents();
   }
 
-  this.toggleCheckBox = function (checkbox) {
-    if (checkbox.prop("checked")) {
-      checkbox.prop("checked", false);
-    } else {
-      checkbox.prop("checked", true);
-    }
-  }
-
   this.bindEvents = function () {
     var store = this;
-    $(".filter_options_container").bind("click", function (e) {
-      store.toggleCheckBox($(this).find("input"));
+    $(".filter_options").bind("click", function (e) {
+      e.stopPropagation();
       store.filterHandler();
+    })
+    $(".filter_options_container").bind("click", function (e) {
+      $(this).find("input").click();
     })
     $("#all_products").bind("click", function () {
       store.displayAllProducts();
