@@ -1,0 +1,14 @@
+1. select u1.name, u2.name from users u1 LEFT JOIN relationships r ON u1.id = r.user_id JOIN users u2 ON u2.id = r.following_id;
+
+2. select u1.name, group_concat(u2.name) from users u1 LEFT JOIN relationships r ON u1.id = r.user_id JOIN users u2 ON u2.id = r.following_id group by u1.name order by count(*) desc;
+
+3. select distinct(u.name), t.content, t.created_at from relationships r JOIN tweets t ON t.user_id IN(r.following_id,1) JOIN users u ON u.id = t.user_id where r.user_id = 1 order by created_at desc;
+
+// Excluding user who never tweeted
+4. a) select u.name, count(*) total_tweets from users u JOIN tweets t ON u.id = t.user_id group by u.id;
+// Including user who never tweeted
+4. b) select u.name, if(t.id IS NULL, 0, count(*)) total_tweets from users u LEFT JOIN tweets t ON u.id = t.user_id group by u.id;
+
+5. select * from users u LEFT JOIN tweets t ON u.id = t.user_id where t.id IS NULL;
+
+6. select * from tweets where created_at > date_sub(now(), INTERVAL 1 HOUR);

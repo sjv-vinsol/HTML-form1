@@ -1,0 +1,25 @@
+DELIMITER $$
+
+CREATE FUNCTION CALCULATE_AREA(shape varchar(255), side1 INT, side2 INT)
+RETURNS DECIMAL(40,3)
+DETERMINISTIC
+BEGIN
+DECLARE area DECIMAL(40,3);
+IF shape = "triangle" THEN SET area = (SQRT(3) * POW(side1, 2))/4; END IF;
+IF shape = "square" THEN SET area = POW(side1, 2); END IF;
+IF shape = "rectangle" THEN SET area = side1 * side2 ; END IF;
+IF shape = "circle" THEN SET area = PI() * POW(side1, 2); END IF;
+
+RETURN area;
+END$$
+
+DELIMITER ;
+
+
+1. SELECT shape, color, CALCULATE_AREA(shape, side1, side2) AREA FROM blocks;
+
+2. SELECT shape, sum(CALCULATE_AREA(shape, side1, side2)) AREA FROM blocks GROUP BY shape;
+
+3. SELECT shape, color, COALESCE(CALCULATE_AREA(shape, side1, side2)* qty, 0) AREA FROM blocks b LEFT JOIN block_qty q ON b.id = q.block_id;
+
+4. SELECT color, sum(CALCULATE_AREA(shape, side1, side2)* qty) AREA FROM blocks b JOIN block_qty q ON b.id = q.block_id GROUP BY color HAVING AREA >= 300;

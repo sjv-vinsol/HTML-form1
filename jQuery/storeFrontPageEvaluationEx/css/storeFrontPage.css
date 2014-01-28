@@ -7,13 +7,25 @@
 	margin-top: 10px;
 }
 
-.filter_options_container {
-	display: inline-block;
-	margin: 0px;
-	margin-bottom: 4px;
+#left_container {
+	margin-left: 50px;
+	margin-top: 6px;
 }
 
-.filter_options_container:hover {
+#brand_container {
+	margin-top: 20px;
+	margin-bottom: 10px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
+.filter_container {
+	cursor: default;
+}
+
+.label {
 	cursor: default;
 }
 

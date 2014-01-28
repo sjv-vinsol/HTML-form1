@@ -5,25 +5,24 @@
 </head>
 
 <body>
-  <img id="product_template" class="product hidden">
-
   <script type="text/x-jquery-tmpl" id="filter_li_template">
     {{each attrArray}}
-    <span class="filter_options_container"> <input type="checkbox" class="filter_options" value="${this}"> ${this} </span>
+    <span class="filter_container"> <input type="checkbox" class="filter_options" value="${this}"> ${this} </span>
     <br/>
     {{/each}}
   </script>
 
   <div id="left_container">
 
-    <input id="all_products" type="button" value="All products">
-    <input id="available_products" type="button" value="Available products">
-    <div id="brand_container"> Brands : <br/>
+    <input id="all_products" type="radio" name="product" checked="checked"> <span class='label'> All Products </span>
+    <input id="available_products" type="radio" name="product"> <span class='label'> Available Products </span>
+    <div id="brand_container"> 
+      <span class="bold"> Brands : </span><br/>
 
     </div>
 
-    <div id="color_container"> Colors : <br/>
-
+    <div id="color_container"> 
+      <span class="bold"> Colors : </span><br/>
     </div>
 
   </div>

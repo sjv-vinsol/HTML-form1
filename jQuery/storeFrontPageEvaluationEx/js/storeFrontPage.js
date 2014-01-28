@@ -2,8 +2,8 @@ $(document).ready(function() {
   getProductJSON();
 })
 
-function initializeStore() {
-  var store = new Store();
+function initializeStore(productJSON) {
+  var store = new Store(productJSON);
   store.init();
 }
 
@@ -12,9 +12,8 @@ function getProductJSON() {
     type: 'GET',
     url: "data/product.json",
     dataType: "json",
-    success: function (response) {
-      productJSON = response
-      initializeStore();
+    success: function (productJSON) {
+      initializeStore(productJSON);
     }
   })
 }
@@ -38,18 +37,31 @@ function Product(name, url, color, brand, sold_out) {
   this.availability = this.checkAvailability();
 }
 
-function Store() {
+function Store(productJSON) {
   this.productsCollection = [];
   this.brands = [];
   this.colors = [];
-  this.currentProducts = [];
+  this.filteredProducts = [];
+  this.availableProducts = [];
+  this.showOnlyAvailableProducts = false;
 
   this.init = function () {
     this.createProducts();
-    this.parseDistinct("brand");
-    this.parseDistinct("color");
+    this.getFilter("brand");
+    this.getFilter("color");
+    this.getAvailableProducts();
     this.displayFilters();
     this.bindEvents();
+  }
+
+  // push all available products to availableProducts array.
+  this.getAvailableProducts = function () {
+    var products = [], store = this;
+    $.each(store.productsCollection, function(i, product) {
+      if (product.availability) {
+        store.availableProducts.push(product);
+      }
+    })
   }
 
   this.bindEvents = function () {
@@ -58,47 +70,48 @@ function Store() {
       e.stopPropagation();
       store.filterHandler();
     })
-    $(".filter_options_container").bind("click", function (e) {
+    $(".filter_container").bind("click", function (e) {
       $(this).find("input").click();
     })
     $("#all_products").bind("click", function () {
-      store.displayAllProducts();
+      store.allProductHandler();
     });
     $("#available_products").bind("click", function () {
-      store.displayAvailableProducts();
+      store.availableProductHandler();
+    })
+    $(".label").bind("click", function () {
+      $(this).prev("input").click();
     })
   }
 
-  this.displayAllProducts = function () {
-    this.currentProducts = this.productsCollection;
-    this.displayProducts();
-    this.resetCheckboxes();
+  this.allProductHandler = function () {
+    this.showOnlyAvailableProducts = false;
+    this.filterHandler();
   }
 
-  this.resetCheckboxes = function () {
-    $("#left_container input:checked").prop("checked", false);
-  }
-
-  this.displayAvailableProducts = function () {
-    this.currentProducts = [], store = this;
-    $.each(store.productsCollection, function (i, product) {
-      if (product.availability) {
-        store.currentProducts.push(product);
-      }
-    })
-    this.displayProducts();
-    this.resetCheckboxes();
+  this.availableProductHandler = function () {
+    this.showOnlyAvailableProducts = true;
+    this.filterHandler();
   }
 
   this.filterHandler = function () {
     var store =  this;
-    this.currentProducts = this.productsCollection;
+    this.setFilterdProducts();
     var filter = {brand: [], color: []};
-    $("#left_container input:checked").each(function() {
+    $(".filter_options:checked").each(function() {
       var elem = $(this);
       filter[elem.data("type")].push(elem.val());
     })
     store.displayFilterResults(filter);
+  }
+
+  // To show only available products, filteredProducts is set to total products that are available.
+  this.setFilterdProducts = function () {
+    if (this.showOnlyAvailableProducts) {
+      this.filteredProducts = this.availableProducts;
+    } else {
+      this.filteredProducts = this.productsCollection;
+    }
   }
 
   this.displayFilterResults = function (filter) {
@@ -106,12 +119,12 @@ function Store() {
     $.each(filter, function(type, options) {
       if (options.length) {
         var filterResults = []
-        $.each(store.currentProducts, function (i, product) {
+        $.each(store.filteredProducts, function (i, product) {
           if ($.inArray(product[type], options) >= 0) {
             filterResults.push(product);
           }
         })
-        store.currentProducts = filterResults;
+        store.filteredProducts = filterResults;
       }
     })
     this.displayProducts();
@@ -141,15 +154,14 @@ function Store() {
       var product = new Product(product.name, product.url, product.color, product.brand, product.sold_out);
       store.productsCollection.push(product);
     })
-    this.currentProducts = this.productsCollection;
+    this.filteredProducts = this.productsCollection;
     this.displayProducts();
   }
 
   this.displayProducts = function () {
     this.cleanProductContainer();
-    $.each(this.currentProducts, function (i, product) {
-      $("#product_template").clone().attr("src", product.url)
-        .removeClass("hidden").appendTo("#product_container");
+    $.each(this.filteredProducts, function (i, product) {
+      $("<img/>", {class: "product"}).attr("src", product.url).appendTo("#product_container");
     })
   }
 
@@ -157,7 +169,7 @@ function Store() {
     $("#product_container").text("");
   }
 
-  this.parseDistinct = function (attr) {
+  this.getFilter = function (attr) {
     var store = this;
     $.each(productJSON, function(i,product) {
       if ($.inArray(product[attr], store[attr + "s"]) < 0) {
