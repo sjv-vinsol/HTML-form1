@@ -159,13 +159,13 @@ function Store(productJSON) {
   }
 
   this.displayProducts = function () {
-    this.cleanProductContainer();
+    this.clearProductContainer();
     $.each(this.filteredProducts, function (i, product) {
       $("<img/>", {class: "product"}).attr("src", product.url).appendTo("#product_container");
     })
   }
 
-  this.cleanProductContainer = function () {
+  this.clearProductContainer = function () {
     $("#product_container").text("");
   }
 
