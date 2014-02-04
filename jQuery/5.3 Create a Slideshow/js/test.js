@@ -1,8 +1,3 @@
-$(document).ready(function () {
-  var slideshow = new Slideshow();
-  slideshow.init();
-})
-
 function Slideshow() {
   this.navigationDelay = 200;
   this.displayTime = 1000;
@@ -20,19 +15,20 @@ function Slideshow() {
   this.start = function () {
     var slideshow = this;
     setInterval(function(){
-      var visibleElem = slideshow.slideshowElems.filter( "li:visible" );
+      var visibleElem = this.slideshowElems.filter( "li:visible" );
       var indexOfVisibleElem = visibleElem.index();
       visibleElem.fadeOut(slideshow.navigationDelay, function(){
-        slideshow.displayNextElem(indexOfVisibleElem);
+        displayNextElem(indexOfVisibleElem);
       })
     }, slideshow.displayTime)
   }
 
   this.displayNextElem = function (indexOfVisibleElem) {
-    this.navigationNumbers.eq(indexOfVisibleElem).removeClass( "highlight" );
+    this.navigationNumbers.eq(indexOfVisibleElem).removeClass( "redBackground" );
     var indexOfNextElem = (indexOfVisibleElem == this.indexOfLastElem) ? 0 : (indexOfVisibleElem + 1);
-    this.navigationNumbers.eq(indexOfNextElem).addClass( "highlight" );
+    this.navigationNumbers.eq(indexOfNextElem).addClass( "redBackground" );
     this.slideshowElems.eq(indexOfNextElem).fadeIn(this.navigationDelay);
+
   }
 
   this.displaySlideShow = function () {
@@ -41,16 +37,16 @@ function Slideshow() {
   }
 
   this.displayImageNumber = function () {
-    this.navigation = $('<div/>', {id: "navigation"});
+    var navigation = $('<div/>', {id: "navigation"});
     for (i = 0; i < this.slideshowElems.length; i++) {
-      this.navigation.append($('<span/>', {id: i + 1, text: i + 1, class: "navigation"}));
+      navigation.append($('<span/>', {id: i + 1, text: i + 1, class: "navigation"}));
     }
   }
 
   this.highlightImageNumber = function () {
-    this.navigationNumbers = this.navigation.insertAfter(this.slideShowContainer).children( "span" );
-    this.slideshowElems.first().fadeIn(slideshow.navigationDelay);
-    this.navigationNumbers.first().addClass( "highlight" );
+    this.navigationNumbers = navigation.insertAfter(displaySlideshowDiv).children( "span" );
+    $slideshow.first().fadeIn(slideshow.navigationDelay);
+    this.navigationNumbers.first().addClass( "redBackground" );
   }
 
   this.hideSlideShowElems = function () {

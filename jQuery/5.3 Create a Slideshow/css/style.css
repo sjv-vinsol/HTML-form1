@@ -10,8 +10,8 @@
   padding-right: 10px;
 }
 
-.redBackground {
-  background-color: red !important;
+.highlight {
+  background-color: blue !important;
 }
 
 .hidden {
