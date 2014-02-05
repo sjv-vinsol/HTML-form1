@@ -15,7 +15,7 @@
 	margin-left: 50px;
 	margin-top: 6px;
 	float: left;
-	width: 30%;
+	width: 25%;
 }
 
 .label {
@@ -48,5 +48,14 @@
 
 [data-id="right_container"] {
 	overflow: hidden;
-	width: 60%;
+	width: 70%;
+}
+
+input {
+	margin: 5px;
+}
+
+[data-id="product_container"] {
+	overflow: hidden;
+	width: 90%;
 }

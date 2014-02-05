@@ -64,6 +64,7 @@ function Store(productJSON) {
     this.bindEvents();
   }
 
+  // Clone the store and append it to body
   this.displayStore = function () {
     var storeElem = $("#clone_store").clone().removeClass("noDisplay");
     storeElem.attr("id", this.storeId);
@@ -83,24 +84,29 @@ function Store(productJSON) {
     })
   }
 
+  // return selector within scope of a particular store
   this.getSelector = function (value) {
     return ("#" + this.storeId + " " + value);
   }
 
-  this.getDataAttrSelector = function (id) {
-    return ("#" + this.storeId + " " + "*[data-id="+id+"]");
+  // return selector for data Id within scope of a particular store.
+  this.getDataAttrSelector = function (dataId) {
+    return ("#" + this.storeId + " " + "*[data-id="+dataId+"]");
   }
 
+  // Handler to handle click event of allProducts button.
   this.allProductHandler = function () {
     this.showOnlyAvailableProducts = false;
     this.filterHandler();
   }
 
+  // Handler to handle click event of "Available Products" button.
   this.availableProductHandler = function () {
     this.showOnlyAvailableProducts = true;
     this.filterHandler();
   }
 
+  // Loop through checked checkboxes to create a filter for filtering products.
   this.filterHandler = function () {
     var store =  this;
     this.filteredProducts = this.productsCollection;
@@ -112,6 +118,7 @@ function Store(productJSON) {
     store.filterProducts(filter);
   }
 
+  // Loop through each filter and store the filtered results in store.filteredProducts.
   this.filterProducts = function (filter) {
     var store = this;
     $.each(filter, function(type, options) {
@@ -125,6 +132,8 @@ function Store(productJSON) {
     this.displayProducts();
   }
 
+  // Loop through each filter type and filter the products. For ex, filter = {brand: ["Brand A", "Brand B"]},
+  //  , then below code loops through brand and filter the products by type is either "Brand A" OR "Brand B"
   this.applyFilter = function (type, options) {
     var filterResults = [];
     $.each(this.filteredProducts, function (i, product) {
@@ -135,6 +144,7 @@ function Store(productJSON) {
     this.filteredProducts = filterResults;
   }
 
+  // Loop through all the store.filteredProducts and filter available products by checking their availability.
   this.filterAvailableProducts = function () {
     var filterResults = [];
     $.each(this.filteredProducts, function (i, product) {
@@ -157,12 +167,14 @@ function Store(productJSON) {
     })
   }
 
+  // create and append the filter option in DOM.
   this.appendFilter = function (type, filter) {
     var filterElem = $("<label> <input type='checkbox' class='filter_options'>"+filter+"</label>");
     filterElem.find("input").data("type", type).attr("value", filter);
     $(this.getDataAttrSelector(type + "_container")).append(filterElem, $("<br>"));
   }
 
+  // Create products and store them in store.productsCollections.
   this.createProducts = function () {
     var store = this;
     $.each(productJSON, function(i, product) {
@@ -173,6 +185,7 @@ function Store(productJSON) {
     this.displayProducts();
   }
 
+  // loop through each store.filteredProducts and append it to DOM.
   this.displayProducts = function () {
     var store = this;
     this.clearProductContainer();
@@ -181,10 +194,12 @@ function Store(productJSON) {
     })
   }
 
+  // remove all the products from DOM for individual store so as to display products depending upon filter.
   this.clearProductContainer = function () {
     $(this.getDataAttrSelector("product_container")).text("");
   }
 
+  // Filter distinct values of brand and color from productJSON and store them in store.brands and store.colors respectively.
   this.getFilter = function (attr) {
     var store = this;
     $.each(productJSON, function(i,product) {
