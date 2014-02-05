@@ -1,8 +1,18 @@
+var storeDefaults = {
+  storeCounter: 0
+}
+
 $(document).ready(function() {
   getProductJSON();
 })
 
 function initializeStore(productJSON) {
+  var store = new Store(productJSON);
+  store.init();
+  var store = new Store(productJSON);
+  store.init();
+  var store = new Store(productJSON);
+  store.init();
   var store = new Store(productJSON);
   store.init();
 }
@@ -42,46 +52,43 @@ function Store(productJSON) {
   this.brands = [];
   this.colors = [];
   this.filteredProducts = [];
-  this.availableProducts = [];
   this.showOnlyAvailableProducts = false;
+  this.storeId = "store" + ++storeDefaults.storeCounter;
 
   this.init = function () {
+    this.displayStore();
     this.createProducts();
     this.getFilter("brand");
     this.getFilter("color");
-    this.getAvailableProducts();
     this.displayFilters();
     this.bindEvents();
   }
 
-  // push all available products to availableProducts array.
-  this.getAvailableProducts = function () {
-    var products = [], store = this;
-    $.each(store.productsCollection, function(i, product) {
-      if (product.availability) {
-        store.availableProducts.push(product);
-      }
-    })
+  this.displayStore = function () {
+    var storeElem = $("#clone_store").clone().removeClass("noDisplay");
+    storeElem.attr("id", this.storeId);
+    $("body").append(storeElem);
   }
 
   this.bindEvents = function () {
     var store = this;
-    $(".filter_options").bind("click", function (e) {
-      e.stopPropagation();
+    $(this.getSelector(".filter_options")).bind("click", function () {
       store.filterHandler();
     })
-    $(".filter_container").bind("click", function (e) {
-      $(this).find("input").click();
-    })
-    $("#all_products").bind("click", function () {
+    $(this.getDataAttrSelector("all_products")).bind("click", function () {
       store.allProductHandler();
     });
-    $("#available_products").bind("click", function () {
+    $(this.getDataAttrSelector("available_products")).bind("click", function () {
       store.availableProductHandler();
     })
-    $(".label").bind("click", function () {
-      $(this).prev("input").click();
-    })
+  }
+
+  this.getSelector = function (value) {
+    return ("#" + this.storeId + " " + value);
+  }
+
+  this.getDataAttrSelector = function (id) {
+    return ("#" + this.storeId + " " + "*[data-id="+id+"]");
   }
 
   this.allProductHandler = function () {
@@ -96,56 +103,64 @@ function Store(productJSON) {
 
   this.filterHandler = function () {
     var store =  this;
-    this.setFilterdProducts();
+    this.filteredProducts = this.productsCollection;
     var filter = {brand: [], color: []};
-    $(".filter_options:checked").each(function() {
+    $("#" + this.storeId + " " + ".filter_options:checked").each(function() {
       var elem = $(this);
       filter[elem.data("type")].push(elem.val());
     })
-    store.displayFilterResults(filter);
+    store.filterProducts(filter);
   }
 
-  // To show only available products, filteredProducts is set to total products that are available.
-  this.setFilterdProducts = function () {
-    if (this.showOnlyAvailableProducts) {
-      this.filteredProducts = this.availableProducts;
-    } else {
-      this.filteredProducts = this.productsCollection;
-    }
-  }
-
-  this.displayFilterResults = function (filter) {
+  this.filterProducts = function (filter) {
     var store = this;
     $.each(filter, function(type, options) {
       if (options.length) {
-        var filterResults = []
-        $.each(store.filteredProducts, function (i, product) {
-          if ($.inArray(product[type], options) >= 0) {
-            filterResults.push(product);
-          }
-        })
-        store.filteredProducts = filterResults;
+        store.applyFilter(type, options);
       }
     })
+    if (this.showOnlyAvailableProducts) {
+      this.filterAvailableProducts();
+    }
     this.displayProducts();
   }
 
+  this.applyFilter = function (type, options) {
+    var filterResults = [];
+    $.each(this.filteredProducts, function (i, product) {
+      if ($.inArray(product[type], options) >= 0) {
+        filterResults.push(product);
+      }
+    })
+    this.filteredProducts = filterResults;
+  }
+
+  this.filterAvailableProducts = function () {
+    var filterResults = [];
+    $.each(this.filteredProducts, function (i, product) {
+      if (product.availability) {
+        filterResults.push(product);
+      }
+    })
+    this.filteredProducts = filterResults;
+  }
+
   this.displayFilters  = function () {
-    this.displayBrandFilterOptions();
-    this.displayColorFilterOptions();
+    this.displayFilterOptions("brand");
+    this.displayFilterOptions("color");
   }
 
-  this.displayBrandFilterOptions = function () {
-    var brandHash = { attrArray: this.brands.sort()};
-    $("#filter_li_template")
-      .tmpl(brandHash).appendTo("#brand_container")
-      .find("input").data("type", "brand");
+  this.displayFilterOptions = function (type) {
+    var store = this;
+    $.each(this[type + "s"].sort(), function (i, filter) {
+      store.appendFilter(type, filter);
+    })
   }
 
-  this.displayColorFilterOptions = function () {
-    var colorHash = { attrArray: this.colors.sort()};
-    $("#filter_li_template").tmpl(colorHash).appendTo("#color_container")
-      .find("input").data("type", "color");
+  this.appendFilter = function (type, filter) {
+    var filterElem = $("<label> <input type='checkbox' class='filter_options'>"+filter+"</label>");
+    filterElem.find("input").data("type", type).attr("value", filter);
+    $(this.getDataAttrSelector(type + "_container")).append(filterElem, $("<br>"));
   }
 
   this.createProducts = function () {
@@ -159,14 +174,15 @@ function Store(productJSON) {
   }
 
   this.displayProducts = function () {
+    var store = this;
     this.clearProductContainer();
     $.each(this.filteredProducts, function (i, product) {
-      $("<img/>", {class: "product"}).attr("src", product.url).appendTo("#product_container");
+      $("<img/>", {class: "product"}).attr("src", product.url).appendTo(store.getDataAttrSelector("product_container"));
     })
   }
 
   this.clearProductContainer = function () {
-    $("#product_container").text("");
+    $(this.getDataAttrSelector("product_container")).text("");
   }
 
   this.getFilter = function (attr) {

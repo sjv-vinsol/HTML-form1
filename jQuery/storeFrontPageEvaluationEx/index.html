@@ -5,30 +5,25 @@
 </head>
 
 <body>
-  <script type="text/x-jquery-tmpl" id="filter_li_template">
-    {{each attrArray}}
-    <span class="filter_container"> <input type="checkbox" class="filter_options" value="${this}"> ${this} </span>
-    <br/>
-    {{/each}}
-  </script>
+  <div id="clone_store" class="noDisplay store">
+    <div data-id="left_container">
 
-  <div id="left_container">
+      <label> <input data-id="all_products" type="radio" name="product" checked="checked"> All Products </label>
+      <label> <input data-id="available_products" type="radio" name="product">  Available Products </label>
+      <div data-id="brand_container">
+        <span class="bold"> Brands : </span><br/>
 
-    <input id="all_products" type="radio" name="product" checked="checked"> <span class='label'> All Products </span>
-    <input id="available_products" type="radio" name="product"> <span class='label'> Available Products </span>
-    <div id="brand_container"> 
-      <span class="bold"> Brands : </span><br/>
+      </div>
+
+      <div data-id="color_container">
+        <span class="bold"> Colors : </span><br/>
+      </div>
 
     </div>
 
-    <div id="color_container"> 
-      <span class="bold"> Colors : </span><br/>
-    </div>
-
-  </div>
-
-  <div id="right_container">
-    <div id="product_container">
+    <div data-id="right_container">
+      <div data-id="product_container">
+      </div>
     </div>
   </div>
   

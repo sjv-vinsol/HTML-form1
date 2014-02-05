@@ -1,3 +1,7 @@
+.noDisplay {
+	display: none;
+}
+
 .product {
 	background-color: grey;
 	width: 70px;
@@ -7,14 +11,27 @@
 	margin-top: 10px;
 }
 
-#left_container {
+[data-id="left_container"] {
 	margin-left: 50px;
 	margin-top: 6px;
+	float: left;
+	width: 30%;
 }
 
-#brand_container {
+.label {
+	cursor: default;
+}
+
+[data-id="brand_container"] {
 	margin-top: 20px;
 	margin-bottom: 10px;
+}
+
+.store {
+	overflow: hidden;
+	border-bottom: 3px solid red;
+	margin: 20px 0px;
+	padding-bottom: 20px;
 }
 
 .bold {
@@ -25,20 +42,11 @@
 	cursor: default;
 }
 
-.label {
-	cursor: default;
-}
-
 .hidden {
 	visibility: hidden;
 }
 
-#left_container {
-	float: left;
-	width: 30%;
-}
-
-#right_container {
+[data-id="right_container"] {
 	overflow: hidden;
 	width: 60%;
 }
