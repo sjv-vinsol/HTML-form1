@@ -1,5 +1,6 @@
-def fibinacci
-  fib = []
+fib = []
+
+def fibonacci(fib)
   continue = true
   while continue
     if fib.empty?
@@ -9,10 +10,10 @@ def fibinacci
       continue = yield(fib)
     end
   end
-  p fib.join(",")
 end
 
-fibinacci do |fib|
+# Pass a block of code to fibonacci that push the sum of last two numbers, if less than 1000, to fib array.
+fibonacci(fib) do |fib|
   index_of_last_element = fib.length - 1
   sum_of_last_two_elements = fib[index_of_last_element] + fib[index_of_last_element-1]
   if sum_of_last_two_elements < 1000
@@ -21,3 +22,5 @@ fibinacci do |fib|
     false
   end
 end
+
+p fib.join(",")
