@@ -1,5 +1,5 @@
 class String
-  def is_palindrome?
+  def palindrome?
     self == self.reverse
   end
 end

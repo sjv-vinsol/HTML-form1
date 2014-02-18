@@ -12,5 +12,5 @@ if str == 'q'
   p "Good Bye!!!"
   exit()
 else
-  p (str.is_palindrome?) ? "String is palindrome" : "String is not a palindrome"
+  p (str.palindrome?) ? "String is palindrome" : "String is not a palindrome"
 end
