@@ -1,12 +1,12 @@
 class String 
-  def is_upper?
+  def upper?
     self == self.upcase
   end
 
-  def to_s
+  def inverse_case
     arr = []
     self.each_char do |c|
-      c.is_upper? ? arr << c.downcase : arr << c.upcase
+      c.upper? ? arr << c.downcase : arr << c.upcase
     end
     arr.join()
   end
