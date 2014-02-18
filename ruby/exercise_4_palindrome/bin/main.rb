@@ -1,16 +1,13 @@
 require_relative '../lib/string'
 
 p "Enter a string"
-str = gets.chomp.downcase
+begin 
+  input_string = gets.chomp.downcase
+end while input_string.empty?
 
-while str.empty?
-  p "Please enter a valid string"
-  str = gets.chomp.downcase
-end
-
-if str == 'q'
+if input_string == 'q'
   p "Good Bye!!!"
   exit()
 else
-  p (str.palindrome?) ? "String is palindrome" : "String is not a palindrome"
+  p (input_string.palindrome?) ? "String is palindrome" : "String is not a palindrome"
 end
