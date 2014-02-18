@@ -1,6 +1,7 @@
 class Vehicle
   attr_accessor :price
   attr_reader :name
+  
   def initialize(price, name)
     @price = price
     @name = name
@@ -22,9 +23,3 @@ class Bike < Vehicle
     super + ", Dealer: #{@dealer}"
   end
 end
-
-bike = Bike.new(2000, "buzz", "Uday")
-
-p bike.details
-bike.price = 1000
-p bike.price
