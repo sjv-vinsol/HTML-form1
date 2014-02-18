@@ -1,7 +1,7 @@
 class Fibonacci
-  def get_fibonacci_upto(max_digit)
+  def fibonacci(max_digit)
     fib = []
-    add_elements(fib) do |fib|
+    create_fibonacci(fib) do |fib|
       index_of_last_element = fib.length - 1
       sum_of_last_two_elements = fib[index_of_last_element] + fib[index_of_last_element-1]
       if sum_of_last_two_elements < max_digit
@@ -14,7 +14,7 @@ class Fibonacci
   end
 
   private
-  def add_elements(fib)
+  def create_fibonacci(fib)
     continue = true
     while continue
       if fib.empty?
