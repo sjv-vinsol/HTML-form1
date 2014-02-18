@@ -1,4 +1,4 @@
-require_relative "../lib/vehicle"
+require_relative "../lib/bike"
 
 bike = Bike.new(2000, "CB Trigger", "Uday Honda")
 p bike.details
