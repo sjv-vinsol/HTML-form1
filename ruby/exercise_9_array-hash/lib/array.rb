@@ -1,5 +1,5 @@
 class Array
-  def array_to_hash
+  def group_by_length
     hash = {}
     for val in self
       length = val.length
