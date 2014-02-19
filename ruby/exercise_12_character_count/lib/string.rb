@@ -1,6 +1,6 @@
 class String
   def digit?
-    (0..9).any? {|int| int.to_s == self}
+    (0..9).any? { |int| int.to_s == self }
   end
 
   def uppercase?
@@ -12,7 +12,7 @@ class String
   end
 
   def count_by_type
-    count = {:upper => 0, :lower => 0, :integer => 0, :special_chars => 0}
+    count = { :upper => 0, :lower => 0, :integer => 0, :special_chars => 0 }
     self.each_char do |c|
       if c.digit?
         count[:integer] += 1
