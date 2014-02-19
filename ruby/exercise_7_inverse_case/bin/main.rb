@@ -1,3 +1,3 @@
 require_relative "../lib/string"
 
-p "Hello World".swapcase
+p "Hello World".to_s
