@@ -1,4 +1,4 @@
-require_relative "vehicle"
+require_relative 'vehicle'
 
 class Bike < Vehicle
   attr_reader :dealer
