@@ -4,16 +4,16 @@ class String
   end
 
   def uppercase?
-    ("A".."Z").any? { |char| char == self }
+    ('A'..'Z').any? { |char| char == self }
   end
 
   def downcase?
-    ("a".."z").any? { |char| char == self }
+    ('a'..'z').any? { |char| char == self }
   end
 
   def count_by_type
     count = { :upper => 0, :lower => 0, :integer => 0, :special_chars => 0 }
-    self.each_char do |c|
+    each_char do |c|
       if c.digit?
         count[:integer] += 1
       elsif c.uppercase?
