@@ -1,7 +1,7 @@
 class Array
   def group_by_odd_even
-    hash = self.group_by {|elem| elem.to_s.length}
-    hash.inject({:odd => [], :even => []}) do | result, (key, val) |
+    hash = group_by { |elem| elem.to_s.length }
+    hash.inject({ :odd => [], :even => [] }) do | result, (key, val) |
       result[key.even? ? :even : :odd] << val
       result
     end
