@@ -1,9 +1,9 @@
 require_relative '../lib/interest'
 
-p "Enter principal"
+p 'Enter principal'
 principal = gets.chomp.to_i
 
-p "Enter time"
+p 'Enter time'
 time = gets.chomp.to_i
 
 interest = Interest.new.tap do |new_interest|
