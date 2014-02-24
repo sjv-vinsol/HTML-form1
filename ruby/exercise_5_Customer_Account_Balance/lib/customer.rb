@@ -1,6 +1,5 @@
 class Customer
-  attr_accessor :name, :balance
-  attr_reader :account_number
+  attr_reader :account_number, :name, :balance
 
   @@account_number_counter = 0
 
