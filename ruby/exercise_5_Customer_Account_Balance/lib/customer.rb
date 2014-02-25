@@ -1,6 +1,4 @@
 class Customer
-  attr_reader :account_number, :name, :balance
-
   @@account_number_counter = 0
 
   def initialize(name)
@@ -23,9 +21,9 @@ class Customer
 
   def details
     <<-eos
-    Name : #{self.name}
-    balance : #{self.balance}
-    account_number : #{self.account_number}
+    Name : #{@name}
+    balance : #{@balance}
+    account_number : #{@account_number}
     ----------------------------------
     eos
   end
