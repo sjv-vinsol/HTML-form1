@@ -1,4 +1,5 @@
 class Customer
+  attr_reader :balance
   @@account_number_counter = 0
 
   def initialize(name)
