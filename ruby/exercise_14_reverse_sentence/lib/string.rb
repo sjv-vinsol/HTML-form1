@@ -1,5 +1,5 @@
 class String
-  def reverse_word_sequence
+  def reverse_words_order
     split.reverse.join(' ')
   end
 end
