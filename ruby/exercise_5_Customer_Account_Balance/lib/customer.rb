@@ -20,4 +20,13 @@ class Customer
       @balance -= amount
     end
   end
+
+  def details
+    <<-eos
+    Name : #{self.name}
+    balance : #{self.balance}
+    account_number : #{self.account_number}
+    ----------------------------------
+    eos
+  end
 end

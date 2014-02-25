@@ -3,15 +3,8 @@ require_relative '../lib/customer'
 customer1 = Customer.new("name1")
 customer2 = Customer.new("name2")
 
-def print_details(customer)
-  puts "Name : #{customer.name}"
-  puts "balance : #{customer.balance}"
-  puts "account_number : #{customer.account_number}"
-  puts "----------------------------------"
-end
-
-print_details(customer1)
-print_details(customer2)
+puts customer1.details
+puts customer2.details
 
 customer1.deposit(2000)
 customer2.withdraw(500)
