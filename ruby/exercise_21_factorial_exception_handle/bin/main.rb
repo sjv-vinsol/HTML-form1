@@ -1,4 +1,4 @@
-require_relative '../lib/integer'
+require_relative '../lib/factorial'
 
 puts Factorial.fact(6)
 puts Factorial.fact(-3)
