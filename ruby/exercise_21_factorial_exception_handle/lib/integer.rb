@@ -1,14 +1,20 @@
-class Integer
+class Factorial
   class NegativeNumberError < StandardError; end
-  
-  def factorial
+  class NotaNumberError < StandardError; end
+
+  def self.fact(number)
     begin
-      if (self >= 0) 
-        (1..self).inject(1) { |result, element| result * element }
+      case
+      when number.class != Fixnum
+        raise NotaNumberError.new('Provide a integer.')
+      when number < 0
+        raise NegativeNumberError.new('Provide number greater than or equal to 0')
       else
-        raise NegativeNumberError.new('Factorial of negative numbers does not exist')
+        result = 1
+        (1..number).each { |element| result *= element }
+        result
       end
-    rescue NegativeNumberError => e
+    rescue Exception => e
       puts "#{e.class}: #{e.message}"
     end
   end
