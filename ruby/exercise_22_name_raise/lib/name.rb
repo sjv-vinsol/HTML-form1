@@ -24,9 +24,9 @@ class Name
       end
     rescue NotNillError => e
       puts "#{e.class}: #{e.message}"
+      false
     rescue CapitalizeError => e
       puts "#{e.class}: #{e.message}"
-    ensure
       false
     end
   end
