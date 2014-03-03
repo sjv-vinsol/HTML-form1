@@ -1,3 +1,3 @@
 require_relative '../lib/fibonacci'
 
-puts 1000.get_fibonacci
+puts 0.get_fibonacci

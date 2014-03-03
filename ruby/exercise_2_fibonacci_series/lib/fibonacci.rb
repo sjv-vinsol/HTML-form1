@@ -9,7 +9,7 @@ class Integer
       fib_series.push(0, 1)
     end
     extend_fib_series(fib_series) do |sum|
-      if (sum <= self) then fib_series << sum end
+      fib_series << sum if (sum <= self)
     end
     fib_series.join(", ")
   end
