@@ -2,7 +2,7 @@ require_relative 'integer'
 
 class Factorial
   class NegativeNumberError < StandardError; end
-  class NotaNumberError     < StandardError; end
+  class NotANumberError     < StandardError; end
 
   attr_reader :factorial
   
