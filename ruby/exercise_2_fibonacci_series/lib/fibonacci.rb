@@ -1,25 +1,29 @@
+require '../lib/array'
+
 class Integer
+  def negative?
+    self < 0
+  end
+
   def get_fibonacci
-    fib_series = []
-    case self
-    when 0
-      fib_series << 0
-      return fib_series
-    else 
-      fib_series.push(0, 1)
+    if negative?
+      raise 'InvalidNumber'
+    elsif zero?
+      return [0]
+    else
+      fibonacci_series = [0, 1, 1]
     end
-    extend_fib_series(fib_series) do |sum|
-      fib_series << sum if (sum <= self)
+    increment_fibonacci_series(fibonacci_series) do |sum|
+      fibonacci_series << sum if (sum <= self)
     end
-    fib_series.join(", ")
+    fibonacci_series
   end
 
   private
 
-  def extend_fib_series(fib_series)
+  def increment_fibonacci_series(fibonacci_series)
     begin
-      last_element_index = fib_series.length - 1
-      sum = fib_series[last_element_index] + fib_series[last_element_index - 1]
+      sum = fibonacci_series.last + fibonacci_series.second_last
     end while yield(sum)
   end
 end
