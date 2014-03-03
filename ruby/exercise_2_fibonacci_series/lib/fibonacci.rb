@@ -1,4 +1,4 @@
-require '../lib/array'
+require_relative '../lib/array'
 
 class Integer
   def negative?
