@@ -1,12 +1,9 @@
 require_relative '../lib/time'
-require_relative '../lib/string'
 
-time = []
-2.times do |i|
-  begin
-    p "Enter valid time#{i + 1} in (h:m:s)"
-    time[i] = gets.chomp
-  end while !time[i].valid_time?
-end
+print 'Please enter time1(hh:mm:ss): '
+input_user_time1 = Time.get_and_validate
+print 'Please enter time2(hh:mm:ss): '
+input_user_time2 = Time.get_and_validate
 
-puts Time.add_time(time[0],time[1])
+time = Time.add_time(input_user_time1,input_user_time2)
+puts Time.humanize(time)
