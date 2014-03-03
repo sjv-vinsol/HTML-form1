@@ -1,5 +1,5 @@
 require_relative '../lib/factorial'
 
-puts Factorial.fact(6)
-puts Factorial.fact(-3)
-puts Factorial.fact('a')
+puts Factorial.new(6)
+puts Factorial.new(-3)
+puts Factorial.new('a')
