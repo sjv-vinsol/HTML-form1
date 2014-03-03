@@ -1,28 +1,23 @@
-class Fibonacci
-  def fibonacci(max_digit)
-    fib = []
-    create_fibonacci(fib) do |fib|
-      index_of_last_element = fib.length - 1
-      sum_of_last_two_elements = fib[index_of_last_element] + fib[index_of_last_element-1]
-      if sum_of_last_two_elements < max_digit
-        fib << sum_of_last_two_elements
-      else
-        false
-      end
+class Integer
+  def get_fibonacci
+    fib_series = []
+    case self
+      when 0
+        fib_series << 0
+        return fib_series
+      else fib_series.push(0,1)
     end
-    fib.join(",")
+    extend_fib_series(fib_series) do |sum|
+      (sum <= self) ? (fib_series << sum) : false
+    end
+    fib_series.join(", ")
   end
 
   private
-  def create_fibonacci(fib)
-    continue = true
-    while continue
-      if fib.empty?
-        fib << 0
-        fib << 1
-      else
-        continue = yield(fib)
-      end
-    end
+  def extend_fib_series(fib_series)
+    begin
+      last_element_index = fib_series.length - 1
+      sum = fib_series[last_element_index] + fib_series[last_element_index-1]
+    end while yield(sum)
   end
 end
