@@ -10,7 +10,7 @@ class String
     elsif !(self =~ TIME_REGEX)
       raise InvalidFormat.new('Expected time format: hh:mm:ss')
     else
-      self
+      DateTime.parse(self)
     end
   end
 end
