@@ -1,22 +1,24 @@
 require_relative '../lib/array'
 
 class Integer
+  class NegativeNumber < StandardError; end
+  
   def negative?
     self < 0
   end
 
   def get_fibonacci
     if negative?
-      raise 'InvalidNumber'
+      raise NegativeNumber, 'Provide a positive number'
     elsif zero?
-      return [0]
+      [0]
     else
       fibonacci_series = [0, 1, 1]
+      increment_fibonacci_series(fibonacci_series) do |sum|
+        fibonacci_series << sum if (sum <= self)
+      end
+      fibonacci_series
     end
-    increment_fibonacci_series(fibonacci_series) do |sum|
-      fibonacci_series << sum if (sum <= self)
-    end
-    fibonacci_series
   end
 
   private
