@@ -1,29 +1,17 @@
 require_relative 'integer'
+require_relative 'object'
 
 class Factorial
-  class NegativeNumberError < StandardError; end
-  class NotANumberError     < StandardError; end
 
   attr_reader :factorial
   
   def initialize(number)
     begin
-      if is_not_fixnum(number)
-        raise NotaNumberError.new('Provide a integer.')
-      elsif number.negative?
-        raise NegativeNumberError.new('Provide number greater than or equal to 0')
-      else
-        @factorial = 1
-        (1..number).each { |element| @factorial *= element }
-      end
+      @factorial = number.validate_and_get_factorial!
     rescue StandardError => e
-      puts "#{e.class}: #{e.backtrace}"
+      puts "#{e.class}: #{e.message}"
     end
   end
-
-  def is_not_fixnum(number)
-    number.class != Fixnum
-  end  
 
   def to_s
     @factorial ? "Factorial is: #{factorial}" : ''
