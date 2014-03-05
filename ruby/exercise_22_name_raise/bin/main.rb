@@ -1,7 +1,10 @@
 require_relative '../lib/name'
 
-name = Name.new
+user = User.new
 
-name.first_name = name.prompt_user('first')
-name.last_name = name.prompt_user('last')
-puts "Fullname : #{name.fullname}"
+puts 'Enter first name'
+user.first_name = user.get_name
+puts 'Enter last name'
+user.last_name = user.get_name
+
+puts user.fullname

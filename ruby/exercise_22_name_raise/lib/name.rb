@@ -1,37 +1,19 @@
-class Name
-  class NotNillError < StandardError; end
-  class CapitalizeError < StandardError; end
+require_relative 'string'
 
+class User
   attr_accessor :first_name, :last_name
 
-  def prompt_user(numeral)
+  def get_name
     begin
-      puts "Enter #{numeral} name"
-      input_name = gets.chomp
-    end while !self.valid?(input_name)
-    input_name
-  end
-
-  def valid?(name)
-    begin
-      case
-      when name == ''
-        raise NotNillError, 'Name cannot be blank'
-      when name != name.capitalize
-        raise CapitalizeError, 'First letter of name should be capital'
-      else
-        true
-      end
-    rescue NotNillError => e
+      gets.chomp.validate_and_return!
+    rescue StandardError => e
       puts "#{e.class}: #{e.message}"
-      false
-    rescue CapitalizeError => e
-      puts "#{e.class}: #{e.message}"
-      false
+      print 'Enter Name: '
+      retry
     end
   end
 
   def fullname
-    "#{self.first_name} #{self.last_name}"
+    "#{first_name} #{last_name}"
   end
 end
