@@ -1,5 +1,6 @@
 class Interest
-  attr_accessor :principal, :time, :rate
+  attr_accessor :principal, :time
+  attr_reader :rate
   RATE = 10
 
   def initialize
