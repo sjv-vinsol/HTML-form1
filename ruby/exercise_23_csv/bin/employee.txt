@@ -1,11 +1,11 @@
-Developer
-John (EmpId: 12)
-Jack (EmpId: 15)
-
-Designer
-Mary (EmpId: 13)
-Jane (EmpId: 17)
-
-Tester
-Johny (EmpId: 19)
-
+ Developer
+John (EmpId:  12)
+Jack (EmpId:  15)
+ 
+ Designer
+Mary (EmpId:  13)
+Jane (EmpId:  17)
+ 
+ Tester
+Johny (EmpId:  19)
+ 
