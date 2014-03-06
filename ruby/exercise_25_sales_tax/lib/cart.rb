@@ -3,6 +3,8 @@ require_relative 'prompt_and_validate'
 
 class Cart
   include PromptAndValidate
+  attr_accessor :current_product
+  attr_reader :products
 
   def initialize
     @products = []
@@ -11,8 +13,7 @@ class Cart
 
   def add_product
     @products << (@current_product = Product.new)
-    @current_product.prompt_details
-    @current_product.evaluate_price
+    current_product.evaluate_price
     update_total
     add_more_product? ? add_product : display_products
   end
@@ -22,7 +23,7 @@ class Cart
   end
 
   def add_more_product?
-    continue = prompt_and_get('Do you want to add more items to your list(y/n): ')
+    continue = get_and_validate('Do you want to add more items to your list(y/n): ')
     (continue == 'y') ? true : false
   end
 

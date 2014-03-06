@@ -1,21 +1,20 @@
 module PromptAndValidate
   class NotNillError < StandardError; end
 
-  def prompt_and_get(prompt)
+  def get_and_validate(message)
     begin
-      print prompt
-      input = gets.chomp.strip.downcase
-    end while invalid?(input)
+      prompt_and_get!(message)
+    rescue StandardError => e
+      puts "#{e.class}: #{e.message} \n \n"
+      retry
+    end
+  end
+
+  def prompt_and_get!(message)
+    print message
+    input = gets.chomp.strip.downcase
+    raise(NotNillError, 'Input cant be blank') if input.strip.empty?
     input
   end
 
-  def invalid?(input)
-    begin
-      raise(NotNillError, 'Input cant be blank') if input.empty?
-      false
-    rescue NotNillError => e
-      puts "#{e.class}: #{e.message} \n \n"
-      true
-    end
-  end
 end
