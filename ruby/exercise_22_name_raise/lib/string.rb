@@ -6,11 +6,11 @@ class String
     self == self.capitalize
   end
 
-  def validate_and_return!
+  def validate!
     if empty?
-      raise BlankError, 'Name cannot be blank'
+      raise BlankError, 'Cannot be blank'
     elsif !capitalize?
-      raise CapitalizeError, 'First letter of name should be capital'
+      raise CapitalizeError, 'First letter should be capital'
     else
       self
     end

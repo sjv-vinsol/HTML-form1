@@ -5,7 +5,7 @@ class User
 
   def get_name
     begin
-      gets.chomp.validate_and_return!
+      gets.chomp.validate!
     rescue StandardError => e
       puts "#{e.class}: #{e.message}"
       print 'Enter Name: '

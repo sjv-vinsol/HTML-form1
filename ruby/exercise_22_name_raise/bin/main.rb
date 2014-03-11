@@ -1,4 +1,4 @@
-require_relative '../lib/name'
+require_relative '../lib/user'
 
 user = User.new
 
