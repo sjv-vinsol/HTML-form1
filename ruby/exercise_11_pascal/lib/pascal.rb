@@ -1,3 +1,5 @@
+require_relative 'integer'
+
 class Pascal
   # returns nested array of each row in pascal triangle.
   def upto(no_of_rows)
