@@ -1,3 +1,7 @@
-require_relative '../lib/Integer'
+require_relative '../lib/integer'
+require_relative '../lib/pascal'
 
-Integer(3).display_pascal
+pascal = Pascal.new
+pascal.upto(4).each do |row|
+  puts row.join(' ')
+end
