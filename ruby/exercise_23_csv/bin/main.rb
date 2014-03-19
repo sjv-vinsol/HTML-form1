@@ -1,6 +1,4 @@
-require 'csv'
-require_relative '../lib/company'
+require_relative '../lib/csv_parser'
 
-company = Company.new
-employee_records = company.read_csv("#{File.expand_path(File.dirname(__FILE__))}/employee.csv")
-company.write_to_csv("#{File.expand_path(File.dirname(__FILE__))}/employee.txt", employee_records)
+CsvParser.read("#{File.expand_path(File.dirname(__FILE__))}/employee.csv")
+CsvParser.write("#{File.expand_path(File.dirname(__FILE__))}/employee.txt")
