@@ -1,30 +1,34 @@
 class Dictionary
-  @@options = Hash.new { |hash, key| hash[key] = [] }
 
-  def words_with_longest_common_sequence(options, wrong_word)
-    options.each { |option| collect_by_max_length(wrong_word, option)}
-    (@@options.max_by { |key, val| key })[1]
+  attr_accessor :wrong_word, :words
+  def initialize(words, wrong_word)
+    @words = words
+    @wrong_word = wrong_word
+    @max_length_of_matched_substr = Hash.new { |hash, key| hash[key] = [] }
   end
 
   # collect max length of matched substring.
   # collect in hash with key as max length and value as option.
-  def collect_by_max_length(word, option)
-    length = word.length
-    matched_substrings = get_matched_substrings(word, option)
-    max_length_of_matched_substrings = (matched_substrings.sort_by &:length).last.length
-    #grouping max length substrings of each option
-    @@options[max_length_of_matched_substrings] << option
+  def words_with_longest_common_sequence
+    words.each do |word|
+      matched_substrings = get_matched_substrings(word)
+      # grouping max length substrings of each option
+      @max_length_of_matched_substr[matched_substrings.max_by(&:length).length] << word
+    end
+    @max_length_of_matched_substr[@max_length_of_matched_substr.keys.max]
   end
 
-  # return all the possible common substrings betweend word and option.
-  def get_matched_substrings(word, option)
-    matched_substrings, length = [], word.length
-    (0..(length-1)).each do |start_index|
-      (start_index..(length-1)).each do |end_index|
-        match = option.match(word[start_index..end_index])
-        matched_substrings << match[0] if match
+  private
+    
+    # return all the possible common substrings betweend word and option.
+    def get_matched_substrings(word)
+      matched_substrings, length = [], wrong_word.length
+      (0...length).each do |start_index|
+        (start_index...length).each do |end_index|
+          match = word.match(wrong_word[start_index..end_index])
+          matched_substrings << match[0] if match
+        end
       end
+      matched_substrings
     end
-    matched_substrings
-  end
 end

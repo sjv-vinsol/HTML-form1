@@ -6,11 +6,11 @@ no_of_options = gets.chomp.to_i
 print 'wring word:'
 wrong_word = gets.chomp
 
-options = []
+words = []
 puts 'Options'
 no_of_options.times do |count|
-  options << gets.chomp
+  words << gets.chomp
 end
 
-dict = Dictionary.new
-puts dict.words_with_longest_common_sequence(options, wrong_word).join(', ')
+dict = Dictionary.new(words, wrong_word)
+puts dict.words_with_longest_common_sequence.join(', ')
